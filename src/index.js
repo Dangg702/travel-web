@@ -9,6 +9,10 @@ const port = process.env.PORT || 9000;
 const route = require('./routes');
 const db = require('./config/db');
 
+// view engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
+
 // connect to DB
 db.connect();
 
