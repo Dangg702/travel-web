@@ -1,11 +1,11 @@
 ## Travel Web
-* * * * * Technology:
+****** Technology:
 * Nodejs
 * Expressjs
 * MongoDB
 * Bootstrap
 * EJS
-* * * * * Functions:
+***** Main Features:
 * Login/Sign in Account
 * Account authentication
 * * Del, Update, Search user
