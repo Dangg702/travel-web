@@ -5,9 +5,7 @@ const placeSchema = new Schema(
     {
         name: { type: String, required: true },
         desc: { type: String, required: true },
-        content: { type: String, required: true },
         isFamous: { type: Boolean, required: true, default: false },
-        region: { type: String, required: true },
     },
     {
         timestamps: true,

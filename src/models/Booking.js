@@ -3,23 +3,14 @@ const Schema = mongoose.Schema;
 
 const bookingSchema = new Schema(
     {
-        bookingItems: [
-            {
-                name: { type: String, required: true },
-                amount: { type: String, required: true },
-                image: { type: String, required: true },
-                // price: { type: String, required: true },
-                tour: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'Tour',
-                },
-            },
-        ],
-        paymentMethod: { type: String, required: true },
+        tourId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tour', required: true },
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        numOfPeople: { type: Number, required: true },
         totalPrice: { type: String, required: true },
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        paymentMethod: { type: String, required: true },
         isPaid: { type: Boolean, default: false },
-        paidAt: { type: Date },
+        paymentDate: { type: Date },
+        status: { type: Number }, // trạng thái: chờ xác nhận, thành công, bị hủy
     },
     {
         timestamps: true,
