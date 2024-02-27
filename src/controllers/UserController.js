@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { refreshTokenJwtService } = require('../services/JwtService');
 
 class UserController {
     // PUT /api/user/update-user/:id
@@ -41,6 +42,16 @@ class UserController {
                 }
             })
             .catch(next);
+    }
+
+    // GET /api/user/refresh-token ( generate a new access token )
+    async refreshToken(req, res, next) {
+        const token = req.headers.token.split(' ')[1];
+        if (!token) {
+            return res.status(404).json({ message: 'The token is required', status: 'ERROR' });
+        }
+        const response = await refreshTokenJwtService(token);
+        res.status(200).json({ message: 'Success', status: 'OK', data: response });
     }
 }
 

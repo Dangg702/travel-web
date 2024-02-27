@@ -45,13 +45,20 @@ class PlaceController {
             })
             .catch(next);
     }
+
+    // GET api/place/search-place
+    searchForm(req, res, next) {
+        res.render('search');
+    }
+
     // GET api/place/search-place/:name
     searchPlace(req, res, next) {
         const placeName = req.params.name;
         Place.find({ name: placeName })
             .then((places) => {
                 if (places.length < 0) {
-                    return res.status(404).json({ message: 'Place not found' });
+                    // return res.status(404).json({ message: 'Place not found' });
+                    return res.status(404).json({ data: places });
                 } else {
                     res.status(200).json({ message: 'Success', data: places });
                 }
