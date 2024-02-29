@@ -6,7 +6,7 @@ const bookingSchema = new Schema(
         tourId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tour', required: true },
         userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
         numOfPeople: { type: Number, required: true },
-        unitprice: { type: String, required: true },
+        unitPrice: { type: String, required: true },
         totalPrice: { type: String, required: true },
         paymentMethod: { type: String, required: true },
         isPaid: { type: Boolean, default: false },
