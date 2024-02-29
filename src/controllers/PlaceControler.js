@@ -57,10 +57,34 @@ class PlaceController {
         Place.find({ name: placeName })
             .then((places) => {
                 if (places.length < 0) {
-                    // return res.status(404).json({ message: 'Place not found' });
-                    return res.status(404).json({ data: places });
+                    return res.status(404).json({ message: 'Place not found' });
+                    // return res.status(404).json({ data: places });
                 } else {
                     res.status(200).json({ message: 'Success', data: places });
+                }
+            })
+            .catch(next);
+    }
+
+    // GET api/place/all-places
+    getAllPlace(req, res, next) {
+        const { limit, page } = req.query;
+        Place.find()
+            .limit(limit)
+            .skip((page - 1) * limit)
+            .then((places) => {
+                if (places.length === 0) {
+                    return res.status(404).json({ message: 'Empty' });
+                } else {
+                    Place.countDocuments().then((totalPlaces) => {
+                        res.status(200).json({
+                            message: 'Success',
+                            data: places,
+                            currentPage: page,
+                            totalPlaces: totalPlaces,
+                            totalPages: Math.ceil(totalPlaces / limit),
+                        });
+                    });
                 }
             })
             .catch(next);
