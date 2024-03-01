@@ -8,6 +8,7 @@ function route(app) {
     app.use('/api/user', userRouter);
     app.use('/api', authRouter);
     // Define routes
+    // app.use('/list/:page/',searchRouter);
     app.use('/', indexRouter);
 }
 
