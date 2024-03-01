@@ -1,14 +1,14 @@
 const authRouter = require('./auth');
 const userRouter = require('./user');
 const placeRouter = require('./place');
-const { getIndex, getList } = require('../controllers/IndexController');
+const indexRouter = require('./site');
+const searchRouter = require('./site');
 function route(app) {
     app.use('/api/place', placeRouter);
     app.use('/api/user', userRouter);
     app.use('/api', authRouter);
     // Define routes
-    app.use('/', getIndex);
-    app.use('/list/:page', getList);
+    app.use('/', indexRouter);
 }
 
 module.exports = route;

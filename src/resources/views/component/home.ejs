@@ -1,14 +1,4 @@
-<style>
-    .product-details {
-      height: 100%; /* Tạo chiều cao cố định cho card body */
-    }
-    
-    .product-details h4,
-    .product-details p {
-      margin-bottom: 0.5rem; /* Xóa khoảng cách dưới của các phần tử */
-    }
-    
-  </style>
+
   <%- include('../layout/header'); -%>
   <div class="container" style="margin-top: 50px">
     <div class="row">
@@ -17,12 +7,12 @@
       <% for(var i = 0; i < places.length; i++) { %>
       <div class="col-md-3"  >
         <div class="p-1">
-          <div class="card"     >
-            <img src="<%= places[i].img %>" class="card-img-top">
-            <div class="card-body">
-              <h4 class="card-title">Điểm đến: <%= places[i].name %></h4>
-              <h4 class="card-title" style="height: 60px;">Vùng:<%= places[i].region %></h4>
-             
+          <div class="card">
+            <a href="./search/<%= places[i].name %>"><img src="<%= places[i].img %>" class="card-img-top">
+              <div class="card-body">
+                <h4 class="card-title">Điểm đến: <%= places[i].name %></h4>
+                <h4 class="card-title" style="height: 60px;">Vùng:<%= places[i].region %></h4>
+              </a>  
             </div>
             <div  style="border:none;margin-left:20px">
               
@@ -32,7 +22,6 @@
       </div>
       <% } %>
     </div>
-  
     <div class="row">
       <!-- pagination -->
       <% if(pages > 0) { %>

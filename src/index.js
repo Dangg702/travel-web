@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -12,7 +11,7 @@ const db = require('./config/db');
 
 // view engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'resources', 'views',));
+app.set('views', path.join(__dirname, 'resources', 'views'));
 
 // connect to DB
 db.connect();
