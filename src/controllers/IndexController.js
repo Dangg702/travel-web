@@ -52,7 +52,9 @@ class IndexController {
 
     // Helper function to render the product index view
     renderPlaceIndex(res, places, currentPage, totalPages) {
-        res.render('component/home', {
+        res.render('home', {
+            title: 'Home page',
+            cssLink: 'css/home.css',
             places,
             current: currentPage,
             pages: totalPages,

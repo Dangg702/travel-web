@@ -1,10 +1,7 @@
 const express = require('express');
-<<<<<<< HEAD
 const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-=======
->>>>>>> c4c6f16b1c8bfc21032b685bca8d7c2871d1307d
 const path = require('path');
 const methodOverride = require('method-override');
 const dotenv = require('dotenv');
@@ -19,14 +16,11 @@ const db = require('./config/db');
 // view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
-<<<<<<< HEAD
 app.use(expressLayouts);
 app.set('layout', 'layouts/header-layout'); // set custom default layout
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
-=======
->>>>>>> c4c6f16b1c8bfc21032b685bca8d7c2871d1307d
 
 // connect to DB
 db.connect();
