@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const placeController = require('../controllers/PlaceControler');
+const placeController = require('../controllers/PlaceController');
 
 router.post('/add-place', placeController.addPlace);
 router.put('/edit-place/:id', placeController.editPlace);

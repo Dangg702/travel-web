@@ -135,6 +135,7 @@
                 sendRequest('/user/login', data)
                     .then((response) => {
                         console.log(response);
+                        // lỗi logic vì chỉ mới check được user chưa check được password
                         if (response.status === 200) {
                             window.location.href = '/';
                         }
