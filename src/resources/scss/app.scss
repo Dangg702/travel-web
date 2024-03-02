@@ -1,0 +1,255 @@
+@import 'variables';
+
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* === Overlay === */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 4;
+    display: none;
+}
+
+#overlay.show {
+    display: initial;
+}
+
+button {
+    border: none;
+    outline: none;
+    border-radius: 100px;
+    font-family: 'Domine', serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: $orange-color;
+    padding: 1em 2em;
+    cursor: pointer;
+    box-shadow: $shadow;
+    transition: $smooth;
+}
+
+button:hover {
+    background-color: $light-pink-color;
+    color: $orange-color;
+    transition: $smooth;
+}
+
+p {
+    line-height: 40px;
+}
+
+.pt {
+    padding-top: 10%;
+}
+
+.section__heading {
+    text-align: center;
+    padding: 0 15px;
+}
+
+.section__tag {
+    font-size: 1.75rem;
+    font-family: 'Red Hat Display', sans-serif;
+    text-transform: capitalize;
+    color: $orange-color;
+}
+
+.section__title {
+    font-size: 3.125rem;
+    font-family: 'Red Hat Display', sans-serif;
+    text-transform: capitalize;
+    color: $green-color;
+    margin-bottom: 18px;
+}
+
+.section__detail {
+    font-size: 1.25rem;
+    font-family: 'Domine', serif;
+    color: $gray-color;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: 1920px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.wrapper {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+header {
+    background-color: $light-pink-color;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 15px 55px 15px;
+    background-color: $light-pink-color;
+}
+
+/* Logo */
+.navbar__logo img {
+    width: 63px;
+}
+
+.navbar__logo p {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 1.125rem;
+    text-transform: uppercase;
+    color: $green-color;
+    margin-left: 14px;
+}
+
+/* Menu */
+.navbar__links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    transform: translateX(-100%);
+    opacity: 0;
+    background-color: $orange-color;
+    transition: $smooth;
+    z-index: 5;
+}
+
+.navbar__link {
+    list-style: none;
+    font-size: 24px;
+    margin: 55px;
+}
+
+.navbar__link a {
+    font-family: 'Domine', serif;
+    color: #fff;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: $smooth;
+}
+
+.navbar__link a:hover {
+    color: $green-color;
+    transition: $smooth;
+}
+
+.navbar__btn {
+    font-size: 18px;
+    margin-left: 25px;
+    border: 2px solid $pink-color;
+}
+
+/* icon */
+.navbar__ham {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    transition: $smooth;
+    z-index: 6;
+}
+
+.navbar__icon {
+    width: 45px;
+    height: 6px;
+    background-color: $orange-color;
+    border-radius: 5px;
+    transition: $smooth;
+    position: relative;
+}
+
+.navbar__icon:before,
+.navbar__icon:after {
+    content: '';
+    position: absolute;
+    width: 45px;
+    height: 6px;
+    background-color: $orange-color;
+    border-radius: 5px;
+    transition: $smooth;
+}
+
+.navbar__icon:before {
+    transform: translateY(-12px);
+}
+
+.navbar__icon:after {
+    transform: translateY(12px);
+}
+
+/* icon animation */
+.open.navbar__icon {
+    transform: translateX(-50px);
+    background-color: transparent;
+    transition: $smooth;
+}
+
+.open.navbar__icon:before {
+    transform: rotate(45deg) translate(35px, -35px);
+    transition: $smooth;
+}
+.open.navbar__icon:after {
+    transform: rotate(-45deg) translate(35px, 35px);
+    transition: $smooth;
+}
+
+/* menu animation */
+.navbar__links.navbar__open {
+    transform: translateX(0);
+    opacity: 1;
+    transition: $smooth;
+}
+
+/* Reposive */
+@media (min-width: 62em) {
+    /* header */
+    .navbar__links {
+        position: initial;
+        transform: translateX(0);
+        opacity: 1;
+        background-color: transparent;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .navbar__link {
+        margin: 0 25px;
+    }
+    .navbar__link a {
+        color: $green-color;
+    }
+    .navbar__link a:hover {
+        color: $orange-color;
+    }
+    .navbar__btn {
+        margin-left: 0;
+        border: none;
+    }
+    .navbar__ham {
+        display: none;
+    }
+}

@@ -40,7 +40,7 @@ const getPageParams = (pageParam) => {
 // Helper function to retrieve places
 const getPlaces = async (perPage, page) => {
     return await Place.find()
-        .skip((perPage * page) - perPage)
+        .skip(perPage * page - perPage)
         .limit(perPage);
 };
 
@@ -51,10 +51,11 @@ const getPlaceCount = async () => {
 
 // Helper function to render the product index view
 const renderPlaceIndex = (res, places, currentPage, totalPages) => {
-    res.render('component/home', {
+    res.render('home', {
+        title: 'Home',
         places,
         current: currentPage,
-        pages: totalPages
+        pages: totalPages,
     });
 };
 

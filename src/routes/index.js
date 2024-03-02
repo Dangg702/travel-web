@@ -5,8 +5,7 @@ const { getIndex, getList } = require('../controllers/IndexController');
 function route(app) {
     app.use('/api/place', placeRouter);
     app.use('/api/user', userRouter);
-    app.use('/api', authRouter);
-    // Define routes
+    app.use('/user', authRouter);
     app.use('/', getIndex);
     app.use('/list/:page', getList);
 }

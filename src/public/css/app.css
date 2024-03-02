@@ -1,0 +1,215 @@
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth; }
+
+/* === Overlay === */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 4;
+  display: none; }
+
+#overlay.show {
+  display: initial; }
+
+button {
+  border: none;
+  outline: none;
+  border-radius: 100px;
+  font-family: 'Domine', serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #fa5652;
+  padding: 1em 2em;
+  cursor: pointer;
+  box-shadow: 0 7px 29px 0 rgba(100, 100, 111, 0.2);
+  transition: all 0.3s ease-in; }
+
+button:hover {
+  background-color: #fff9f9;
+  color: #fa5652;
+  transition: all 0.3s ease-in; }
+
+p {
+  line-height: 40px; }
+
+.pt {
+  padding-top: 10%; }
+
+.section__heading {
+  text-align: center;
+  padding: 0 15px; }
+
+.section__tag {
+  font-size: 1.75rem;
+  font-family: 'Red Hat Display', sans-serif;
+  text-transform: capitalize;
+  color: #fa5652; }
+
+.section__title {
+  font-size: 3.125rem;
+  font-family: 'Red Hat Display', sans-serif;
+  text-transform: capitalize;
+  color: #035755;
+  margin-bottom: 18px; }
+
+.section__detail {
+  font-size: 1.25rem;
+  font-family: 'Domine', serif;
+  color: #4b4f51;
+  max-width: 700px;
+  margin: 0 auto; }
+
+.container {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto; }
+
+.wrapper {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto; }
+
+header {
+  background-color: #fff9f9; }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 15px 55px 15px;
+  background-color: #fff9f9; }
+
+/* Logo */
+.navbar__logo img {
+  width: 63px; }
+
+.navbar__logo p {
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  color: #035755;
+  margin-left: 14px; }
+
+/* Menu */
+.navbar__links {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  transform: translateX(-100%);
+  opacity: 0;
+  background-color: #fa5652;
+  transition: all 0.3s ease-in;
+  z-index: 5; }
+
+.navbar__link {
+  list-style: none;
+  font-size: 24px;
+  margin: 55px; }
+
+.navbar__link a {
+  font-family: 'Domine', serif;
+  color: #fff;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: all 0.3s ease-in; }
+
+.navbar__link a:hover {
+  color: #035755;
+  transition: all 0.3s ease-in; }
+
+.navbar__btn {
+  font-size: 18px;
+  margin-left: 25px;
+  border: 2px solid #fee6e5; }
+
+/* icon */
+.navbar__ham {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  z-index: 6; }
+
+.navbar__icon {
+  width: 45px;
+  height: 6px;
+  background-color: #fa5652;
+  border-radius: 5px;
+  transition: all 0.3s ease-in;
+  position: relative; }
+
+.navbar__icon:before,
+.navbar__icon:after {
+  content: '';
+  position: absolute;
+  width: 45px;
+  height: 6px;
+  background-color: #fa5652;
+  border-radius: 5px;
+  transition: all 0.3s ease-in; }
+
+.navbar__icon:before {
+  transform: translateY(-12px); }
+
+.navbar__icon:after {
+  transform: translateY(12px); }
+
+/* icon animation */
+.open.navbar__icon {
+  transform: translateX(-50px);
+  background-color: transparent;
+  transition: all 0.3s ease-in; }
+
+.open.navbar__icon:before {
+  transform: rotate(45deg) translate(35px, -35px);
+  transition: all 0.3s ease-in; }
+
+.open.navbar__icon:after {
+  transform: rotate(-45deg) translate(35px, 35px);
+  transition: all 0.3s ease-in; }
+
+/* menu animation */
+.navbar__links.navbar__open {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.3s ease-in; }
+
+/* Reposive */
+@media (min-width: 62em) {
+  /* header */
+  .navbar__links {
+    position: initial;
+    transform: translateX(0);
+    opacity: 1;
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; }
+  .navbar__link {
+    margin: 0 25px; }
+  .navbar__link a {
+    color: #035755; }
+  .navbar__link a:hover {
+    color: #fa5652; }
+  .navbar__btn {
+    margin-left: 0;
+    border: none; }
+  .navbar__ham {
+    display: none; } }

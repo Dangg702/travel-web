@@ -5,17 +5,22 @@ const { generateAccessToken, generateRefreshToken } = require('../services/JwtSe
 class AuthController {
     // POST /register
     register(req, res, next) {
-        const { name, password } = req.body;
-        User.findOne({ name: name })
+        const { email, username, password } = req.body;
+
+        User.findOne({ email })
             .then((user) => {
                 if (user) {
-                    res.json({ message: 'User already exists' });
+                    // res.json({ message: 'User already exists' });
+                    res.redirect('/user/login');
                 } else {
                     // ma hoa password
                     const hash = bcrypt.hashSync(password, 10);
-                    const user = new User({ name, password: hash });
+                    const user = new User({ email, username, password: hash });
                     user.save()
-                        .then(() => res.json({ message: 'User created successfully' }))
+                        .then(() => {
+                            // res.json({ message: 'User created successfully' });
+                            res.redirect('/');
+                        })
                         .catch(next);
                 }
             })
@@ -24,8 +29,8 @@ class AuthController {
 
     // POST /login
     login(req, res, next) {
-        const { name, password } = req.body;
-        User.findOne({ name })
+        const { email, password } = req.body;
+        User.findOne({ email })
             .then((user) => {
                 if (user) {
                     const access_token = generateAccessToken({ id: user.id, isAdmin: user.isAdmin });
@@ -40,6 +45,11 @@ class AuthController {
                 }
             })
             .catch(next);
+    }
+
+    // GET /login or /register
+    loginForm(req, res, next) {
+        res.render('signInUp', { layout: false });
     }
 }
 
