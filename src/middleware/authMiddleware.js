@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 dotenv.config();
 
 const authMiddleware = (req, res, next) => {
-    const token = req.headers.token.split(' ')[1];
+    const token = req.cookies.access_token;
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
             if (err) {
@@ -22,7 +23,7 @@ const authMiddleware = (req, res, next) => {
 };
 
 const authUserMiddleware = (req, res, next) => {
-    const token = req.headers.token.split(' ')[1];
+    const token = req.cookies.access_token;
     const userName = req.params.name;
     // console.log('userName', userName);
 
