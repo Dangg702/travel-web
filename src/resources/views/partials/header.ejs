@@ -11,10 +11,10 @@
             <!-- Links -->
             <ul class="navbar__links">
                 <li class="navbar__link"><a href="/">Trang chủ</a></li>
-                <li class="navbar__link"><a href="/tours">Tours</a></li>
-                <li class="navbar__link"><a href="/blogs">Blogs</a></li>
+                <li class="navbar__link"><a href="/tour">Tours</a></li>
+                <li class="navbar__link"><a href="/blog">Blogs</a></li>
                 <li class="navbar__link"><a href="/contact">Liên hệ</a></li>
-                <a href="/user/login"><button class="navbar__btn">Tài khoản</button></a>
+                <a href="/user/login" id="accountLink"><button class="navbar__btn">Tài khoản</button></a>
             </ul>
             <!-- Icon -->
             <div class="navbar__ham">
@@ -43,4 +43,26 @@
         menuIcon.classList.toggle('open');
         menu.classList.toggle('navbar__open');
     });
+
+    // Lấy thông tin trạng thái đăng nhập từ server
+    fetch('/user/check-login')
+        .then(response => response.json())
+        .then(data => {
+            const isLoggedIn = data.isLoggedIn;
+            const accountBtn = document.querySelector('.navbar__btn');
+            const accountLink = document.getElementById('accountLink');
+
+            // Nếu đã đăng nhập, hiển thị nút Đăng xuất và ngược lại
+            if (isLoggedIn) {
+                accountBtn.textContent = 'Đăng xuất';
+                accountLink.href = '/user/logout';
+            } else {
+                accountBtn.textContent = 'Tài khoản';
+                accountLink.href = '/user/login';
+            }
+        })
+        .catch(error => {
+            console.error('Error checking login status:', error);
+        });
 </script>
+

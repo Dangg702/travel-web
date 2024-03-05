@@ -34,8 +34,30 @@ const refreshTokenJwtService = (token) => {
     });
 };
 
+// Thiết lập cookie cho access token
+const setAccessTokenCookie = (res, accessToken) => {
+    res.cookie('access_token', accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // Đặt secure thành true trong môi trường production
+        sameSite: 'strict',
+        maxAge: 60 * 60 * 1000, // Thời gian sống của cookie: 1 giờ
+    });
+};
+
+// Thiết lập cookie cho refresh token
+const setRefreshTokenCookie = (res, refreshToken) => {
+    res.cookie('refresh_token', refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // Đặt secure thành true trong môi trường production
+        sameSite: 'strict',
+        maxAge: 365 * 24 * 60 * 60 * 1000, // Thời gian sống của cookie: 1 năm
+    });
+};
+
 module.exports = {
     generateAccessToken,
     generateRefreshToken,
     refreshTokenJwtService,
+    setAccessTokenCookie,
+    setRefreshTokenCookie,
 };
