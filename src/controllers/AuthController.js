@@ -38,13 +38,13 @@ class AuthController {
                         // Lưu token vào cookie
                         res.cookie('access_token', access_token, { httpOnly: true });
                         res.cookie('refresh_token', refresh_token, { httpOnly: true });
-                        res.json({ message: 'Login successfully' });
+                        res.json({ message: 'Login successfully', isLogin: true });
                         console.log(access_token)
                     } else {
-                        res.json({ message: 'Wrong password' });
+                        res.json({ message: 'Wrong password', isLogin: false });
                     }
                 } else {
-                    res.json({ message: 'User does not exist' });
+                    res.json({ message: 'User does not exist' , isLogin:false});
                 }
             })
             .catch(next);
