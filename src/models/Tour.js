@@ -10,6 +10,7 @@ const tourSchema = new Schema(
         dateBack: { type: Date, required: true },
         desc: { type: String },
         tourGuideId: { type: mongoose.Schema.Types.ObjectId, ref: 'TourGuide', required: true },
+        price: { type: String, required: true },
         imgUrl: { type: String },
     },
     {
