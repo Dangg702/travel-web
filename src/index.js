@@ -1,6 +1,12 @@
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const path = require('path');
+const methodOverride = require('method-override');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+
 dotenv.config();
 
 const app = express();
@@ -12,6 +18,13 @@ const db = require('./config/db');
 // view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
+app.use(expressLayouts);
+app.set('layout', 'layouts/header-layout'); // set custom default layout
+
+
+app.use(cookieParser());
+// static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // connect to DB
 db.connect();
@@ -23,6 +36,12 @@ app.use(
     }),
 );
 app.use(express.json());
+
+// middleware: override with POST having ?_method=DELETE/PUT
+app.use(methodOverride('_method'));
+
+// middleware: cors
+app.use(cors());
 
 // Routes init
 route(app);

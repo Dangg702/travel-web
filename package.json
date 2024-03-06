@@ -1,24 +1,32 @@
 {
-  "name": "travel-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "nodemon --inspect src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.2",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.3.0",
-    "mongoose": "^8.1.0",
-    "nodemon": "^3.0.3"
-  }
+    "name": "travel-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "nodemon --inspect src/index.js & npm run scss",
+        "watch": "node-sass --watch src/resources/scss/ --output src/public/css/",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.6.7",
+        "bcrypt": "^5.1.1",
+        "body-parser": "^1.20.2",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "customize-cra": "^1.0.0",
+        "dotenv": "^16.3.2",
+        "ejs": "^3.1.9",
+        "express": "^4.18.2",
+        "express-ejs-layouts": "^2.5.1",
+        "jsonwebtoken": "^9.0.2",
+        "method-override": "^3.0.0",
+        "mongodb": "^6.3.0",
+        "mongoose": "^8.1.0",
+        "nodemon": "^3.0.3",
+        "passport": "^0.7.0",
+        "sass": "^1.71.1"
+    }
 }
