@@ -9,5 +9,6 @@ router.delete('/delete-place/:id', placeController.deletePlace);
 router.get('/search-place/:name', placeController.searchPlace);
 router.get('/search-place/', placeController.searchForm);
 router.get('/all-place/', placeController.getAllPlace);
+router.get('/add-place', placeController.createForm);
 
 module.exports = router;

@@ -272,6 +272,11 @@ footer {
     background-color: #333;
     padding: 20px 80px;
 
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
     .title-contact-us {
         color: $text-white;
         font-size: 1.6rem;
@@ -298,6 +303,7 @@ footer {
         font-size: 1.6rem;
         margin-bottom: 25px;
         h4 {
+            text-align: left;
             color: $text-white;
             font-size: 18px;
             margin-bottom: 25px;

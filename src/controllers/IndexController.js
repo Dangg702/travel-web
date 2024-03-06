@@ -12,6 +12,8 @@ class IndexController {
             places,
             tours,
         });
+
+        // res.render('500', { layout: false });
     }
 
     // // Function to handle the home page route

@@ -1,6 +1,10 @@
 const Place = require('../models/Place');
 
 class PlaceController {
+    // GET api/place/add-place
+    createForm(req, res, next) {
+        res.render('create-form', { layout: 'layouts/dashboard-layout' });
+    }
     // POST api/place/add-place
     addPlace(req, res, next) {
         Place.findOne({ name: req.body.name })
