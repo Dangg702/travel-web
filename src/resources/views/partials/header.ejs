@@ -46,8 +46,8 @@
 
     // Lấy thông tin trạng thái đăng nhập từ server
     fetch('/user/check-login')
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
             const isLoggedIn = data.isLoggedIn;
             const accountBtn = document.querySelector('.navbar__btn');
             const accountLink = document.getElementById('accountLink');
@@ -61,8 +61,7 @@
                 accountLink.href = '/user/login';
             }
         })
-        .catch(error => {
+        .catch((error) => {
             console.error('Error checking login status:', error);
         });
 </script>
-
