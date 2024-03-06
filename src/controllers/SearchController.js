@@ -20,7 +20,7 @@ class SearchController {
         }
     }
 
-    async searchPlace(req, res, next) {
+    async searchPlace1(req, res, next) {
         try {
             const placeName = req.query.name;
 
@@ -37,16 +37,16 @@ class SearchController {
         }
     }
 
-    searchPlace1(req, res, next) {
-        const placeName = req.params.name;
-        Place.find({ name: placeName })
-            .then((places) => {
-                if (!places) {
-                    return res.status(404).render('error', { message: 'Place not found' });
-                }
+    searchPlace(req, res, next) {
+        const placeName = req.query.name;
 
-                // Truyền dữ liệu địa điểm vào view
-                res.render('component/search', { places }); // Chú ý sử dụng places: place
+        Place.find({ name: { $regex: placeName, $options: 'i' } })
+            .then((places) => {
+                if (!places || places.length === 0) {
+                    return res.status(404).render('error', { message: 'Place not found' });
+                } else {
+                    res.render('component/search', { places });
+                }
             })
             .catch(next);
     }
