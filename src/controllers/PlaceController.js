@@ -1,27 +1,37 @@
 const Place = require('../models/Place');
 
 class PlaceController {
-    // GET api/place/add-place
+    
+   
+    // POST api/place/add-place
+    async addPlace(req, res, next) {
+        try {
+            
+            // Tạo mới đối tượng Place từ dữ liệu được gửi từ biểu mẫu
+            const placeData = {
+                name: req.body.name,
+                desc: req.body.desc,
+                img: req.body.img || '', // Sử dụng đường dẫn đến ảnh từ request body (nếu có)
+                isFamous: req.body.isFamous || false,
+                region: req.body.region || ''
+            };
+        
+            // Tạo mới đối tượng Place từ dữ liệu được cung cấp
+            const place = new Place(placeData);
+        
+            // Lưu đối tượng Place vào MongoDB
+            const savedPlace = await place.save();
+        
+            // Trả về thông báo và đối tượng Place đã lưu thành công
+            res.json({ message: 'Place created successfully', data: savedPlace });
+        } catch (error) {
+            // Xử lý lỗi nếu có
+            next(error);
+        }
+    }
     createForm(req, res, next) {
         res.render('create-form', { layout: 'layouts/dashboard-layout' });
     }
-    // POST api/place/add-place
-    addPlace(req, res, next) {
-        Place.findOne({ name: req.body.name })
-            .then((place) => {
-                if (place) {
-                    res.json({ message: 'Place already exists' });
-                } else {
-                    const place = new Place(req.body);
-                    place
-                        .save()
-                        .then((place) => res.json({ message: 'Place created successfully', data: place }))
-                        .catch(next);
-                }
-            })
-            .catch(next);
-    }
-
     // PUT api/place/edit-place/:id
     editPlace(req, res, next) {
         const placeId = req.params.id;
