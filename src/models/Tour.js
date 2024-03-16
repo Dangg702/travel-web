@@ -14,6 +14,7 @@ const tourSchema = new Schema(
         rating: { type: Number },
         content: { type: String },
         schedule: { type: String },
+        departure: { type: String },
     },
     {
         timestamps: true,

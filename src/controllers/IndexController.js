@@ -4,7 +4,7 @@ class IndexController {
     async getIndex(req, res, next) {
         const limitNumber = 6;
         const places = await Place.find().limit(limitNumber);
-        const latestPlace = await Place.find().sort({ createdAt: -1 }).limit(limitNumber);
+        const latestPlace = await Tour.find().sort({ createdAt: -1 }).limit(limitNumber);
         const tours = { latestPlace };
         console.log(tours);
         res.render('home', {
