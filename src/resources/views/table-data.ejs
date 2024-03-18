@@ -1,0 +1,63 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Places Data</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard">dashboard</a></li>
+                <li class="breadcrumb-item active text-muted" aria-current="page">create form</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Data Table</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="form-check form-check-muted m-0">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" />
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Region</th>
+                                    <th>Is famous</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% places.forEach((place, index) => { %>
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-muted m-0">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" />
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img src="<%= place.img %>" alt="image" />
+                                    </td>
+                                    <td><%= place.name %></td>
+                                    <td><%= place.region %></td>
+                                    <td><%= place.isFamous %></td>
+                                    <td>
+                                        <a href="/edit/<%= place.id %>" class="btn btn-outline-primary">Edit</a>
+                                        <a href="/delete/<%= place.id %>" class="btn btn-outline-danger">Delete</a>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

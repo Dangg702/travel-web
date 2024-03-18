@@ -5,6 +5,21 @@ class PlaceController {
     createForm(req, res, next) {
         res.render('create-form', { layout: 'layouts/dashboard-layout' });
     }
+
+    // GET api/place/edit-place/:id
+    editForm(req, res, next) {
+        const placeId = req.params.id;
+        Place.findById(placeId)
+            .then((place) => {
+                if (!place) {
+                    return res.status(404).json({ message: 'Place not found' });
+                } else {
+                    res.render('edit-form', { layout: 'layouts/dashboard-layout' });
+                }
+            })
+            .catch(next);
+    }
+
     // POST api/place/add-place
     addPlace(req, res, next) {
         Place.findOne({ name: req.body.name })
@@ -125,6 +140,23 @@ class PlaceController {
                 })
                 .catch(next);
         }
+    }
+
+    // GET api/place/place-data
+    placeTable(req, res, next) {
+        Place.find()
+            .then((places) => {
+                console.log('places', places);
+                if (places.length === 0) {
+                    return res.status(404).json({ message: 'Empty' });
+                } else {
+                    res.render('table-data', {
+                        places,
+                        layout: 'layouts/dashboard-layout',
+                    });
+                }
+            })
+            .catch(next);
     }
 }
 

@@ -1,7 +1,7 @@
 <div class="home-body-container">
     <!-- Banner and search -->
     <div class="banner-container" style="background-image: url('img/banner.jpg')">
-        <div class="container">
+        <div class="container col-xs-12">
             <div class="row">
                 <div class="col-xs-12 banner-form">
                     <div class="col-xs-12 col-lg-8">
@@ -13,7 +13,7 @@
                                 </h2>
                             </div>
                         </div>
-                        <div class="col-xs-12 hidden-xs" style="height: 50px">&nbsp;</div>
+                        <div class="col-xs-12 hidden-xs" style="height: 33px">&nbsp;</div>
                     </div>
                     <%- include('./partials/searchForm.ejs') %>
                 </div>
@@ -83,37 +83,39 @@
     <div class="item-list-container">
         <div class="row">
             <div class="col-xs-12">
-                <h1 class="item-list__title">Tours du lịch bạn đã xem gần đây</h1>
+                <h1 class="item-list__title">Tours du lịch mới nhất</h1>
             </div>
         </div>
         <div class="row gy-5">
             <% if (tours != '') { %> <% tours.latestPlace.forEach((tour, index) => { %>
             <div class="col-xs-12 col-md-4">
                 <div class="item">
-                    <div class="item__info">
-                        <h4><%= tour.price %></h4>
-                        <span>/người</span>
-                    </div>
-                    <img
-                        class="card-img-top"
-                        style="height: 300px"
-                        data-src="<%= tour.img %>"
-                        alt="Tour 1"
-                        src="<%= tour.imgUrl %>"
-                        loading="lazy"
-                    />
-                    <div class="border-bottom item__content">
-                        <div class="item__pre_title">25% Off</div>
-                        <h3 class="item__title"><%= tour.name %></h3>
-                        <p class="item__desc"><%= tour.desc %></p>
-                    </div>
+                    <a href="/api/tour/get-tour/<%= tour.name %>">
+                        <div class="item__info">
+                            <h4 class="fw-bold"><%= tour.price %></h4>
+                            <span>/người</span>
+                        </div>
+                        <img
+                            class="card-img-top"
+                            style="height: 300px"
+                            data-src="<%= tour.img %>"
+                            alt="Tour 1"
+                            src="<%= tour.imgUrl %>"
+                            loading="lazy"
+                        />
+                        <div class="border-bottom item__content">
+                            <div class="item__pre_title">25% Off</div>
+                            <h3 class="item__title"><%= tour.name %></h3>
+                            <p class="item__desc"><%= tour.desc %></p>
+                        </div>
+                    </a>
                 </div>
             </div>
             <% }) %> <% } %>
         </div>
         <div class="row">
             <div class="col-xs-12 d-flex justify-content-center">
-                <a class="btn item-list__view-all" href="#" role="button">Xem thêm</a>
+                <a class="btn item-list__view-all" href="/api/tour/latest-tours" role="button">Xem thêm</a>
             </div>
         </div>
     </div>

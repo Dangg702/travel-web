@@ -1,0 +1,41 @@
+<h1>Tours du lịch Đà Nẵng từ Hồ Chí Minh</h1>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 tour-list">
+    <% if (tours != '') { %> <% tours.forEach(tour => { %>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-5 tour-item">
+        <div class="row g-3">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tour-item__image">
+                <a href="#">
+                    <img src="<%= tour.imgUrl %>" class="img-fluid" alt="..." />
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 tour-item__content">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ps-4 pe-0">
+                        <h5 class="tour-item__content-title m-0">
+                            <a href="#" title="<%= tour.name %>"><%= tour.name %></a>
+                        </h5>
+                        <p class="tour-item__content-destination">TPHCM - XXX</p>
+                        <div class="tour-item__content-detail">
+                            <p class="tour-item__content-duration">Thời gian: <%= tour.duration %></p>
+                            <p class="tour-item__content-transport">Phương tiện: Máy bay</p>
+                            <p class="tour-item__content-description"><%= tour.desc %></p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <span class="tour-item__content-dateGo">Khởi hành: 13/3/2025</span><br />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <button type="button" class="btn w-100 tour-item__content-price">
+                                    <%= tour.price%>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }) %> <% } %>
+</div>

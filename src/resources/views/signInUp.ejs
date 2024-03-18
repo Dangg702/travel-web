@@ -66,7 +66,7 @@
                             <a href="#">Forgot password?</a>
                         </div>
                     </div>
-                    <span id="error-message" style="color:red">*</span>
+                    <span id="error-message" style="color: red">*</span>
                     <button type="submit">Login</button>
                     <span>or use your account</span>
                     <div class="social-container">
@@ -138,14 +138,19 @@
                         console.log(response);
                         if (response.status === 200) {
                             // Kiểm tra dữ liệu trả về từ API
-                            response.json().then(data => {
+                            response.json().then((data) => {
                                 if (data.isLogin) {
-                                    // Đăng nhập thành công, chuyển hướng sang trang chủ
-                                    window.location.href = '/';
+                                    if (data.isAdmin) {
+                                        window.location.href = '/dashboard';
+                                    } else {
+                                        // Đăng nhập thành công, chuyển hướng sang trang chủ
+                                        window.location.href = '/';
+                                    }
                                 } else {
                                     // Hiển thị thông báo không thành công và yêu cầu nhập lại
                                     const errorMessageSpan = document.getElementById('error-message');
-                                    errorMessageSpan.textContent = 'Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin đăng nhập.';
+                                    errorMessageSpan.textContent =
+                                        'Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin đăng nhập.';
                                 }
                             });
                         }

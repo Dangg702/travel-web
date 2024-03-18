@@ -1,9 +1,15 @@
+.show {
+  display: block; }
+
+.hide {
+  display: none; }
+
 .light-bg {
   background-color: #fff9f9; }
 
 .banner-container {
   cursor: pointer;
-  height: 524px;
+  height: 534px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: center;
@@ -14,7 +20,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 524px;
+  height: 534px;
   background-color: rgba(0, 0, 0, 0.25); }
 
 .hero-heading {
@@ -23,63 +29,13 @@
   margin-bottom: 15px; }
 
 .hero-heading-1 {
+  padding-top: 30px;
   font-size: 4rem;
   font-weight: bold; }
 
 .hero-heading-2 {
   font-weight: normal;
   font-size: 20px; }
-
-.search-form {
-  width: 720px;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 15px;
-  border-radius: 4px; }
-
-.input-icon {
-  position: absolute;
-  color: rgba(108, 112, 126, 0.8);
-  margin: 14px 4px 0 16px;
-  font-size: 2rem; }
-
-.search-form .search-input {
-  font-size: 1.8rem;
-  height: 60px;
-  padding: 0px 15px 0 50px; }
-
-.field {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  vertical-align: middle;
-  border-radius: 4px;
-  cursor: pointer;
-  background: white;
-  transition: all 0.3s linear;
-  user-select: none;
-  color: #494b55;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); }
-
-.field__content {
-  font-size: 1.6rem;
-  margin-left: 50px;
-  margin-top: 20px; }
-
-.field__text {
-  margin: 0;
-  line-height: 1; }
-
-.field__desc {
-  color: #6c707e;
-  line-height: 2; }
-
-.btn-search {
-  width: 100%;
-  height: 60px;
-  background-color: #035755;
-  color: #f8f8f8;
-  font-size: 1.8rem;
-  font-weight: 500; }
 
 .why-container {
   background-color: #fff9f9;
@@ -126,11 +82,12 @@ p.media-heading {
   position: absolute;
   top: 20px;
   right: 20px;
-  padding: 12px;
+  padding: 12px 20px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.15);
+  background-color: #fa5652;
+  opacity: 0.9;
   border-radius: 4px;
-  color: #fff; }
+  color: #ffffff; }
   .item .item__info span {
     font-size: 1.4rem; }
 
@@ -157,6 +114,10 @@ p.media-heading {
     -webkit-box-orient: vertical;
     overflow: hidden;
     display: -webkit-box; }
+
+.item:hover {
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out; }
 
 .item-list__view-all {
   margin-top: 20px;

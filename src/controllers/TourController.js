@@ -1,6 +1,14 @@
 const Tour = require('../models/Tour');
 
 class TourController {
+    async show(req, res, next) {
+        try {
+            return res.json({ message: 'TourController' });
+        } catch (err) {
+            next(err);
+        }
+    }
+
     // POST api/tour/add-tour
     async addTour(req, res, next) {
         try {
@@ -52,28 +60,58 @@ class TourController {
     async getTour(req, res, next) {
         try {
             const tourName = req.params.name;
-            const tour = await Tour.find({ name: { $regex: tourName, $options: 'i' } });
-            if (tour.length === 0) {
-                return res.status(404).json({ message: 'No tour found' });
+            const tour = await Tour.find({ name: tourName });
+            console.log(tour);
+            if (tour) {
+                // return res.status(200).json({ message: 'Success', data: tour });
+                res.render('tour-detail', {
+                    // layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tourDetail.css',
+                    tour: tour[0],
+                });
             } else {
-                return res.status(200).json({ message: 'Success', data: tour });
+                return res.status(404).json({ message: 'No tour found' });
             }
         } catch (err) {
             next(err);
         }
     }
 
-    // GET api/tour/all-tour
+    // GET api/tour/all-tours
     async getAll(req, res, next) {
         try {
             const tours = await Tour.find();
             if (!tours) {
-                return res.status(404).json({ message: 'No tour found' });
+                res.status(404).json({ message: 'No tour found' });
+                res.render('404', { layout: false });
             } else {
-                return res.status(200).json({ message: 'Success', data: tours });
+                res.render('tours', {
+                    layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tours.css',
+                    tours,
+                });
             }
         } catch (err) {
-            next(err);
+            res.render('500', { layout: false });
+        }
+    }
+    // GET api/tour/latest-tours
+    async getLatestTours(req, res, next) {
+        try {
+            const limitNumber = 15;
+            const tours = await Tour.find().sort({ createdAt: -1 }).limit(limitNumber);
+            if (!tours) {
+                // res.status(404).json({ message: 'No tour found' });
+                res.render('404', { layout: false });
+            } else {
+                res.render('tours', {
+                    layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tours.css',
+                    tours,
+                });
+            }
+        } catch (err) {
+            res.render('500', { layout: false });
         }
     }
 
@@ -124,6 +162,25 @@ class TourController {
                     currentPage: page,
                     totalPlaces: totalPlaces,
                     totalPages: Math.ceil(totalTours / limit),
+                });
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async showBookTour(req, res, next) {
+        try {
+            const tourId = req.params.id;
+            const tour = await Tour.findById(tourId);
+            if (!tour) {
+                return res.status(404).json({ message: 'No tour found' });
+            } else {
+                // return res.status(200).json({ message: 'Success', data: tour });
+                res.render('book-tour', {
+                    // layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tourDetail.css',
+                    tour,
                 });
             }
         } catch (err) {

@@ -13,6 +13,7 @@ function route(app) {
     app.use('/user', authRouter);
     app.use('/dashboard', dashboardRouter);
     app.use('/api', authRouter);
+    app.use('/booking', tourRouter);
     app.use('/', indexRouter);
 }
 
