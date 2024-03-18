@@ -1,5 +1,4 @@
 const Tour = require('../models/Tour');
-
 class TourController {
     async show(req, res, next) {
         try {
@@ -70,6 +69,28 @@ class TourController {
                     tour: tour[0],
                 });
             } else {
+                return res.status(404).json({ message: 'No tour found' });
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async searchTours(req, res, next) {
+        try {
+            let queryConditions = {}; // Biến trung gian để lưu điều kiện truy vấn
+            if (req.query.date) {
+                queryConditions.dateGo = new Date(req.query.date);
+            }
+            if (req.query.departure) {
+                queryConditions.departure = req.query.departure;
+            }
+
+            const tour = await Tour.find({
+                name: { $regex: tourName, $options: 'i' },
+                ...queryConditions, // Sử dụng toán tử spread để thêm các điều kiện vào truy vấn
+            });
+            if (tour.length === 0) {
                 return res.status(404).json({ message: 'No tour found' });
             }
         } catch (err) {
