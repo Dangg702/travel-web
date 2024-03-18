@@ -34,6 +34,7 @@ class PlaceController {
         const placeId = req.params.id;
         Place.findById(placeId)
             .then((place) => {
+                console.log(place);
                 if (!place) {
                     return res.status(404).json({ message: 'Place not found' });
                 } else {
@@ -65,6 +66,7 @@ class PlaceController {
                     return res.status(404).json({ message: 'Place not found' });
                 } else {
                     res.status(200).json({ message: 'Delete place successfully' });
+                    // alert('Delete place successfully');
                 }
             })
             .catch(next);

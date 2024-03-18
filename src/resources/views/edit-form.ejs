@@ -97,8 +97,8 @@
             const cloudinaryData = await cloudinaryResponse.json();
 
             // Gửi dữ liệu địa điểm lên server
-            const placeResponse = await fetch('/api/place/add-place', {
-                method: 'POST',
+            const placeResponse = await fetch('http://localhost:9000/api/place/edit-place/<%= place._id %>', {
+                method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -114,8 +114,10 @@
 
             // Hiển thị thông báo hoặc xử lý kết quả theo ý của bạn
             console.log('Place added successfully:', placeData);
+            alert('Updated successfully')
         } catch (error) {
             console.error('Error:', error);
+            alert('Updated failed:');
         }
     }
 </script>

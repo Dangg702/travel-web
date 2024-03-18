@@ -48,10 +48,15 @@
                                     <td><%= place.region %></td>
                                     <td><%= place.isFamous %></td>
                                     <td>
-                                        <a href="api/place/edit-place/<%= place.id %>" class="btn btn-outline-primary"
+                                        <a
+                                            href="http://localhost:9000/api/place/edit-place/<%= place.id %>"
+                                            class="btn btn-outline-primary"
                                             >Edit</a
                                         >
-                                        <a href="/delete-place/<%= place.id %>" class="btn btn-outline-danger"
+                                        <a
+                                            href="javascript:void(0);"
+                                            class="btn btn-outline-danger delete-place-link"
+                                            data-place-id="<%= place.id %>"
                                             >Delete</a
                                         >
                                     </td>
@@ -65,3 +70,37 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('.delete-place-link');
+        deleteButtons.forEach((button) => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của link
+
+                const placeId = this.getAttribute('data-place-id'); // Lấy id từ data-place-id
+
+                // Gửi yêu cầu DELETE sử dụng Fetch API
+                fetch(`http://localhost:9000/api/place/delete-place/${placeId}`, {
+                    method: 'DELETE',
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Failed to delete place');
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        // Xử lý phản hồi từ server (nếu cần)
+                        console.log(data.message);
+                        // Load lại trang sau khi xóa thành công
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        // Xử lý lỗi (nếu cần)
+                    });
+            });
+        });
+    });
+</script>
