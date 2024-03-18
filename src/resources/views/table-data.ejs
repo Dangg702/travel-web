@@ -48,8 +48,12 @@
                                     <td><%= place.region %></td>
                                     <td><%= place.isFamous %></td>
                                     <td>
-                                        <a href="/edit/<%= place.id %>" class="btn btn-outline-primary">Edit</a>
-                                        <a href="/delete/<%= place.id %>" class="btn btn-outline-danger">Delete</a>
+                                        <a href="api/place/edit-place/<%= place.id %>" class="btn btn-outline-primary"
+                                            >Edit</a
+                                        >
+                                        <a href="/delete-place/<%= place.id %>" class="btn btn-outline-danger"
+                                            >Delete</a
+                                        >
                                     </td>
                                 </tr>
                                 <% }) %>

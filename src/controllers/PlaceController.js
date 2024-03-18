@@ -1,27 +1,24 @@
 const Place = require('../models/Place');
 
 class PlaceController {
-    
-   
     // POST api/place/add-place
     async addPlace(req, res, next) {
         try {
-            
             // Tạo mới đối tượng Place từ dữ liệu được gửi từ biểu mẫu
             const placeData = {
                 name: req.body.name,
                 desc: req.body.desc,
                 img: req.body.img || '', // Sử dụng đường dẫn đến ảnh từ request body (nếu có)
                 isFamous: req.body.isFamous || false,
-                region: req.body.region || ''
+                region: req.body.region || '',
             };
-        
+
             // Tạo mới đối tượng Place từ dữ liệu được cung cấp
             const place = new Place(placeData);
-        
+
             // Lưu đối tượng Place vào MongoDB
             const savedPlace = await place.save();
-        
+
             // Trả về thông báo và đối tượng Place đã lưu thành công
             res.json({ message: 'Place created successfully', data: savedPlace });
         } catch (error) {
@@ -32,8 +29,6 @@ class PlaceController {
     createForm(req, res, next) {
         res.render('create-form', { layout: 'layouts/dashboard-layout' });
     }
-<<<<<<< HEAD
-
     // GET api/place/edit-place/:id
     editForm(req, res, next) {
         const placeId = req.params.id;
@@ -42,36 +37,16 @@ class PlaceController {
                 if (!place) {
                     return res.status(404).json({ message: 'Place not found' });
                 } else {
-                    res.render('edit-form', { layout: 'layouts/dashboard-layout' });
+                    res.render('edit-form', { layout: 'layouts/dashboard-layout', place });
                 }
             })
             .catch(next);
     }
-
-    // POST api/place/add-place
-    addPlace(req, res, next) {
-        Place.findOne({ name: req.body.name })
-            .then((place) => {
-                if (place) {
-                    res.json({ message: 'Place already exists' });
-                } else {
-                    const place = new Place(req.body);
-                    place
-                        .save()
-                        .then((place) => res.json({ message: 'Place created successfully', data: place }))
-                        .catch(next);
-                }
-            })
-            .catch(next);
-    }
-
-=======
->>>>>>> 54c3c9711ca5cbffc4fae40e3057a00258beef4f
     // PUT api/place/edit-place/:id
     editPlace(req, res, next) {
         const placeId = req.params.id;
         const updateData = req.body;
-        Place.findByIdAndUpdate(placeId, updateData, { new: true })
+        Place.findByIdAndUpdate(placeId, updateData)
             .then((place) => {
                 if (!place) {
                     return res.status(404).json({ message: 'Place not found' });
