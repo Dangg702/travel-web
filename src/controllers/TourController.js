@@ -59,12 +59,11 @@ class TourController {
     async getTour(req, res, next) {
         try {
             const tourName = req.params.name;
-            const tour = await Tour.find({ name: tourName });
-            console.log(tour);
+            const tour = await Tour.find({ name: { $regex: tourName, $options: 'i' } }).populate('placeData');
             if (tour) {
                 // return res.status(200).json({ message: 'Success', data: tour });
                 res.render('tour-detail', {
-                    // layout: 'layouts/sidebar-layout',
+                    layout: 'layouts/sidebar-layout',
                     cssLink: '/css/tourDetail.css',
                     tour: tour[0],
                 });
@@ -78,20 +77,25 @@ class TourController {
 
     async searchTours(req, res, next) {
         try {
+            const tourName = req.params.name;
             let queryConditions = {}; // Biến trung gian để lưu điều kiện truy vấn
             if (req.query.date) {
-                queryConditions.dateGo = new Date(req.query.date);
+                queryConditions.dateGo = req.query.date;
             }
             if (req.query.departure) {
                 queryConditions.departure = req.query.departure;
             }
-
             const tour = await Tour.find({
                 name: { $regex: tourName, $options: 'i' },
+                // dateGo: tourDate,
+                // departure: tourDeparture,
                 ...queryConditions, // Sử dụng toán tử spread để thêm các điều kiện vào truy vấn
-            });
+            }).populate('placeData');
+
             if (tour.length === 0) {
                 return res.status(404).json({ message: 'No tour found' });
+            } else {
+                return res.status(200).json({ message: 'Success', data: tour });
             }
         } catch (err) {
             next(err);
@@ -133,60 +137,6 @@ class TourController {
             }
         } catch (err) {
             res.render('500', { layout: false });
-        }
-    }
-
-    // còn lỗi
-    async getAllTour(req, res, next) {
-        try {
-            const { sort, filter } = req.query;
-            const limit = parseInt(req.query.limit) || 10;
-            const page = parseInt(req.query.page) || 1;
-
-            if (filter) {
-                const objectFilter = {};
-                objectFilter[filter[0]] = filter[1];
-                const tours = await Tour.find({ [filter[0]]: { $regex: filter[1] } })
-                    .limit(limit)
-                    .skip((page - 1) * limit);
-
-                if (tours.length === 0) {
-                    return res.status(404).json({ message: 'Empty' });
-                }
-
-                const totalTours = await Tour.countDocuments();
-                return res.status(200).json({
-                    message: 'Success',
-                    data: tours,
-                    currentPage: page,
-                    totalPlaces: totalTours,
-                    totalPages: Math.ceil(totalTours / limit),
-                });
-            }
-
-            if (sort) {
-                const objectSort = {};
-                objectSort[sort[1]] = sort[0];
-                const tours = await Tour.find()
-                    .limit(limit)
-                    .skip((page - 1) * limit)
-                    .sort(objectSort);
-
-                if (tours.length === 0) {
-                    return res.status(404).json({ message: 'Empty' });
-                }
-
-                const totalTours = await Tour.countDocuments();
-                return res.status(200).json({
-                    message: 'Success',
-                    data: tours,
-                    currentPage: page,
-                    totalPlaces: totalPlaces,
-                    totalPages: Math.ceil(totalTours / limit),
-                });
-            }
-        } catch (err) {
-            next(err);
         }
     }
 

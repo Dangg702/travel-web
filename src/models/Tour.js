@@ -4,17 +4,24 @@ const Schema = mongoose.Schema;
 const tourSchema = new Schema(
     {
         name: { type: String, required: true },
-        placeId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Place', required: true }],
+        placeData: { type: mongoose.Schema.Types.ObjectId, ref: 'Place', required: true },
         duration: { type: String }, // vd: 3 ngày 2 đêm
-        dateGo: { type: Date, required: true },
-        dateBack: { type: Date, required: true },
+        dateGo: { type: String, required: true },
+        dateBack: { type: String, required: true },
         desc: { type: String },
         price: { type: String, required: true },
-        imgUrl: [{ type: String }],
+        img: [{ type: String }],
         rating: { type: Number },
-        content: { type: String },
-        schedule: { type: String },
+        schedule: [
+            {
+                title: { type: String },
+                content: { type: String },
+                img: { type: String },
+            },
+        ],
         departure: { type: String },
+        destination: { type: String },
+        vehicle: { type: String },
     },
     {
         timestamps: true,
