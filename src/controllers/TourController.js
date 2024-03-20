@@ -59,12 +59,12 @@ class TourController {
     async getTour(req, res, next) {
         try {
             const tourName = req.params.name;
-            const tour = await Tour.find({ name: { $regex: tourName, $options: 'i' } }).populate('placeData');
+            const tour = await Tour.find({ name: tourName }).populate('placeData');
+            console.log('get Tour', tour);
             if (tour) {
-                // return res.status(200).json({ message: 'Success', data: tour });
                 res.render('tour-detail', {
-                    layout: 'layouts/sidebar-layout',
                     cssLink: '/css/tourDetail.css',
+                    message: 'Success',
                     tour: tour[0],
                 });
             } else {
@@ -139,25 +139,8 @@ class TourController {
             res.render('500', { layout: false });
         }
     }
-
-    async showBookTour(req, res, next) {
-        try {
-            const tourId = req.params.id;
-            const tour = await Tour.findById(tourId);
-            if (!tour) {
-                return res.status(404).json({ message: 'No tour found' });
-            } else {
-                // return res.status(200).json({ message: 'Success', data: tour });
-                res.render('book-tour', {
-                    // layout: 'layouts/sidebar-layout',
-                    cssLink: '/css/tourDetail.css',
-                    tour,
-                });
-            }
-        } catch (err) {
-            next(err);
-        }
-    }
+    // GET api/tour/:region
+    async fillerRegion(req, res, next) {}
 }
 
 module.exports = new TourController();

@@ -1,4 +1,4 @@
-<div class="page-title" style="background: no-repeat center/100% url('<%= tour.img[0] %>')">
+<div class="page-title" style="background: no-repeat center/100% url('<%= tour.placeData.img %>')">
     <div class="background-desc"><%= tour.name %></div>
 </div>
 <div class="container ps-5 pe-5 mt-5 main-content">
@@ -71,68 +71,32 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row-description">
+                <div class="row-description">
                     <div class="title-description">Tour này có gì hay</div>
-                    <div class="content-description">
-                        - Khởi hành (thứ 6 cách tuần) - Tham quan đồi cát vàng dưới tác động của gió biển đã tạo nên
-                        những hình dạng rất tuyệt vời - Tham quan không gian trưng bày nghệ thuật “Làng chài xưa”, tận
-                        mắt được chứng kiến một làng chài xưa của xứ biển Phan Thiết được tái hiện một cách công phu.| -
-                        Trải nghiệm cảm giác chinh phục đồi cát bằng xe Jeep vượt địa hình (tự túc chi phí)
-                    </div>
-                </div> -->
+                    <div class="content-description"><%= tour.desc %></div>
+                </div>
                 <div class="row gx-5 row-image-box isdesktop">
+                    <% tour.img.forEach(itemSrc => { %>
                     <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
-                        <img width="100%" height="80%" alt="image tour" src="<%= tour.img[0] %>" />
+                        <img width="100%" height="80%" alt="image tour" src="<%= itemSrc %>" />
                     </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
-                        <img width="100%" height="80%" alt="image tour" src="<%= tour.img[1] %>" />
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
-                        <img width="100%" height="80%" alt="image tour" src="<%= tour.img[2] %>" />
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
-                        <img width="100%" height="80%" alt="image tour" src="<%= tour.img[3] %>" />
-                    </div>
+                    <% }) %>
                 </div>
                 <div class="row-info-tour">
                     <div class="title-description">Chương trình tour</div>
                     <div class="content-description">
                         <div>
                             <p class="sub-title">Điểm đón</p>
-                            <p>TPHCM</p>
+                            <p><%= tour.departure %></p>
                         </div>
+                        <% tour.schedule.forEach(element => { %>
                         <div>
-                            <p class="sub-title">NGÀY 01: TP. HỒ CHÍ MINH - PHAN THIẾT - MŨI NÉ</p>
-                            <p class="detail">
-                                Đến Phan Thiết, quý khách tham quan không gian trưng bày nghệ thuật “Làng chài xưa”.
-                                Toàn bộ khu trưng bày có diện tích 1.600m². Đây là không gian trưng bày nghệ thuật và là
-                                bảo tàng thu nhỏ, tái hiện lại một phần làng chài xưa của Phan Thiết - Mũi Né cách đây
-                                hơn 300 năm. Du khách đến đây sẽ được tham quan làng chài dưới rặng dừa; phố cổ ven sông
-                                Cà Ty; nhà ở và nơi sản xuất nước mắm của hàm hộ Phan Thiết; con đường Phan Thiết - Mũi
-                                Né xưa; đắm mình vào biển Mũi Né 3D và mua sắm trong không gian chợ quê làng xưa… tận
-                                mắt được chứng kiến một làng chài xưa của xứ biển Phan Thiết được tái hiện một cách công
-                                phu. Đến Mũi Né, quý khách nhận phòng và tự do tắm biển tại resort. Buổi chiều, du khách
-                                tự do khám phá thành phố biển về đêm và thưởng thức ẩm thực địa phương (chi phí tự túc).
-                                Nghỉ đêm tại Mũi Né.
-                            </p>
-                            <img src="<%= tour.schedule[0].img %>" alt="Day 1" />
+                            <p class="sub-title"><%= element.title %></p>
+                            <p class="detail"><%= element.content %></p>
+                            <img class="w-100" src="<%= element.img %>" alt="<%= element.title %>" />
                         </div>
-                        <div>
-                            <p class="sub-title">NGÀY 01: TP. HỒ CHÍ MINH - PHAN THIẾT - MŨI NÉ</p>
-                            <p class="detail">
-                                Đến Phan Thiết, quý khách tham quan không gian trưng bày nghệ thuật “Làng chài xưa”.
-                                Toàn bộ khu trưng bày có diện tích 1.600m². Đây là không gian trưng bày nghệ thuật và là
-                                bảo tàng thu nhỏ, tái hiện lại một phần làng chài xưa của Phan Thiết - Mũi Né cách đây
-                                hơn 300 năm. Du khách đến đây sẽ được tham quan làng chài dưới rặng dừa; phố cổ ven sông
-                                Cà Ty; nhà ở và nơi sản xuất nước mắm của hàm hộ Phan Thiết; con đường Phan Thiết - Mũi
-                                Né xưa; đắm mình vào biển Mũi Né 3D và mua sắm trong không gian chợ quê làng xưa… tận
-                                mắt được chứng kiến một làng chài xưa của xứ biển Phan Thiết được tái hiện một cách công
-                                phu. Đến Mũi Né, quý khách nhận phòng và tự do tắm biển tại resort. Buổi chiều, du khách
-                                tự do khám phá thành phố biển về đêm và thưởng thức ẩm thực địa phương (chi phí tự túc).
-                                Nghỉ đêm tại Mũi Né.
-                            </p>
-                            <img src="<%= tour.schedule[1].img %>" alt="Day 1" />
-                        </div>
+
+                        <% }) %>
                     </div>
                 </div>
                 <div class="row-rating">

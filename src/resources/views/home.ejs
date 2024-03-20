@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="row gy-5">
-            <% if (tours != '') { %> <% tours.latestPlace.forEach((tour, index) => { %>
+            <% if (latestTours != '') { %> <% latestTours.forEach((tour, index) => { %>
             <div class="col-xs-12 col-md-4">
                 <div class="item">
                     <a href="/api/tour/get-tour/<%= tour.name %>">
@@ -129,25 +129,27 @@
         <div class="row gy-5">
             <% if (places != '') { %> <% places.forEach((place, index) => { %>
             <div class="col-xs-12 col-md-4">
-                <div class="item">
-                    <div class="item__info">
-                        <h4>5.999.000</h4>
-                        <span>/người</span>
+                <a href="/api/tour/get-tour/<%= place.name %>">
+                    <div class="item">
+                        <div class="item__info">
+                            <h4>5.999.000</h4>
+                            <span>/người</span>
+                        </div>
+                        <img
+                            class="card-img-top"
+                            style="height: 300px"
+                            data-src="<%= place.img %>"
+                            alt="Tour 1"
+                            src="<%= place.img %>"
+                            loading="lazy"
+                        />
+                        <div class="border-bottom item__content">
+                            <div class="item__pre_title">25% Off</div>
+                            <h3 class="item__title"><%= place.name %></h3>
+                            <p class="item__desc"><%= place.desc %></p>
+                        </div>
                     </div>
-                    <img
-                        class="card-img-top"
-                        style="height: 300px"
-                        data-src="<%= place.img %>"
-                        alt="Tour 1"
-                        src="<%= place.img %>"
-                        loading="lazy"
-                    />
-                    <div class="border-bottom item__content">
-                        <div class="item__pre_title">25% Off</div>
-                        <h3 class="item__title"><%= place.name %></h3>
-                        <p class="item__desc"><%= place.desc %></p>
-                    </div>
-                </div>
+                </a>
             </div>
             <% }) %> <% } %>
         </div>
