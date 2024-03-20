@@ -1,4 +1,4 @@
-<div class="page-title" style="background: no-repeat center/100% url('<%- tour.imgUrl %>')">
+<div class="page-title" style="background: no-repeat center/100% url('<%= tour.img[0] %>')">
     <div class="background-desc"><%= tour.name %></div>
 </div>
 <div class="container ps-5 pe-5 mt-5 main-content">
@@ -14,17 +14,17 @@
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <span class="text-uppercase">Phương tiện:</span>
-                                <span class="fw-bold"> Đi về bằng xe </span>
+                                <span class="fw-bold"><%= tour.vehicle %> </span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <span class="text-uppercase">Điểm xuất phát:</span>
-                                <span class="fw-bold">TP. Hồ Chí Minh </span>
+                                <span class="fw-bold"><%= tour.departure %></span>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <span class="text-uppercase">Điểm đến:</span>
-                                <span class="fw-bold">Phan Thiết</span>
+                                <span class="fw-bold"><%= tour.destination %></span>
                             </div>
                         </div>
                     </div>
@@ -45,10 +45,10 @@
                             <div class="list-inline">
                                 <div class="row">
                                     <div class="col-md 2 col-xs-12">
-                                        <strong>05/04/2024</strong>
+                                        <strong><%= tour.dateGo %></strong>
                                     </div>
                                     <div class="col-md 2 col-xs-12">
-                                        <strong>08/04/2024</strong>
+                                        <strong><%= tour.dateBack %></strong>
                                     </div>
                                     <div class="col-md 2 col-xs-12">
                                         <strong style="margin-left: -30px"><%= tour._id %></strong>
@@ -82,16 +82,16 @@
                 </div> -->
                 <div class="row gx-5 row-image-box isdesktop">
                     <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
-                        <img width="100%" height="80%" alt="image tour" src="<%= tour.imgUrl %>" />
+                        <img width="100%" height="80%" alt="image tour" src="<%= tour.img[0] %>" />
                     </div>
                     <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
-                        <img width="100%" height="80%" alt="image tour" src="<%= tour.imgUrl %>" />
+                        <img width="100%" height="80%" alt="image tour" src="<%= tour.img[1] %>" />
                     </div>
                     <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
-                        <img width="100%" height="80%" alt="image tour" src="<%= tour.imgUrl %>" />
+                        <img width="100%" height="80%" alt="image tour" src="<%= tour.img[2] %>" />
                     </div>
                     <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
-                        <img width="100%" height="80%" alt="image tour" src="<%= tour.imgUrl %>" />
+                        <img width="100%" height="80%" alt="image tour" src="<%= tour.img[3] %>" />
                     </div>
                 </div>
                 <div class="row-info-tour">
@@ -115,7 +115,7 @@
                                 tự do khám phá thành phố biển về đêm và thưởng thức ẩm thực địa phương (chi phí tự túc).
                                 Nghỉ đêm tại Mũi Né.
                             </p>
-                            <img src="<%= tour.imgUrl %>" alt="" />
+                            <img src="<%= tour.schedule[0].img %>" alt="Day 1" />
                         </div>
                         <div>
                             <p class="sub-title">NGÀY 01: TP. HỒ CHÍ MINH - PHAN THIẾT - MŨI NÉ</p>
@@ -131,7 +131,7 @@
                                 tự do khám phá thành phố biển về đêm và thưởng thức ẩm thực địa phương (chi phí tự túc).
                                 Nghỉ đêm tại Mũi Né.
                             </p>
-                            <img src="<%= tour.imgUrl %>" alt="" />
+                            <img src="<%= tour.schedule[1].img %>" alt="Day 1" />
                         </div>
                     </div>
                 </div>
