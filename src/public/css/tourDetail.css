@@ -115,3 +115,159 @@
       text-align: center;
       max-width: 200px;
       color: #222222; }
+
+.payment-wrap {
+  margin-top: 0;
+  margin-bottom: 30px; }
+  .payment-wrap .title {
+    margin: 10px 0; }
+    .payment-wrap .title h3 {
+      font-weight: 600; }
+  .payment-wrap .form-group {
+    margin-bottom: 15px; }
+    .payment-wrap .form-group label {
+      color: #222222;
+      font-weight: 400;
+      font-size: 1.4rem;
+      margin-bottom: 5px; }
+  .payment-wrap .form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
+  .payment-wrap .prepayment {
+    padding: 10px 0 25px; }
+    .payment-wrap .prepayment .prepayment-description {
+      font-size: 1.4rem; }
+  .payment-wrap .methods {
+    margin-top: 15px; }
+    .payment-wrap .methods .method {
+      margin: 2px 0; }
+
+.prepayment .prepayment-method {
+  display: flex; }
+  .prepayment .prepayment-method .box-radio-method {
+    flex: 1; }
+    .prepayment .prepayment-method .box-radio-method .radio-method {
+      display: none; }
+  .prepayment .prepayment-method .box-radio-method input[type='radio']:checked + .mar-radio-method {
+    background: #035755;
+    color: #fff; }
+  .prepayment .prepayment-method .box-radio-method .mar-radio-method {
+    margin: 0 10px 0 0;
+    width: calc(100% - 10px);
+    border-radius: 4px;
+    line-height: 40px;
+    color: #000;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    background: #a4cec0;
+    cursor: pointer; }
+
+.highlight-text {
+  font-size: 1.3rem;
+  font-style: italic;
+  list-style-type: disc; }
+
+.btn.btn-orange {
+  padding: 0 15px;
+  color: #ffffff;
+  background-color: #fa5652;
+  border-color: #fa5652;
+  line-height: 43px;
+  font-size: 1.4rem; }
+
+.booking-container .payment-wrap .title {
+  float: none;
+  margin: 10px 0; }
+
+.method .title {
+  padding-right: 70px !important;
+  padding: 20px;
+  background-color: #f3eded;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  width: 100%; }
+  .method .title .description {
+    font-size: 13px;
+    display: -webkit-inline-box; }
+
+.method .content {
+  font-size: 12px;
+  padding-left: 10px;
+  display: none; }
+
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700; }
+
+.payment-method + .method-content .content {
+  display: none; }
+
+.method .content {
+  font-size: 12px;
+  padding-left: 10px;
+  display: none; }
+
+.payment-method:checked + .method-content .title {
+  background: #035755;
+  color: white; }
+  .payment-method:checked + .method-content .title i.fa-check {
+    display: inline-block; }
+  .payment-method:checked + .method-content .title i.fa.fa-chevron-down {
+    display: none; }
+
+.payment-method:checked + .method-content > .content {
+  display: block;
+  float: left;
+  width: 100%;
+  border: 1px dashed #555;
+  margin-bottom: 25px; }
+
+.fa-chevron-down:before {
+  content: '\f078'; }
+
+.fa-check:before {
+  content: '\f00c'; }
+
+.method .title i.fa-check {
+  top: 15%;
+  font-size: 3.8rem;
+  display: none; }
+
+.buttonArea.galleryBtnArea {
+  text-align: left;
+  padding: 60px 0; }
+  .buttonArea.galleryBtnArea .list-inline {
+    padding-left: 0;
+    margin-left: -5px;
+    list-style: none; }
+    .buttonArea.galleryBtnArea .list-inline > li {
+      display: inline-block;
+      padding-right: 5px;
+      padding-left: 5px; }
+  .buttonArea.galleryBtnArea .buttonTransparent {
+    background-color: whitesmoke;
+    border-color: #fa5652;
+    color: #222222;
+    padding: 8px 30px;
+    font-size: 1.6rem; }
+    .buttonArea.galleryBtnArea .buttonTransparent:hover {
+      background-color: #fa5652;
+      color: #fff; }
