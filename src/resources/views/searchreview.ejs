@@ -92,15 +92,16 @@
                     <% const user = users.find(user => user._id.toString() === review.userId.toString()); %>
                     <div class="col-xs-12 col-md-4">
                         <div class="item">
-                            <% if (tour.imgUrl && tour.imgUrl.length > 0) { %>
-                            <img
-                                class="card-img-top"
-                                style="height: 300px"
-                                alt="Tour <%= index + 1 %>"
-                                src="<%= tourImage %>"
-                                loading="lazy"
-                            />
-                            <% }
+                                <% tours.forEach((tour, index) => { %>
+                                <img
+                                    class="card-img-top"
+                                    style="height: 300px"
+                                    alt="Tour <%= index + 1 %>"
+                                    src="<%= tour.img[index] %>"
+                                    loading="lazy"
+                                />
+                                <%}) %>
+                            
                             <div class="border-bottom item__content">
                                 <div class="item__pre_title">Tên: <%= user.username %></div>
                                 <p class="item__desc">Ngày đánh giá: <%= review.createdAt %></p>
