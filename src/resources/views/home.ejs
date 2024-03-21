@@ -89,7 +89,7 @@
         <div class="row gy-5">
             <% if (latestTours != '') { %> <% latestTours.forEach((tour, index) => { %>
             <div class="col-xs-12 col-md-4">
-                <a href="/api/tour/get-tour/<%= tour.name %>">
+                <a href="/api/tour/get-tour/<%= tour._id %>">
                     <div class="item">
                         <div class="item__info">
                             <h4><%= tour.price %></h4>

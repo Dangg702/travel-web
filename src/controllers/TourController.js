@@ -1,4 +1,5 @@
 const Tour = require('../models/Tour');
+const review = require('../controllers/reviewController');
 class TourController {
     async show(req, res, next) {
         try {
@@ -64,14 +65,17 @@ class TourController {
     // GET api/tour/get-tour/:name
     async getTour(req, res, next) {
         try {
-            const tourName = req.params.name;
-            const tour = await Tour.find({ name: tourName }).populate('placeData');
+            const tourId = req.params.id;
+            const tour = await Tour.find({ _id: tourId }).populate('placeData');
             console.log('get Tour', tour);
             if (tour) {
+                const { reviews, users, tours, tourImages } = await review.getReviewsByTourId(tourId);
                 res.render('tour-detail', {
                     cssLink: '/css/tourDetail.css',
                     message: 'Success',
                     tour: tour[0],
+                    reviews,
+                    users,
                 });
             } else {
                 return res.status(404).json({ message: 'No tour found' });
