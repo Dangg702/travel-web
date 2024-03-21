@@ -38,11 +38,25 @@ class PlaceController {
     createForm(req, res, next) {
         res.render('create-form', { layout: 'layouts/dashboard-layout' });
     }
+    // GET api/place/edit-place/:id
+    editForm(req, res, next) {
+        const placeId = req.params.id;
+        Place.findById(placeId)
+            .then((place) => {
+                console.log(place);
+                if (!place) {
+                    return res.status(404).json({ message: 'Place not found' });
+                } else {
+                    res.render('edit-form', { layout: 'layouts/dashboard-layout', place });
+                }
+            })
+            .catch(next);
+    }
     // PUT api/place/edit-place/:id
     editPlace(req, res, next) {
         const placeId = req.params.id;
         const updateData = req.body;
-        Place.findByIdAndUpdate(placeId, updateData, { new: true })
+        Place.findByIdAndUpdate(placeId, updateData)
             .then((place) => {
                 if (!place) {
                     return res.status(404).json({ message: 'Place not found' });
@@ -65,6 +79,7 @@ class PlaceController {
                     return res.status(404).json({ message: 'Place not found' });
                 } else {
                     res.status(200).json({ message: 'Delete place successfully' });
+                    // alert('Delete place successfully');
                 }
             })
             .catch(next);
@@ -150,6 +165,23 @@ class PlaceController {
                 })
                 .catch(next);
         }
+    }
+
+    // GET api/place/place-data
+    placeTable(req, res, next) {
+        Place.find()
+            .then((places) => {
+                console.log('places', places);
+                if (places.length === 0) {
+                    return res.status(404).json({ message: 'Empty' });
+                } else {
+                    res.render('table-data', {
+                        places,
+                        layout: 'layouts/dashboard-layout',
+                    });
+                }
+            })
+            .catch(next);
     }
 }
 

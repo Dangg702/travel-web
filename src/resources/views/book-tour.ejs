@@ -1,0 +1,323 @@
+<div class="page-title" style="background: no-repeat center/100% url('/img/banner2.jpg'); height: 300px">
+    <div class="background-desc">Đặt tour</div>
+</div>
+<div class="container ps-5 pe-5 mt-5 main-content">
+    <div class="row progress-wizard" style="border-bottom: 0">
+        <div class="col-sm-3 col-xs-12 progress-wizard-step complete">
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+            <a href="javascript:void(0)" class="progress-wizard-dot">
+                <span style="font-size: 20px">1</span>. Chọn dịch vụ
+            </a>
+        </div>
+        <div class="col-sm-3 col-xs-12 progress-wizard-step active">
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+            <a href="javascript:void(0)" class="progress-wizard-dot">
+                <span style="font-size: 20px">2</span>. Nhập thông tin hành khách
+            </a>
+        </div>
+        <div class="col-sm-3 col-xs-12 progress-wizard-step disabled">
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+            <a href="javascript:void(0)" class="progress-wizard-dot">
+                <span style="font-size: 20px">3</span>. Thanh toán
+            </a>
+        </div>
+        <div class="col-sm-3 col-xs-12 progress-wizard-step disabled">
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+            <a href="javascript:void(0)" class="progress-wizard-dot">
+                <span style="font-size: 20px">4</span>. Xác nhận
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-sm-12 col-xs-12">
+            <div class="payment-wrap bookingForm">
+                <form role="form" method="post" class="form" id="info-form" novalidate="">
+                    <div class="no-padding">
+                        <div class="title">
+                            <h3>SỐ LƯỢNG HÀNH KHÁCH</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 col-sm-5 col-xs-12 no-padding">
+                                <div class="form-group">
+                                    <label>Người lớn (*)</label>
+                                    <input
+                                        type="number"
+                                        name="numOfPeople"
+                                        placeholder=""
+                                        value="1"
+                                        class="form-control has-value"
+                                        required="required"
+                                        min="1"
+                                        pattern="^\d+$"
+                                    />
+                                    <span class="error"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-sm-7 col-xs-12 no-padding"></div>
+                        </div>
+                    </div>
+                    <div class="title">
+                        <h3>PHƯƠNG THỨC THANH TOÁN</h3>
+                    </div>
+                    <div class="row prepayment">
+                        <div class="col-md-6 col-sm-6 col-xs-12 no-padding prepayment-method">
+                            <div class="box-radio-method">
+                                <input
+                                    class="radio-method"
+                                    id="pay100"
+                                    type="radio"
+                                    checked=""
+                                    name="paymentType"
+                                    value="1"
+                                />
+                                <label class="mar-radio-method" for="pay100"
+                                    >Thanh toán 100% <i class="fa fa-check"></i
+                                ></label>
+                            </div>
+                            <div class="box-radio-method">
+                                <input class="radio-method" id="pay50" type="radio" name="paymentType" value="2" />
+                                <label class="mar-radio-method" for="pay50"
+                                    >Thanh toán 50% <i class="fa fa-check"></i
+                                ></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 no-padding">
+                            <span class="prepayment-description"
+                                >Sau khi đặt cọc, quý khách vui lòng hoàn tất thanh toán trong
+                                <strong> 48h</strong></span
+                            >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5 col-xs-12 no-padding promotion-code">
+                            <div>
+                                <div class="form-group">
+                                    <input
+                                        type="text"
+                                        name="virtualPromotionCode"
+                                        placeholder="Mã khuyến mãi"
+                                        value=""
+                                        class="form-control"
+                                    />
+                                </div>
+                                <a
+                                    href="javascript:checkPromotionCode();"
+                                    class="btn btn-orange"
+                                    style="margin-top: -3px"
+                                    >Áp dụng</a
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-12 no-padding">
+                            <ul class="highlight-text" style="margin-top: 0; color: red">
+                                <li>Chỉ áp dụng cho thành viên</li>
+                                <li>Chỉ áp dụng cho thanh toán online hoặc đặt cọc</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="coupon-message">
+                        <div class="gift-tag" style="display: none">
+                            <span class="label label-success gift-card-item">
+                                <input type="hidden" name="promotionCode" />
+                                <span class="coupon-disc"></span>
+                                <a href="javascript:removePromotionCode();" class="btn btn-default btn-remove-coupon"
+                                    ><i class="fa fa-times"></i
+                                ></a>
+                            </span>
+                        </div>
+                        <div class="promotion-code-message"></div>
+                    </div>
+                    <p><b style="font-size: 1.4rem">Chọn một trong các phương thức sau:</b></p>
+                    <div class="methods">
+                        <div class="method" data-payment-type="offline">
+                            <input
+                                value="1"
+                                style="display: none"
+                                type="radio"
+                                id="pament-method3"
+                                data-fee="0"
+                                class="payment-method"
+                                name="method"
+                            />
+                            <div class="method-content">
+                                <label class="title" toggle="Cash" for="pament-method3">
+                                    <h4 style="margin: 0 0 10px">Thanh toán bằng tiền mặt tại văn phòng</h4>
+                                    <div class="description">
+                                        Quý khách vui lòng đến các văn phòng để thanh toán và nhận vé.
+                                    </div>
+                                    <i class="fa fa-chevron-down"></i>
+                                    <i class="fa fa-check"></i>
+                                </label>
+                                <div class="content" id="Cash">
+                                    <h3 class="mt-2 mb-2">VĂN PHÒNG LỮ HÀNH</h3>
+
+                                    <div class="content">
+                                        <strong>Địa chỉ:</strong> 45 Lê Thánh Tôn, phường Bến Nghé, quận 1, TP.HCM<br />
+                                        <strong>Điện thoại:</strong> 1900 1808<br />
+                                        <strong>Email:</strong>&nbsp;<a href="mailto:info@saigontourist.net"
+                                            >info@saigontourist.net</a
+                                        ><br />
+                                        <strong>Website:</strong> http://www.saigontourist.net
+                                    </div>
+
+                                    <div class="content">&nbsp;</div>
+
+                                    <div class="content">
+                                        Quý khách vui lòng đến
+                                        <a href="http://www.saigontourist.net/chi-nhanh">các văn phòng Saigontourist</a>
+                                        để thanh toán và nhận vé.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method" data-payment-type="online">
+                            <input
+                                value="5"
+                                style="display: none"
+                                type="radio"
+                                id="pament-method4"
+                                data-fee="0"
+                                class="payment-method"
+                                name="method"
+                            />
+                            <div class="method-content">
+                                <label class="title" toggle="ZaloPay" for="pament-method4">
+                                    <h4 style="margin: 0 0 10px">Thanh toán bằng Zalo Pay</h4>
+                                    <div class="description">
+                                        Sau khi đặt vé và thanh toán thành công, chúng tôi sẽ gửi vé điện tử của Quý
+                                        khách qua email.
+                                    </div>
+                                    <i class="fa fa-chevron-down"></i>
+                                    <i class="fa fa-check"></i>
+                                </label>
+                                <div class="content" id="ZaloPay">
+                                    <p>
+                                        Chúng tôi chấp nhận thanh toán bằng các thẻ ATM nội địa do các ngân hàng tại
+                                        Việt Nam phát hành.
+                                    </p>
+
+                                    <p>
+                                        Thẻ ghi nợ nội địa (thẻ ATM): Vietcombank, Vietinbank, DongA , VIBank,
+                                        Techcombank, HDBank, Tienphong Bank, Military Bank, VietA Bank, Maritime Bank,
+                                        Eximbank, SHB, Sacombank,&nbsp; NamA Bank,...(23 Ngân hàng)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method" data-payment-type="online">
+                            <input
+                                value="6"
+                                style="display: none"
+                                type="radio"
+                                id="pament-method5"
+                                data-fee="0"
+                                class="payment-method"
+                                name="method"
+                            />
+                            <div class="method-content">
+                                <label class="title" toggle="Momo" for="pament-method5">
+                                    <h4 style="margin: 0 0 10px">Thanh toán bằng ví điện tử Momo</h4>
+                                    <div class="description" style="display: unset">
+                                        Hạn mức tối đa là 20.000.000 VND. Sau khi đặt vé và thanh toán thành công, Chúng
+                                        tôi sẽ gửi vé điện tử của Quý khách qua email.
+                                    </div>
+                                    <i class="fa fa-chevron-down"></i>
+                                    <i class="fa fa-check"></i>
+                                </label>
+                                <div class="content" id="Momo">
+                                    <p>Chúng tôi chấp nhận thanh toán bằng Ví điện tử Momo.</p>
+
+                                    <p><b>(*) Hạn mức tối đa là 20.000.000 VND</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="buttonArea galleryBtnArea">
+                            <ul class="list-inline d-flex justify-content-between">
+                                <li>
+                                    <a
+                                        href="/tour-trong-nuoc/3745/du-lich-phan-thiet-mui-ne-lang-chai-xua-bau-trang-trung-tam-bun-khoang"
+                                        class="btn buttonTransparent"
+                                        >Trở về</a
+                                    >
+                                </li>
+                                <li class="pull-right">
+                                    <div>
+                                        <div
+                                            class="grecaptcha-badge"
+                                            data-style="bottomright"
+                                            style="
+                                                width: 256px;
+                                                height: 60px;
+                                                display: block;
+                                                transition: right 0.3s ease 0s;
+                                                position: fixed;
+                                                bottom: 14px;
+                                                right: -186px;
+                                                box-shadow: gray 0px 0px 5px;
+                                                border-radius: 2px;
+                                                overflow: hidden;
+                                            "
+                                        >
+                                            <div class="grecaptcha-logo">
+                                                <iframe
+                                                    title="reCAPTCHA"
+                                                    width="256"
+                                                    height="60"
+                                                    role="presentation"
+                                                    name="a-32c4s251ln1"
+                                                    frameborder="0"
+                                                    scrolling="no"
+                                                    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation"
+                                                    src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LeX0c8UAAAAAJ6RT6EqkGX-tfWHcOaLs-_0qP-Z&amp;co=aHR0cHM6Ly93d3cuc2FpZ29udG91cmlzdC5uZXQ6NDQz&amp;hl=vi&amp;v=YurWEBlMIwR4EqFPncmQTkxQ&amp;size=invisible&amp;cb=rky16d8zejph"
+                                                ></iframe>
+                                            </div>
+                                            <div class="grecaptcha-error"></div>
+                                            <textarea
+                                                id="g-recaptcha-response"
+                                                name="g-recaptcha-response"
+                                                class="g-recaptcha-response"
+                                                style="
+                                                    width: 250px;
+                                                    height: 40px;
+                                                    border: 1px solid rgb(193, 193, 193);
+                                                    margin: 10px 25px;
+                                                    padding: 0px;
+                                                    resize: none;
+                                                    display: none;
+                                                "
+                                            ></textarea>
+                                        </div>
+                                        <iframe style="display: none"></iframe>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        data-sitekey="6LeX0c8UAAAAAJ6RT6EqkGX-tfWHcOaLs-_0qP-Z"
+                                        data-callback="validate"
+                                        id="submit-button"
+                                        class="g-recaptcha btn buttonTransparent"
+                                    >
+                                        Tiếp tục
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        //$.validate({modules: 'html5', errorMessageClass: 'error', lang: 'vi'});
+                    </script>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-xs-12"></div>
+    </div>
+</div>

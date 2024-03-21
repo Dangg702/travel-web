@@ -12,5 +12,7 @@ router.get('/search-place/:name', placeController.searchPlace);
 router.get('/search-place/', placeController.searchForm);
 router.get('/all-place/', placeController.getAllPlace);
 router.get('/add-place', placeController.createForm);
+router.get('/edit-place/:id', placeController.editForm);
+router.get('/place-data', placeController.placeTable);
 
 module.exports = router;

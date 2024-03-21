@@ -1,0 +1,117 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Places Data</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard">dashboard</a></li>
+                <li class="breadcrumb-item active text-muted" aria-current="page">create form</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row mb-4">
+        <div class="col-12">
+            <form
+                action="http://localhost:9000/api/place/search-place/"
+                method="GET"
+                class="nav-link mt-2 mt-md-0 d-none d-lg-flex search"
+            >
+                <input type="text" class="form-control" placeholder="Search place" />
+                <button class="search-btn" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Data Table</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="form-check form-check-muted m-0">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" />
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Region</th>
+                                    <th>Is famous</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% places.forEach((place, index) => { %>
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-muted m-0">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" />
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img src="<%= place.img %>" alt="image" />
+                                    </td>
+                                    <td><%= place.name %></td>
+                                    <td><%= place.region %></td>
+                                    <td><%= place.isFamous %></td>
+                                    <td>
+                                        <a
+                                            href="http://localhost:9000/api/place/edit-place/<%= place.id %>"
+                                            class="btn btn-outline-primary"
+                                            >Edit</a
+                                        >
+                                        <a
+                                            href="javascript:void(0);"
+                                            class="btn btn-outline-danger delete-place-link"
+                                            data-place-id="<%= place.id %>"
+                                            >Delete</a
+                                        >
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('.delete-place-link');
+        deleteButtons.forEach((button) => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của link
+
+                const placeId = this.getAttribute('data-place-id'); // Lấy id từ data-place-id
+
+                // Gửi yêu cầu DELETE sử dụng Fetch API
+                fetch(`http://localhost:9000/api/place/delete-place/${placeId}`, {
+                    method: 'DELETE',
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Failed to delete place');
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        // Xử lý phản hồi từ server (nếu cần)
+                        console.log(data.message);
+                        // Load lại trang sau khi xóa thành công
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        // Xử lý lỗi (nếu cần)
+                    });
+            });
+        });
+    });
+</script>

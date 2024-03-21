@@ -38,13 +38,12 @@ class AuthController {
                         // Lưu token vào cookie
                         res.cookie('access_token', access_token, { httpOnly: true });
                         res.cookie('refresh_token', refresh_token, { httpOnly: true });
-                        res.json({ message: 'Login successfully', isLogin: true });
-                        console.log(access_token)
+                        res.json({ message: 'Login successfully', isLogin: true, isAdmin: user.isAdmin });
                     } else {
                         res.json({ message: 'Wrong password', isLogin: false });
                     }
                 } else {
-                    res.json({ message: 'User does not exist' , isLogin:false});
+                    res.json({ message: 'User does not exist', isLogin: false });
                 }
             })
             .catch(next);
@@ -66,24 +65,22 @@ class AuthController {
     }
 
     // GET /check-login
-    checkLoginStatus(req, res,next) {
-    // Kiểm tra xem cookies có tồn tại không
-    if (!req.cookies.access_token) {
-        res.json({ iisLoggedIn: false });
-        return; // Dừng hàm và trả về kết quả
-    }
-    
-    // Kiểm tra xem cookie access_token có tồn tại không
-    const access_token = req.cookies.access_token;
-    if (!access_token) {
-        res.json({ isLoggedIn: false });
-        return; // Dừng hàm và trả về kết quả
-    }
+    checkLoginStatus(req, res, next) {
+        // Kiểm tra xem cookies có tồn tại không
+        if (!req.cookies.access_token) {
+            res.json({ iisLoggedIn: false });
+            return; // Dừng hàm và trả về kết quả
+        }
 
-    else {
-        res.json({ isLoggedIn: true });
-    } 
-}
+        // Kiểm tra xem cookie access_token có tồn tại không
+        const access_token = req.cookies.access_token;
+        if (!access_token) {
+            res.json({ isLoggedIn: false });
+            return; // Dừng hàm và trả về kết quả
+        } else {
+            res.json({ isLoggedIn: true });
+        }
+    }
 }
 
 module.exports = new AuthController();
