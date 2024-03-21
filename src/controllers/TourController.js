@@ -8,6 +8,10 @@ class TourController {
         }
     }
 
+    createForm(req, res, next) {
+        res.render('create-tour', { layout: 'layouts/dashboard-layout' });
+    }
+
     // POST api/tour/add-tour
     async addTour(req, res, next) {
         try {

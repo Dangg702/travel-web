@@ -1,74 +1,63 @@
-<div class="page-header">
-    <h3 class="page-title">Create Form</h3>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/dashboard">dashboard</a></li>
-            <li class="breadcrumb-item active text-muted" aria-current="page">create form</li>
-        </ol>
-    </nav>
-</div>
-<div classs="col-12" id="alert-container"></div> <!-- Thay thế div bằng span -->
-<div class="row">
-    <div class="col-12 grid-margin stretch-card">
-       
-        <div class="card">
-            <div class="card-body">
-
-                <h4 class="card-title">Add Place</h4>
-                <p class="card-description">Add place</p>
-                <form class="upload-form" id="upload-form">
-                    <div class="form-group">
-                        <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleTextarea1">Description</label>
-                        <textarea class="form-control" id="desc" name="desc" required rows="4"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleSelectGender">Region</label>
-                        <select class="form-control" id="region" name="region">
-                            <option value="none" selected disabled hidden>--- Select an Option ---</option>
-                            <option value="bắc bộ">Bắc Bộ</option>
-                            <option value="bắc trung bộ">Bắc Trung Bộ</option>
-                            <option value="duyên hải nam trung bộ">Duyên Hải Nam Trung Bộ</option>
-                            <option value="tây nguyên">Tây Nguyên</option>
-                            <option value="đông nam bộ">Đông Nam Bộ</option>
-                            <option value="tây nam bộ">Tây Nam Bộ</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Is Famous</label>
-                        <div class="form-check form-check-inline">
-                            <input
-                                class="form-check-input"
-                                type="radio"
-                                id="isFamous" 
-                                name="isFamous"
-                                checked
-                            />
-                            <label class="form-check-label" for="flexRadioDefault1"> No </label>
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Create Form</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard">dashboard</a></li>
+                <li class="breadcrumb-item active text-muted" aria-current="page">create form</li>
+            </ol>
+        </nav>
+    </div>
+    <div classs="col-12" id="alert-container"></div>
+    <!-- Thay thế div bằng span -->
+    <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add Place</h4>
+                    <p class="card-description">Add place</p>
+                    <form class="upload-form" id="upload-form">
+                        <div class="form-group">
+                            <label for="exampleInputName1">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input
-                                class="form-check-input"
-                                type="radio"
-                                id="isFamous" 
-                                name="isFamous"
-                            />
-                            <label class="form-check-label" for="flexRadioDefault2"> Yes </label>
+                        <div class="form-group">
+                            <label for="exampleTextarea1">Description</label>
+                            <textarea class="form-control" id="desc" name="desc" required rows="4"></textarea>
                         </div>
-                    </div>
-                    <div class="input-group mb-3 custom-file-button">
-                        <label class="input-group-text" for="inputGroupFile">Upload Image</label>
-                        <input type="file" class="form-control" id="image" name="image" accept="image/*" required />
-                    </div>
-                    <button type="button" class="btn btn-primary"  onclick="uploadAndAddPlace()">Submit</button>
-                </form>
+                        <div class="form-group">
+                            <label for="exampleSelectGender">Region</label>
+                            <select class="form-control" id="region" name="region">
+                                <option value="none" selected disabled hidden>--- Select an Option ---</option>
+                                <option value="bắc bộ">Bắc Bộ</option>
+                                <option value="bắc trung bộ">Bắc Trung Bộ</option>
+                                <option value="duyên hải nam trung bộ">Duyên Hải Nam Trung Bộ</option>
+                                <option value="tây nguyên">Tây Nguyên</option>
+                                <option value="đông nam bộ">Đông Nam Bộ</option>
+                                <option value="tây nam bộ">Tây Nam Bộ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Is Famous</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="isFamous" name="isFamous" checked />
+                                <label class="form-check-label" for="flexRadioDefault1"> No </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="isFamous" name="isFamous" />
+                                <label class="form-check-label" for="flexRadioDefault2"> Yes </label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3 custom-file-button">
+                            <label class="input-group-text" for="inputGroupFile">Upload Image</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*" required />
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="uploadAndAddPlace()">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <script>
     async function uploadAndAddPlace() {
@@ -91,7 +80,7 @@
             // Gửi ảnh lên Cloudinary
             const cloudinaryResponse = await fetch('/api/up/upload', {
                 method: 'POST',
-                body: formData
+                body: formData,
             });
             const cloudinaryData = await cloudinaryResponse.json();
 
@@ -99,21 +88,20 @@
             const placeResponse = await fetch('/api/place/add-place', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     name: name,
                     desc: desc,
                     img: cloudinaryData.url, // URL của ảnh từ Cloudinary
                     isFamous: isFamous,
-                    region: region
-                })
+                    region: region,
+                }),
             });
             const placeData = await placeResponse.json();
-            const alertContainer = document.getElementById("alert-container");
+            const alertContainer = document.getElementById('alert-container');
             if (placeData.isupload) {
                 alertContainer.innerText = `Error! Failed to create place. Please try again.`;
-                
             } else {
                 alertContainer.innerHTML = `
                     <div class="alert alert-success alert-dismissible fade show" role="alert">

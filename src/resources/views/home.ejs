@@ -89,24 +89,26 @@
         <div class="row gy-5">
             <% if (latestTours != '') { %> <% latestTours.forEach((tour, index) => { %>
             <div class="col-xs-12 col-md-4">
-                <div class="item">
-                    <div class="item__info">
-                        <h4><%= tour.price %></h4>
-                        <span>/người</span>
+                <a href="/api/tour/get-tour/<%= tour.name %>">
+                    <div class="item">
+                        <div class="item__info">
+                            <h4><%= tour.price %></h4>
+                            <span>/người</span>
+                        </div>
+                        <img
+                            class="card-img-top"
+                            style="height: 300px"
+                            alt="Tour 1"
+                            src="<%= tour.img[0] %>"
+                            loading="lazy"
+                        />
+                        <div class="border-bottom item__content">
+                            <div class="item__pre_title">25% Off</div>
+                            <h3 class="item__title"><%= tour.name %></h3>
+                            <p class="item__desc"><%= tour.desc %></p>
+                        </div>
                     </div>
-                    <img
-                        class="card-img-top"
-                        style="height: 300px"
-                        alt="Tour 1"
-                        src="<%= tour.img[0] %>"
-                        loading="lazy"
-                    />
-                    <div class="border-bottom item__content">
-                        <div class="item__pre_title">25% Off</div>
-                        <h3 class="item__title"><%= tour.name %></h3>
-                        <p class="item__desc"><%= tour.desc %></p>
-                    </div>
-                </div>
+                </a>
             </div>
             <% }) %> <% } %>
         </div>
