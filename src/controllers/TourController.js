@@ -17,7 +17,9 @@ class TourController {
             next(err);
         }
     }
-
+    createForm(req, res, next) {
+        res.render('create-tour', { layout: 'layouts/dashboard-layout' });
+    }
     // PUT api/tour/edit-tour/:id
     async editTour(req, res, next) {
         try {

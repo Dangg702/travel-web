@@ -8,5 +8,7 @@ router.put('/edit-tour/:id', tourController.editTour);
 router.delete('/delete-tour/:id', tourController.deleteTour);
 router.get('/get-tour/:name', tourController.getTour);
 router.get('/all-tour/', tourController.getAll);
+router.get('/create-tour/', tourController.createForm);
+
 
 module.exports = router;
