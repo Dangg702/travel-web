@@ -10,9 +10,6 @@ const tourSchema = new Schema(
         dateBack: { type: String, required: true },
         desc: { type: String },
         price: { type: String, required: true },
-<<<<<<< HEAD
-        imgUrl: { type: [String] },
-=======
         img: [{ type: String }],
         rating: { type: Number },
         schedule: [
@@ -25,7 +22,6 @@ const tourSchema = new Schema(
         departure: { type: String },
         destination: { type: String },
         vehicle: { type: String },
->>>>>>> f6c7004d5c0f238ee6b12a1d215078c8001e545f
     },
     {
         timestamps: true,
