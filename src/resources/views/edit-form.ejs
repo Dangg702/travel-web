@@ -1,123 +1,108 @@
 <div class="page-header">
-    <h3 class="page-title">Edit Form</h3>
+    <h3 class="page-title">Edit Place</h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/dashboard">dashboard</a></li>
-            <li class="breadcrumb-item active text-muted" aria-current="page">Edit form</li>
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item active text-muted" aria-current="page">Edit Place</li>
         </ol>
     </nav>
 </div>
+
+<div class="col-12" id="alert-container"></div>
+<!-- Thay thế div bằng span -->
+
 <div class="row">
     <div class="col-12 grid-margin stretch-card">
-        <div id="alert-container">
-
-        </div>
         <div class="card">
             <div class="card-body">
-
                 <h4 class="card-title">Edit Place</h4>
-                <p class="card-description">Edit <%= place.name %></p>
-                <form class="upload-form" id="upload-form">
-                    <div class="form-group">
-                        <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<%= place.name %>" />
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleTextarea1">Description</label>
-                        <textarea class="form-control" id="desc" name="desc" required rows="4" ><%= place.desc %></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleSelectGender">Region</label>
-                        <select class="form-control" id="region" name="region">
-                            <option value="none" selected disabled hidden>--- Select an Option ---</option>
-                            <option value="bắc bộ">Bắc Bộ</option>
-                            <option value="bắc trung bộ">Bắc Trung Bộ</option>
-                            <option value="duyên hải nam trung bộ">Duyên Hải Nam Trung Bộ</option>
-                            <option value="tây nguyên">Tây Nguyên</option>
-                            <option value="đông nam bộ">Đông Nam Bộ</option>
-                            <option value="tây nam bộ">Tây Nam Bộ</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Is Famous</label>
-                        <div class="form-check form-check-inline">
-                            <input
-                                class="form-check-input"
-                                type="radio"
-                                id="isFamous" 
-                                name="isFamous"
-                                checked
-                            />
-                            <label class="form-check-label" for="flexRadioDefault1"> No </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input
-                                class="form-check-input"
-                                type="radio"
-                                id="isFamous" 
-                                name="isFamous"
-                            />
-                            <label class="form-check-label" for="flexRadioDefault2"> Yes </label>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3 custom-file-button">
-                        <label class="input-group-text" for="inputGroupFile">Upload Image</label>
-                        <input type="file" class="form-control" id="image" name="image" accept="image/*" required />
-                    </div>
-                    <button type="button" class="btn btn-primary"  onclick="uploadAndAddPlace()">Submit</button>
-                </form>
+                <p class="card-description">Select a place to edit:</p>
+                <ul>
+                    <% places.forEach(place => { %>
+                    <li>
+                        <form
+                            id="editForm<%= place._id %>"
+                            action="/api/place/edit-place/<%= place._i%>"
+                            method="POST"
+                        >
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name<%= place._id %>"
+                                    name="name"
+                                    value="<%= place.name %>"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="desc">Description:</label>
+                                <textarea class="form-control" id="desc<%= place._id %>" name="desc" rows="4">
+<%= place.desc %></textarea
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="region">Region:</label>
+                                <select class="form-control" id="region<%= place._id %>" name="region">
+                                    <option value="none" selected disabled hidden><%= place.region%></option>
+                                    <option value="bắc bộ" <%= place.region === "bắc bộ" ? 'selected' : '' %>>Bắc Bộ</option>
+                                    <option value="bắc trung bộ" <%= place.region === "bắc trung bộ" ? 'selected' : '' %>>Bắc Trung Bộ</option>
+                                    <option value="duyên hải nam trung bộ" <%= place.region === "duyên hải nam trung bộ" ? 'selected' : '' %>>Duyên Hải Nam Trung Bộ</option>
+                                    <option value="tây nguyên" <%= place.region === "tây nguyên" ? 'selected' : '' %>>Tây Nguyên</option>
+                                    <option value="đông nam bộ" <%= place.region === "đông nam bộ" ? 'selected' : '' %>>Đông Nam Bộ</option>
+                                    <option value="tây nam bộ" <%= place.region === "tây nam bộ" ? 'selected' : '' %>>Tây Nam Bộ</option>
+                                </select>
+                            </div>
+                            
+                            <button type="button" class="btn btn-primary" onclick="updatePlace('<%= place._id %>')">
+                                Update
+                            </button>
+                        </form>
+                    </li>
+                    <% }); %>
+                </ul>
             </div>
         </div>
     </div>
 </div>
-</div>
-<script>
-    async function uploadAndAddPlace() {
-        // Lấy thông tin từ biểu mẫu
-        const name = document.getElementById('name').value;
-        const desc = document.getElementById('desc').value;
-        const image = document.getElementById('image').files[0];
-        const isFamous = document.getElementById('isFamous').checked;
-        const region = document.getElementById('region').value;
 
-        // Tạo FormData để gửi dữ liệu đến server
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('desc', desc);
-        formData.append('image', image);
-        formData.append('isFamous', isFamous);
-        formData.append('region', region);
+<script>
+    async function updatePlace(placeId) {
+        const name = document.getElementById('name' + placeId).value;
+        const desc = document.getElementById('desc' + placeId).value;
+        const region = document.getElementById('region' + placeId).value;
 
         try {
-            // Gửi ảnh lên Cloudinary
-            const cloudinaryResponse = await fetch('/api/up/upload', {
-                method: 'POST',
-                body: formData
-            });
-            const cloudinaryData = await cloudinaryResponse.json();
-
-            // Gửi dữ liệu địa điểm lên server
-            const placeResponse = await fetch('http://localhost:9000/api/place/edit-place/<%= place._id %>', {
-                method: "PUT",
+            const response = await fetch('/api/place/edit-place/' + placeId, {
+                method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    name: name,
-                    desc: desc,
-                    img: cloudinaryData.url, // URL của ảnh từ Cloudinary
-                    isFamous: isFamous,
-                    region: region
-                })
+                body: JSON.stringify({ name: name, desc: desc, region: region }),
             });
-            const placeData = await placeResponse.json();
 
-            // Hiển thị thông báo hoặc xử lý kết quả theo ý của bạn
-            console.log('Place added successfully:', placeData);
-            alert('Updated successfully')
+            const data = await response.json();
+            if (response.ok) {
+                // Hiển thị thông báo thành công
+                const alertContainer = document.getElementById('alert-container');
+                alertContainer.innerHTML = `
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> Place updated successfully.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+            } else {
+                // Hiển thị thông báo lỗi
+                const alertContainer = document.getElementById('alert-container');
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> Failed to update place. Please try again.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+            }
         } catch (error) {
             console.error('Error:', error);
-            alert('Updated failed:');
         }
     }
 </script>

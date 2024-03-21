@@ -1,7 +1,7 @@
 <div class="home-body-container">
     <!-- Banner and search -->
     <div class="banner-container" style="background-image: url('img/banner.jpg')">
-        <div class="container col-xs-12">
+        <div class="container">
             <div class="row">
                 <div class="col-xs-12 banner-form">
                     <div class="col-xs-12 col-lg-8">
@@ -13,7 +13,7 @@
                                 </h2>
                             </div>
                         </div>
-                        <div class="col-xs-12 hidden-xs" style="height: 33px">&nbsp;</div>
+                        <div class="col-xs-12 hidden-xs" style="height: 50px">&nbsp;</div>
                     </div>
                     <%- include('./partials/searchForm.ejs') %>
                 </div>
@@ -83,95 +83,38 @@
     <div class="item-list-container">
         <div class="row">
             <div class="col-xs-12">
-                <h1 class="item-list__title">Tours du lịch mới nhất</h1>
+                <h1 class="item-list__title">Đánh giá cho tour</h1>
             </div>
         </div>
         <div class="row gy-5">
-            <% if (latestTours != '') { %> <% latestTours.forEach((tour, index) => { %>
-            <div class="col-xs-12 col-md-4">
-                <div class="item">
-<<<<<<< HEAD
-                    <div class="item__info">
-                        <h4><%= tour.price %></h4>
-                        <span>/người</span>
-                    </div>
-                    <img
-                        class="card-img-top"
-                        style="height: 300px"
-                        alt="Tour 1"
-                        src="<%= tour.img %>"
-                        loading="lazy"
-                    />
-                    <div class="border-bottom item__content">
-                        <div class="item__pre_title">25% Off</div>
-                        <h3 class="item__title"><%= tour.name %></h3>
-                        <p class="item__desc"><%= tour.desc %></p>
-                        <a href="/api/review/<%= tour._id %>" class="btn btn-primary">Xem đánh giá</a>
-                    </div>
-=======
-                    <a href="/api/tour/get-tour/<%= tour.name %>">
-                        <div class="item__info">
-                            <h4 class="fw-bold"><%= tour.price %></h4>
-                            <span>/người</span>
+            <% if (reviews.length > 0) { %>
+                <% reviews.forEach((review, index) => { %>
+                    <% const user = users.find(user => user._id.toString() === review.userId.toString()); %>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="item">
+                            <% if (tour.imgUrl && tour.imgUrl.length > 0) { %>
+                            <img
+                                class="card-img-top"
+                                style="height: 300px"
+                                alt="Tour <%= index + 1 %>"
+                                src="<%= tourImage %>"
+                                loading="lazy"
+                            />
+                            <% }
+                            <div class="border-bottom item__content">
+                                <div class="item__pre_title">Tên: <%= user.username %></div>
+                                <p class="item__desc">Ngày đánh giá: <%= review.createdAt %></p>
+                                <p class="item__desc">Đánh giá: <%= review.rating %></p>
+                                <p class="item__desc">Bình luận: <%= review.comment %></p>
+                            </div>
                         </div>
-                        <img
-                            class="card-img-top"
-                            style="height: 300px"
-                            data-src="<%= tour.img %>"
-                            alt="Tour 1"
-                            src="<%= tour.img[0] %>"
-                            loading="lazy"
-                        />
-                        <div class="border-bottom item__content">
-                            <div class="item__pre_title">25% Off</div>
-                            <h3 class="item__title"><%= tour.name %></h3>
-                            <p class="item__desc"><%= tour.desc %></p>
-                        </div>
-                    </a>
->>>>>>> f6c7004d5c0f238ee6b12a1d215078c8001e545f
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-xs-12">
+                    <p>Không có đánh giá nào cho tour này.</p>
                 </div>
-            </div>
-            <% }) %> <% } %>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 d-flex justify-content-center">
-                <a class="btn item-list__view-all" href="/api/tour/latest-tours" role="button">Xem thêm</a>
-            </div>
-        </div>
-    </div>
-    <!-- Tours -->
-    <div class="item-list-container light-bg">
-        <div class="row">
-            <div class="col-xs-12">
-                <h1 class="item-list__title">Tours du lịch miền Trung</h1>
-            </div>
-        </div>
-        <div class="row gy-5">
-            <% if (places != '') { %> <% places.forEach((place, index) => { %>
-            <div class="col-xs-12 col-md-4">
-                <a href="/api/tour/get-tour/<%= place.name %>">
-                    <div class="item">
-                        <div class="item__info">
-                            <h4>5.999.000</h4>
-                            <span>/người</span>
-                        </div>
-                        <img
-                            class="card-img-top"
-                            style="height: 300px"
-                            data-src="<%= place.img %>"
-                            alt="Tour 1"
-                            src="<%= place.img %>"
-                            loading="lazy"
-                        />
-                        <div class="border-bottom item__content">
-                            <div class="item__pre_title">25% Off</div>
-                            <h3 class="item__title"><%= place.name %></h3>
-                            <p class="item__desc"><%= place.desc %></p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <% }) %> <% } %>
+            <% } %>
         </div>
         <div class="row">
             <div class="col-xs-12 d-flex justify-content-center">
@@ -179,5 +122,6 @@
             </div>
         </div>
     </div>
+    
     <!-- Famous landmark: địa danh nổi tiếng -->
 </div>

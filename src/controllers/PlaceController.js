@@ -13,6 +13,14 @@ class PlaceController {
                 region: req.body.region || '',
             };
 
+            // Tìm địa điểm có cùng tên trong cơ sở dữ liệu
+            const existingPlace = await Place.findOne({ name: placeData.name });
+
+            if (existingPlace) {
+                console.log(existingPlace);
+                return res.json({ message: 'Place with this name already exists', isupload: true });
+            }
+
             // Tạo mới đối tượng Place từ dữ liệu được cung cấp
             const place = new Place(placeData);
 
@@ -26,6 +34,7 @@ class PlaceController {
             next(error);
         }
     }
+
     createForm(req, res, next) {
         res.render('create-form', { layout: 'layouts/dashboard-layout' });
     }
@@ -57,6 +66,10 @@ class PlaceController {
             })
             .catch(next);
     }
+    async editForm(req, res, next) {
+        const places = await Place.find();
+        res.render('edit-form', { layout: 'layouts/dashboard-layout',places: places  });
+    }
     // DELETE api/place/delete-place/:id
     deletePlace(req, res, next) {
         const placeId = req.params.id;
@@ -71,10 +84,15 @@ class PlaceController {
             })
             .catch(next);
     }
+    async deleteForm(req, res, next) {
+        const places = await Place.find();
+        res.render('delete-form', { layout: 'layouts/dashboard-layout',places: places  });
+    }
 
     // GET api/place/search-place
-    searchForm(req, res, next) {
-        res.render('search');
+    async searchForm(req, res, next) {
+        const places = await Place.find();
+        res.render('search-form', { layout: 'layouts/dashboard-layout',places: places  });
     }
 
     // GET api/place/search-place/:name

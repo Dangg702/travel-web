@@ -7,11 +7,10 @@
         </ol>
     </nav>
 </div>
+<div classs="col-12" id="alert-container"></div> <!-- Thay thế div bằng span -->
 <div class="row">
     <div class="col-12 grid-margin stretch-card">
-        <div id="alert-container">
-
-        </div>
+       
         <div class="card">
             <div class="card-body">
 
@@ -111,7 +110,20 @@
                 })
             });
             const placeData = await placeResponse.json();
-
+            const alertContainer = document.getElementById("alert-container");
+            if (placeData.isupload) {
+                alertContainer.innerText = `Error! Failed to create place. Please try again.`;
+                
+            } else {
+                alertContainer.innerHTML = `
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> Place created successfully.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <button class="btn btn-primary" onclick="window.location.href='/dashboard'">Back to Dashboard</button>
+                    <button class="btn btn-secondary" onclick="window.location.reload()">Continue Adding</button>
+                `;
+            }
             // Hiển thị thông báo hoặc xử lý kết quả theo ý của bạn
             console.log('Place added successfully:', placeData);
             alert('Place added successfully:');
