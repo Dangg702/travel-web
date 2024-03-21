@@ -141,6 +141,7 @@ class TourController {
     }
     // GET api/tour/:region
     async fillerRegion(req, res, next) {}
+    // GET api/tour/create-tour
 }
 
 module.exports = new TourController();
