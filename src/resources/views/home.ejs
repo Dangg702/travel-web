@@ -89,35 +89,15 @@
         <div class="row gy-5">
             <% if (latestTours != '') { %> <% latestTours.forEach((tour, index) => { %>
             <div class="col-xs-12 col-md-4">
-                <div class="item">
-<<<<<<< HEAD
-                    <div class="item__info">
-                        <h4><%= tour.price %></h4>
-                        <span>/người</span>
-                    </div>
-                    <img
-                        class="card-img-top"
-                        style="height: 300px"
-                        alt="Tour 1"
-                        src="<%= tour.img %>"
-                        loading="lazy"
-                    />
-                    <div class="border-bottom item__content">
-                        <div class="item__pre_title">25% Off</div>
-                        <h3 class="item__title"><%= tour.name %></h3>
-                        <p class="item__desc"><%= tour.desc %></p>
-                        <a href="/api/review/<%= tour._id %>" class="btn btn-primary">Xem đánh giá</a>
-                    </div>
-=======
-                    <a href="/api/tour/get-tour/<%= tour.name %>">
+                <a href="/api/tour/get-tour/<%= tour.name %>">
+                    <div class="item">
                         <div class="item__info">
-                            <h4 class="fw-bold"><%= tour.price %></h4>
+                            <h4><%= tour.price %></h4>
                             <span>/người</span>
                         </div>
                         <img
                             class="card-img-top"
                             style="height: 300px"
-                            data-src="<%= tour.img %>"
                             alt="Tour 1"
                             src="<%= tour.img[0] %>"
                             loading="lazy"
@@ -127,9 +107,8 @@
                             <h3 class="item__title"><%= tour.name %></h3>
                             <p class="item__desc"><%= tour.desc %></p>
                         </div>
-                    </a>
->>>>>>> f6c7004d5c0f238ee6b12a1d215078c8001e545f
-                </div>
+                    </div>
+                </a>
             </div>
             <% }) %> <% } %>
         </div>

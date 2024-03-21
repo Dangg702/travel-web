@@ -3,6 +3,7 @@ const router = express.Router();
 
 const tourController = require('../controllers/TourController');
 
+router.get('/create-tour', tourController.createForm);
 router.post('/add-tour', tourController.addTour);
 router.put('/edit-tour/:id', tourController.editTour);
 router.delete('/delete-tour/:id', tourController.deleteTour);

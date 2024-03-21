@@ -1,7 +1,7 @@
 const Place = require('../models/Place');
 
 class DashboardController {
-    async getIndex(req, res, next) {
+    getIndex(req, res, next) {
         res.render('dashboard', { layout: 'layouts/dashboard-layout' });
     }
 }
