@@ -98,9 +98,10 @@
                     region: region,
                 }),
             });
-            const placeData = await placeResponse.json();
+            // console.log('placeResponse', placeResponse);
+            // const placeData = await placeResponse.json();
             const alertContainer = document.getElementById('alert-container');
-            if (placeData.isupload) {
+            if (placeResponse.status !== 200) {
                 alertContainer.innerText = `Error! Failed to create place. Please try again.`;
             } else {
                 alertContainer.innerHTML = `
@@ -114,7 +115,7 @@
             }
             // Hiển thị thông báo hoặc xử lý kết quả theo ý của bạn
             console.log('Place added successfully:', placeData);
-            alert('Place added successfully:');
+            // alert('Place added successfully:');
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to add place:');
