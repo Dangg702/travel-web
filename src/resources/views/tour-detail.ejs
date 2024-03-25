@@ -101,6 +101,7 @@
                 </div>
                 <div class="row-rating tour-review">
                     <div class="title-description">Đánh giá khách hàng về Tour <%= tour.name %></div>
+<<<<<<< HEAD
                     <div class="col-xs-12 mt-3 mb-3">
                         <span class="recentReviews">
                             Đánh giá gần đây
@@ -133,6 +134,17 @@
                                         </div>
                                    </div>
                                 </div>
+=======
+                    <% if (reviews != '') { %> <% reviews.forEach((review, index) => { %> <% const user =
+                    users.find(user => user._id.toString() === review.userId.toString()); %>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="item">
+                            <div class="border-bottom item__content">
+                                <div class="item__pre_title">Tên: <%= user.username %></div>
+                                <p class="item__desc">Ngày đánh giá: <%= review.createdAt %></p>
+                                <p class="item__desc">Đánh giá: <%= review.rating %></p>
+                                <p class="item__desc">Bình luận: <%= review.comment %></p>
+>>>>>>> dfe12cfd821c0dd0abf98df7f11036ff269baa50
                             </div>
                         </div>
                             <% }) %> <% } else { %>

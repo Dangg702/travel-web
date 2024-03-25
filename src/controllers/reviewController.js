@@ -46,16 +46,6 @@ const reviewController = {
             if (!reviews || reviews.length === 0) {
                 return [];
             }
-
-            // Lấy thông tin của người dùng và tour
-            // const userIds = reviews.map((review) => review.userId);
-            // const tourIds = reviews.map((review) => review.tourId);
-            // const users = await User.find({ _id: { $in: userIds } });
-            // const tours = await Tour.find({ _id: { $in: tourIds } });
-
-            // const tourImages = tours.map((tour) => tour.img);
-
-            // return { reviews, users, tours, tourImages };
             return { reviews };
         } catch (error) {
             throw new Error(error.message);
