@@ -16,10 +16,10 @@ class TourController {
     // POST api/tour/add-tour
     async addTour(req, res, next) {
         try {
-                const newTour = new Tour(req.body);
-                const savedTour = await newTour.save();
-                console.log(savedTour);
-                return res.json({ message: 'Tour created successfully', data: savedTour ,isupload:true });
+            const newTour = new Tour(req.body);
+            const savedTour = await newTour.save();
+            console.log(savedTour);
+            return res.json({ message: 'Tour created successfully', data: savedTour, isupload: true });
         } catch (err) {
             console.log(err);
             next(err);
@@ -97,10 +97,11 @@ class TourController {
             }).populate('placeData');
 
             if (tours.length === 0) {
+                9;
                 res.render('tours', {
                     layout: 'layouts/sidebar-layout',
                     cssLink: '/css/tours.css',
-                    message: 'Tours is not available',
+                    message: 'Tours không tồn tại',
                     tours,
                 });
             } else {

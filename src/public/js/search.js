@@ -88,6 +88,8 @@ let searchButton = document.getElementById('home-search');
 let searchForm = document.getElementById('search-form');
 searchButton.addEventListener('click', function (e) {
     e.preventDefault();
-    searchForm.action = `http://localhost:9000/api/tour/search-tours/${searchName}?departure=${departure}&dateGo=${dateGo}`;
+    const url = `http://localhost:9000/api/tour/search-tours/${searchName}?departure=${departure}&dateGo=${dateGo}`;
+    searchForm.action = url;
     searchForm.submit();
+    window.location.href = url;
 });
