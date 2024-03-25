@@ -97,8 +97,6 @@ class TourController {
             }
             const tour = await Tour.find({
                 name: { $regex: tourName, $options: 'i' },
-                // dateGo: tourDate,
-                // departure: tourDeparture,
                 ...queryConditions, // Sử dụng toán tử spread để thêm các điều kiện vào truy vấn
             }).populate('placeData');
 
