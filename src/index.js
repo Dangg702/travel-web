@@ -6,6 +6,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const  jwtDecode  =require( 'jwt-decode');
 
 dotenv.config();
 

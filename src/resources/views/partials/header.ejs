@@ -13,7 +13,16 @@
                 <li class="navbar__link"><a href="/">Trang chủ</a></li>
                 <li class="navbar__link"><a href="/blog">Blogs</a></li>
                 <li class="navbar__link"><a href="/contact">Liên hệ</a></li>
-                <a href="/user/login" id="accountLink"><button class="navbar__btn">Tài khoản</button></a>
+                <li>
+                    <a href="/user/login" id="accountLink">
+                        <button class="navbar__btn">Tài khoản</button>
+                    </a>
+                    <ul class="navbar__menu" id="accountMenu">
+                        <li><a href="/user/logout">Đăng xuất</a></li>
+                        <li><a href="#">Thông tin đơn hàng</a></li>
+                        <!-- Thêm các mục menu khác tại đây -->
+                    </ul>
+                </li>
             </ul>
             <!-- Icon -->
             <div class="navbar__ham">
@@ -23,6 +32,7 @@
     </div>
 </header>
 <script>
+    
     const $ = document.querySelector.bind(document);
     const $$ = document.querySelectorAll.bind(document);
 
@@ -47,15 +57,27 @@
     fetch('/user/check-login')
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            console.log('hihi');
             const isLoggedIn = data.isLoggedIn;
             const accountBtn = document.querySelector('.navbar__btn');
             const accountLink = document.getElementById('accountLink');
+            const accountMenu = $('#accountMenu');
 
             // Nếu đã đăng nhập, hiển thị nút Đăng xuất và ngược lại
+            const username =data.user.username;
             if (isLoggedIn) {
-                accountBtn.textContent = 'Đăng xuất';
-                accountLink.href = '/user/logout';
+                accountBtn.innerHTML = `<img src="${data.user.avatar}" alt="${username}" style="width: 30px; height: 30px; border-radius: 50%;">`;
+                //accountBtn.textContent = username;
+                accountLink.href = '#';
+
+                // Chuyển từ mouseover và mouseout sang click
+                accountBtn.addEventListener('click', () => {
+                    if (accountMenu.style.display === 'none' || accountMenu.style.display === '') {
+                        accountMenu.style.display = 'block';
+                    } else {
+                        accountMenu.style.display = 'none';
+                    }
+                });
             } else {
                 accountBtn.textContent = 'Tài khoản';
                 accountLink.href = '/user/login';

@@ -4,6 +4,9 @@ const { generateAccessToken, generateRefreshToken } = require('../services/JwtSe
 const jwt = require('jsonwebtoken'); // Thêm dòng này
 const cookieParser = require('cookie-parser'); // Thêm dòng này
 
+const  jwtDecode  =require( 'jwt-decode');
+
+
 class AuthController {
     // POST /register
     register(req, res, next) {
@@ -74,12 +77,36 @@ class AuthController {
 
         // Kiểm tra xem cookie access_token có tồn tại không
         const access_token = req.cookies.access_token;
-        if (!access_token) {
-            res.json({ isLoggedIn: false });
-            return; // Dừng hàm và trả về kết quả
-        } else {
-            res.json({ isLoggedIn: true });
-        }
+        jwt.verify(access_token, process.env.ACCESS_TOKEN, function(err, decoded) {
+            if (err) {
+                console.error('Error decoding JWT:', err);
+            } else {
+                console.log('Decoded JWT payload:', decoded);
+                
+                // Sử dụng id từ decoded để tìm kiếm người dùng trong model user
+                User.findOne({ _id: decoded.id })
+                    .then(user => {
+                        if (user) {
+                            console.log('User found:', user);
+                            // Thực hiện các thao tác tiếp theo với người dùng đã tìm thấy
+                            if (!access_token) {
+                                res.json({ isLoggedIn: false,user:user });
+                                return; // Dừng hàm và trả về kết quả
+                            } else {
+                                
+                                res.json({ isLoggedIn: true ,user:user });
+                            }
+                        } else {
+                            console.log('User not found');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error finding user:', err);
+                    });
+                   
+            }
+        });
+        
     }
 }
 

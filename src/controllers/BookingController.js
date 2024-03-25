@@ -19,6 +19,7 @@ class BookingController {
             next(err);
         }
     }
+    
 }
 
 module.exports = new BookingController();
