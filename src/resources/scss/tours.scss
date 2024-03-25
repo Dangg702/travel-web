@@ -7,11 +7,16 @@ p {
 
 .tour-list {
     background-color: $white-bg;
+    .message {
+        color: $orange-color;
+        background-color: $secondary-bg;
+        font-weight: 500;
+    }
 }
 
 .tour-item {
     padding: 20px 0;
-    // border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
     box-shadow: 0 1px 2px 0 rgba(100, 100, 111, 0.2);
 }
 
