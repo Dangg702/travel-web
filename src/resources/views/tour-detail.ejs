@@ -101,7 +101,7 @@
                 </div>
                 <div class="row-rating">
                     <div class="title-description">Đánh giá khách hàng về Tour <%= tour.name %></div>
-                    <% if (reviews.length > 0) { %> <% reviews.forEach((review, index) => { %> <% const user =
+                    <% if (reviews != '') { %> <% reviews.forEach((review, index) => { %> <% const user =
                     users.find(user => user._id.toString() === review.userId.toString()); %>
                     <div class="col-xs-12 col-md-4">
                         <div class="item">

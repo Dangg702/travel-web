@@ -39,26 +39,27 @@ const reviewController = {
         }
     },
     getReviewsByTourId: async (tourId) => {
-      try {
-          const reviews = await Review.find({ tourId });
+        try {
+            const reviews = await Review.find({ tourId });
 
-          if (!reviews || reviews.length === 0) {
-              return [];
-          }
+            if (!reviews || reviews.length === 0) {
+                return [];
+            }
 
-          // Lấy thông tin của người dùng và tour
-          const userIds = reviews.map((review) => review.userId);
-          const tourIds = reviews.map((review) => review.tourId);
-          const users = await User.find({ _id: { $in: userIds } });
-          const tours = await Tour.find({ _id: { $in: tourIds } });
+            // Lấy thông tin của người dùng và tour
+            const userIds = reviews.map((review) => review.userId);
+            const tourIds = reviews.map((review) => review.tourId);
+            const users = await User.find({ _id: { $in: userIds } });
+            const tours = await Tour.find({ _id: { $in: tourIds } });
 
-          const tourImages = tours.map((tour) => tour.img);
+            const tourImages = tours.map((tour) => tour.img);
+            console.log(typeof reviews);
 
-          return { reviews, users, tours, tourImages };
-      } catch (error) {
-          throw new Error(error.message);
-      }
-  },
+            return { reviews, users, tours, tourImages };
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
     updateReview: async (req, res) => {
         try {
             const updatedReview = await Review.findByIdAndUpdate(req.params.reviewId, req.body, { new: true });

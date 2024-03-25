@@ -14,11 +14,15 @@ const authMiddleware = (req, res, next) => {
             if (user.isAdmin) {
                 next();
             } else {
-                return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
+                //res.redirect('/');
+                //return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
+                res.render('403', { 
+                    user
+                });
             }
         });
     } else {
-        res.json({ message: 'No token provided' });
+        res.redirect('/user/login');
     }
 };
 
@@ -36,11 +40,12 @@ const authUserMiddleware = (req, res, next) => {
             if (user.isAdmin || user.name === userName) {
                 next();
             } else {
-                return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
+                //return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
+                res.redirect('/user/login');
             }
         });
     } else {
-        res.json({ message: 'No token provided' });
+        res.redirect('/user/login');
     }
 };
 

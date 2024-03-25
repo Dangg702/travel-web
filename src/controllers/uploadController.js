@@ -1,7 +1,6 @@
 //controllers/uploadController.js
 
 const cloudinary = require('cloudinary').v2;
-const Place = require('../models/Place');
 // Middleware để xử lý tải lên ảnh lên Cloudinary
 exports.uploadImage = async (req, res) => {
     try {

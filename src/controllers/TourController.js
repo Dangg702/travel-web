@@ -16,16 +16,12 @@ class TourController {
     // POST api/tour/add-tour
     async addTour(req, res, next) {
         try {
-            const existingTour = await Tour.findOne({ name: req.body.name });
-
-            if (existingTour) {
-                return res.json({ message: 'Tour already exists' });
-            } else {
                 const newTour = new Tour(req.body);
                 const savedTour = await newTour.save();
-                return res.json({ message: 'Tour created successfully', data: savedTour });
-            }
+                console.log(savedTour);
+                return res.json({ message: 'Tour created successfully', data: savedTour ,isupload:true });
         } catch (err) {
+            console.log(err);
             next(err);
         }
     }
@@ -67,7 +63,6 @@ class TourController {
         try {
             const tourId = req.params.id;
             const tour = await Tour.find({ _id: tourId }).populate('placeData');
-            console.log('get Tour', tour);
             if (tour) {
                 const { reviews, users, tours, tourImages } = await review.getReviewsByTourId(tourId);
                 res.render('tour-detail', {

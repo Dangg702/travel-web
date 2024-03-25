@@ -18,7 +18,7 @@ class PlaceController {
 
             if (existingPlace) {
                 console.log(existingPlace);
-                return res.json({ message: 'Place with this name already exists', isupload: true });
+                return res.status(200).json({ message: 'Place with this name already exists', isupload: true });
             }
 
             // Tạo mới đối tượng Place từ dữ liệu được cung cấp
