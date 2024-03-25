@@ -6,7 +6,7 @@ const bookingRouter = require('./booking');
 const indexRouter = require('./site');
 const dashboardRouter = require('./dashboard');
 const reviewRouter = require('./review');
-
+const paymentRouter = require('./payment');
 const uploadRoute = require('./uploadRoutes');
 
 function route(app) {
@@ -20,6 +20,7 @@ function route(app) {
     app.use('/booking', bookingRouter);
     app.use('/', indexRouter);
     app.use('/api/review',reviewRouter)
+    app.use('/api/payment',paymentRouter)
 }
 
 module.exports = route;

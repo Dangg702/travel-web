@@ -16,16 +16,12 @@ class TourController {
     // POST api/tour/add-tour
     async addTour(req, res, next) {
         try {
-            const existingTour = await Tour.findOne({ name: req.body.name });
-
-            if (existingTour) {
-                return res.json({ message: 'Tour already exists' });
-            } else {
-                const newTour = new Tour(req.body);
-                const savedTour = await newTour.save();
-                return res.json({ message: 'Tour created successfully', data: savedTour });
-            }
+            const newTour = new Tour(req.body);
+            const savedTour = await newTour.save();
+            console.log(savedTour);
+            return res.json({ message: 'Tour created successfully', data: savedTour, isupload: true });
         } catch (err) {
+            console.log(err);
             next(err);
         }
     }
@@ -62,12 +58,11 @@ class TourController {
         }
     }
 
-    // GET api/tour/get-tour/:name
+    // GET api/tour/get-tour/:id
     async getTour(req, res, next) {
         try {
             const tourId = req.params.id;
             const tour = await Tour.find({ _id: tourId }).populate('placeData');
-            console.log('get Tour', tour);
             if (tour) {
                 const { reviews, users, tours, tourImages } = await review.getReviewsByTourId(tourId);
                 res.render('tour-detail', {
@@ -85,25 +80,38 @@ class TourController {
         }
     }
 
+    // GET api/tour/search-tours/:name
     async searchTours(req, res, next) {
         try {
             const tourName = req.params.name;
             let queryConditions = {}; // Biến trung gian để lưu điều kiện truy vấn
-            if (req.query.date) {
-                queryConditions.dateGo = req.query.date;
+            if (req.query.dateGo) {
+                queryConditions.dateGo = req.query.dateGo;
             }
             if (req.query.departure) {
                 queryConditions.departure = req.query.departure;
             }
-            const tour = await Tour.find({
+            const tours = await Tour.find({
                 name: { $regex: tourName, $options: 'i' },
                 ...queryConditions, // Sử dụng toán tử spread để thêm các điều kiện vào truy vấn
             }).populate('placeData');
 
-            if (tour.length === 0) {
-                return res.status(404).json({ message: 'No tour found' });
+            if (tours.length === 0) {
+                9;
+                res.render('tours', {
+                    layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tours.css',
+                    message: 'Tours không tồn tại',
+                    tours,
+                });
             } else {
-                return res.status(200).json({ message: 'Success', data: tour });
+                // return res.status(200).json({ message: 'Success', data: tours });
+                console.log('search tours', tours);
+                res.render('tours', {
+                    layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tours.css',
+                    tours,
+                });
             }
         } catch (err) {
             next(err);
@@ -132,9 +140,8 @@ class TourController {
     async getLatestTours(req, res, next) {
         try {
             const limitNumber = 15;
-            const tours = await Tour.find().sort({ createdAt: -1 }).limit(limitNumber);
+            const tours = await Tour.find().sort({ createdAt: -1 }).limit(limitNumber).populate('placeData');
             if (!tours) {
-                // res.status(404).json({ message: 'No tour found' });
                 res.render('404', { layout: false });
             } else {
                 res.render('tours', {

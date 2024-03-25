@@ -390,3 +390,39 @@ label {
         font-size: 14px;
     }
 }
+
+// review
+.recentReviews {
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+.horizontalLine {
+    border-bottom: 1px solid #ddd;
+    margin: 8px 0;
+}
+.customerReviewName {
+    span {
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+}
+.review-detail {
+    .scoreSpan {
+        border-radius: 3px;
+        padding: 3px 5px 2px 5px;
+        color: #fff;
+        background-color: $orange-color;
+        font-size: 1.4rem;
+        padding: 2px 14px;
+    }
+    .scoreReviewDate {
+        font-size: 1.4rem;
+        color: #cdcccb;
+        margin-left: 10px;
+    }
+    .customerReviewContent {
+        font-style: italic;
+        font-size: 1.4rem;
+        line-height: 1.4;
+    }
+}

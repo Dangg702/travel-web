@@ -4,9 +4,14 @@ p {
 
 .tour-list {
   background-color: #fff; }
+  .tour-list .message {
+    color: #fa5652;
+    background-color: #ecf0f5;
+    font-weight: 500; }
 
 .tour-item {
   padding: 20px 0;
+  border-bottom: 1px solid #2c2e33;
   box-shadow: 0 1px 2px 0 rgba(100, 100, 111, 0.2); }
 
 .tour-item__image {

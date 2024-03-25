@@ -93,32 +93,55 @@
                         <div>
                             <p class="sub-title"><%= element.title %></p>
                             <p class="detail"><%= element.content %></p>
-                            <img class="w-100" src="<%= element.img %>" alt="<%= element.title %>" />
+                            <img class="d-flex" style="width: 70%; margin: 0 auto;" src="<%= element.img %>" alt="<%= element.title %>" />
                         </div>
 
                         <% }) %>
                     </div>
                 </div>
-                <div class="row-rating">
+                <div class="row-rating tour-review">
                     <div class="title-description">Đánh giá khách hàng về Tour <%= tour.name %></div>
-                    <% if (reviews.length > 0) { %> <% reviews.forEach((review, index) => { %> <% const user =
-                    users.find(user => user._id.toString() === review.userId.toString()); %>
-                    <div class="col-xs-12 col-md-4">
-                        <div class="item">
-                            <div class="border-bottom item__content">
-                                <div class="item__pre_title">Tên: <%= user.username %></div>
-                                <p class="item__desc">Ngày đánh giá: <%= review.createdAt %></p>
-                                <p class="item__desc">Đánh giá: <%= review.rating %></p>
-                                <p class="item__desc">Bình luận: <%= review.comment %></p>
+                    <div class="col-xs-12 mt-3 mb-3">
+                        <span class="recentReviews">
+                            Đánh giá gần đây
+                        </span>
+                    </div>
+                    <div class="review-detail-container">
+                        <% if (reviews.length > 0) { %> <% reviews.forEach(review => { %> <% const user = review.userId;
+                        %> <% tour = review.tourId %>
+                        <div class="horizontalLine"></div>
+                        <div class="review-detail pt-4 pb-4">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+                                    <div class="row">
+                                        <div class="col-xs-12 vspacing3 customerReviewName">
+                                            <img width="80px" height="50px" src="<%= user.avatar %>" alt="avatar">
+                                            <span><%= user.username %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+                                    <div class="row">
+                                        <div class="col-xs-12 mb-3">
+                                            <span class="scoreSpan"><%= review.rating %></span>
+                                            <span class="scoreReviewDate"><%= review.updatedAt %></span>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <span class="customerReviewContent">
+                                                <%= review.comment %>
+                                            </span>
+                                        </div>
+                                   </div>
+                                </div>
                             </div>
                         </div>
+                            <% }) %> <% } else { %>
+                            <div class="col-xs-12">
+                                <p>Không có đánh giá nào cho tour này.</p>
+                            </div>
+                            <% } %>
+                        </div>
                     </div>
-                    <% }) %> <% } else { %>
-                    <div class="col-xs-12">
-                        <p>Không có đánh giá nào cho tour này.</p>
-                    </div>
-                    <% } %>
-                    <div class="content-description"></div>
                 </div>
             </div>
         </div>
