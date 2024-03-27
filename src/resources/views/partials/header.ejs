@@ -3,25 +3,20 @@
 <!-- Header -->
 <header>
     <div class="wrapper">
-        <nav class="navbar">
+        <nav class="navbar fixed-top d-flex flex-row">
             <!-- Logo -->
             <div class="navbar__logo">
                 <img src="/img/logo.svg" alt="logo" />
             </div>
             <!-- Links -->
-            <ul class="navbar__links">
-                <li class="navbar__link"><a href="/">Trang chủ</a></li>
-                <li class="navbar__link"><a href="/blog">Blogs</a></li>
-                <li class="navbar__link"><a href="/contact">Liên hệ</a></li>
-                <li>
-                    <a href="/user/login" id="accountLink">
+            <ul class="navbar-nav navbar__links">
+                <li class="nav-item navbar__link"><a href="/">Trang chủ</a></li>
+                <li class="nav-item navbar__link"><a href="/blog">Blogs</a></li>
+                <li class="nav-item navbar__link"><a href="/contact">Liên hệ</a></li>
+                <li class="nav-item navbar__link dropdown" id="accountBtn">
+                    <a class="nav-link" href="/user/login">
                         <button class="navbar__btn">Tài khoản</button>
                     </a>
-                    <ul class="navbar__menu" id="accountMenu">
-                        <li><a href="/user/logout">Đăng xuất</a></li>
-                        <li><a href="#">Thông tin đơn hàng</a></li>
-                        <!-- Thêm các mục menu khác tại đây -->
-                    </ul>
                 </li>
             </ul>
             <!-- Icon -->
@@ -32,58 +27,19 @@
     </div>
 </header>
 <script>
-    
-    const $ = document.querySelector.bind(document);
-    const $$ = document.querySelectorAll.bind(document);
-
-    const menu = $('.navbar__links');
-    const menuIcon = $('.navbar__icon');
-    const menuBtn = $('.navbar__ham');
-    const overlay = $('#overlay');
+    const menu = document.querySelector('.navbar__links');
+    const menuIcon = document.querySelector('.navbar__icon');
+    const menuBtn = document.querySelector('.navbar__ham');
+    const overlay = document.querySelector('#overlay');
 
     menuBtn.addEventListener('click', () => {
         menuIcon.classList.toggle('open');
         menu.classList.toggle('navbar__open');
         overlay.classList.toggle('show');
     });
-
     overlay.addEventListener('click', () => {
         overlay.classList.toggle('show');
         menuIcon.classList.toggle('open');
         menu.classList.toggle('navbar__open');
     });
-
-    // Lấy thông tin trạng thái đăng nhập từ server
-    fetch('/user/check-login')
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('hihi');
-            const isLoggedIn = data.isLoggedIn;
-            const accountBtn = document.querySelector('.navbar__btn');
-            const accountLink = document.getElementById('accountLink');
-            const accountMenu = $('#accountMenu');
-
-            // Nếu đã đăng nhập, hiển thị nút Đăng xuất và ngược lại
-            const username =data.user.username;
-            if (isLoggedIn) {
-                accountBtn.innerHTML = `<img src="${data.user.avatar}" alt="${username}" style="width: 30px; height: 30px; border-radius: 50%;">`;
-                //accountBtn.textContent = username;
-                accountLink.href = '#';
-
-                // Chuyển từ mouseover và mouseout sang click
-                accountBtn.addEventListener('click', () => {
-                    if (accountMenu.style.display === 'none' || accountMenu.style.display === '') {
-                        accountMenu.style.display = 'block';
-                    } else {
-                        accountMenu.style.display = 'none';
-                    }
-                });
-            } else {
-                accountBtn.textContent = 'Tài khoản';
-                accountLink.href = '/user/login';
-            }
-        })
-        .catch((error) => {
-            console.error('Error checking login status:', error);
-        });
 </script>

@@ -8,11 +8,9 @@ class TourController {
             next(err);
         }
     }
-
     createForm(req, res, next) {
         res.render('create-tour', { layout: 'layouts/dashboard-layout' });
     }
-
     // POST api/tour/add-tour
     async addTour(req, res, next) {
         try {
@@ -24,9 +22,6 @@ class TourController {
             console.log(err);
             next(err);
         }
-    }
-    createForm(req, res, next) {
-        res.render('create-tour', { layout: 'layouts/dashboard-layout' });
     }
     // PUT api/tour/edit-tour/:id
     async editTour(req, res, next) {
@@ -64,13 +59,13 @@ class TourController {
             const tourId = req.params.id;
             const tour = await Tour.find({ _id: tourId }).populate('placeData');
             if (tour) {
-                const { reviews, users, tours, tourImages } = await review.getReviewsByTourId(tourId);
+                const { reviews, limitReviews } = await review.getReviewsByTourId(tourId);
                 res.render('tour-detail', {
                     cssLink: '/css/tourDetail.css',
                     message: 'Success',
                     tour: tour[0],
                     reviews,
-                    users,
+                    limitReviews,
                 });
             } else {
                 return res.status(404).json({ message: 'No tour found' });
@@ -156,7 +151,6 @@ class TourController {
     }
     // GET api/tour/:region
     async fillerRegion(req, res, next) {}
-    // GET api/tour/create-tour
 }
 
 module.exports = new TourController();

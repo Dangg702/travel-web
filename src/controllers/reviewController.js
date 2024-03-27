@@ -41,12 +41,13 @@ const reviewController = {
     getReviewsByTourId: async (tourId) => {
         try {
             const reviews = await Review.find({ tourId }).populate('userId').populate('tourId');
-            console.log('review', reviews);
+            const limitReviews = await Review.find({ tourId }).populate('userId').populate('tourId').limit(1);
+            // console.log('review', reviews);
 
             if (!reviews || reviews.length === 0) {
                 return [];
             }
-            return { reviews };
+            return { reviews, limitReviews };
         } catch (error) {
             throw new Error(error.message);
         }

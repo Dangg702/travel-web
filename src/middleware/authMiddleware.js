@@ -8,7 +8,10 @@ const authMiddleware = (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
             if (err) {
-                return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
+                // return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
+                res.render('404', {
+                    layout: false,
+                });
             }
             // console.log('user: ', user);
             if (user.isAdmin) {
@@ -16,8 +19,9 @@ const authMiddleware = (req, res, next) => {
             } else {
                 //res.redirect('/');
                 //return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
-                res.render('403', { 
-                    user
+                res.render('403', {
+                    layout: false,
+                    user,
                 });
             }
         });
