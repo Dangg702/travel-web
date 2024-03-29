@@ -347,3 +347,21 @@ label {
   font-style: italic;
   font-size: 1.4rem;
   line-height: 1.4; }
+
+.more-reviews {
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: unset;
+  cursor: pointer; }
+
+.comment {
+  font-size: 1.6rem;
+  box-shadow: none;
+  border: none;
+  border-bottom: 1px solid #333; }
+  .comment:focus {
+    border-color: #fa5652;
+    box-shadow: none; }
+
+.form-select {
+  font-size: 1.6rem; }

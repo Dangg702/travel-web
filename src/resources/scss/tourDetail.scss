@@ -426,3 +426,22 @@ label {
         line-height: 1.4;
     }
 }
+.more-reviews {
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-transform: unset;
+    cursor: pointer;
+}
+.comment {
+    font-size: 1.6rem;
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid #333;
+    &:focus {
+        border-color: $orange-color;
+        box-shadow: none;
+    }
+}
+.form-select {
+    font-size: 1.6rem;
+}
