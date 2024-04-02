@@ -4,7 +4,6 @@ const $$ = document.querySelectorAll.bind(document);
 fetch('/user/check-login')
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
         const isLoggedIn = data.isLoggedIn;
         const accountBtn = $('#accountBtn');
         const sidebarAdminName = $('.sidebar-profile-name');
@@ -26,6 +25,8 @@ fetch('/user/check-login')
                 </a>
                 <ul class="dropdown-menu navbar__menu" aria-labelledby="accountDropdown">
                     <li><a class="dropdown-item" href="#">Thông tin đơn hàng</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/user/account/${data.user._id}">Tài khoản</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="/user/logout">Đăng xuất</a></li>
                 </ul>

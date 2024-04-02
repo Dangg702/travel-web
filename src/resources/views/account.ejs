@@ -1,0 +1,44 @@
+<div style="padding: 0 100px">
+    <div class="user-profile">
+        <img class="rounded" src="<%= user.avatar %>" alt="avatar" style="width: 300px; height: 300px" />
+        <p class="text-upload">
+            <label class="btn" for="avatar"><a>Upload hình mới</a></label>
+            <input accept="image/*" id="avatar" style="visibility: hidden" type="file" />
+        </p>
+    </div>
+    <div class="user-dashboard">
+        <form action="">
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input
+                        type="text"
+                        readonly
+                        class="form-control-plaintext"
+                        id="staticEmail"
+                        value="<%= user.email %>"
+                    />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="username" class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="username" />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="fullName" class="col-sm-2 col-form-label">Tên đầy đủ</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="fullName" />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="phone" />
+                </div>
+            </div>
+            <button class="mb-3 row btn btn-lg btn-outline-primary">Lưu thay đổi</button>
+        </form>
+    </div>
+</div>

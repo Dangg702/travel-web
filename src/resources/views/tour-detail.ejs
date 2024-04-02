@@ -61,8 +61,8 @@
                                     </div>
                                     <div class="col-md 2 col-xs-12 packageInfo">
                                         <div class="action-book">
-                                            <a class="btn btn-buy-tour" href="/booking/book-tour/<%= tour.id %>">
-                                                Mua Online
+                                            <a class="btn btn-buy-tour" href="/booking/booking-form/<%= tour.id %>">
+                                                Mua
                                             </a>
                                         </div>
                                     </div>
@@ -75,13 +75,14 @@
                     <div class="title-description">Tour này có gì hay</div>
                     <div class="content-description"><%= tour.desc %></div>
                 </div>
-                <div class="row gx-5 row-image-box isdesktop">
-                    <% tour.img.forEach(itemSrc => { %>
+                <!-- <div class="row gx-5 row-image-box isdesktop">
+                    <% if (tour.img) { %> <% tour.img.forEach(itemSrc => { %>
                     <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
                         <img width="100%" height="80%" alt="image tour" src="<%= itemSrc %>" />
                     </div>
-                    <% }) %>
-                </div>
+                    <% }) %> <% } %>
+                    <div></div>
+                </div> -->
                 <div class="row-info-tour">
                     <div class="title-description">Chương trình tour</div>
                     <div class="content-description">
@@ -89,19 +90,7 @@
                             <p class="sub-title">Điểm đón</p>
                             <p><%= tour.departure %></p>
                         </div>
-                        <% tour.schedule.forEach(element => { %>
-                        <div>
-                            <p class="sub-title"><%= element.title %></p>
-                            <p class="detail"><%= element.content %></p>
-                            <img
-                                class="d-flex"
-                                style="width: 70%; margin: 0 auto"
-                                src="<%= element.img %>"
-                                alt="<%= element.title %>"
-                            />
-                        </div>
-
-                        <% }) %>
+                        <div class="schedule" data-schedule="<%= tour.scheduleHtml %>"></div>
                     </div>
                 </div>
                 <div class="row-rating tour-review">
@@ -164,13 +153,14 @@
                     </div>
                     <div class="col-xs-12 mt-3 mb-3">
                         <span class="recentReviews">
-                            Đánh giá gần đây
-                            <span class="fst-italic fw-light">(<%= reviews.length %> đánh giá)</span></span
-                        >
+                            Đánh giá gần đây <% if (reviews ) { %>
+                            <span class="fst-italic fw-light">(<%= reviews.length %> đánh giá)</span>
+                            <% } %>
+                        </span>
                     </div>
                     <div class="col-xs-12 mt-3 mb-3 review-detail-container">
-                        <% if (limitReviews.length > 0) { %> <% limitReviews.forEach(review => { %> <% const user =
-                        review.userId; %> <% tour = review.tourId %>
+                        <% if (limitReviews) { %> <% limitReviews.forEach(review => { %> <% const user = review.userId;
+                        %> <% tour = review.tourId %>
                         <div class="horizontalLine"></div>
                         <div class="review-detail pt-4 pb-4">
                             <div class="row">
@@ -215,3 +205,8 @@
         </div>
     </div>
 </div>
+<script>
+    const schedule = document.querySelector('.schedule');
+    const scheduleHtmlString = schedule.getAttribute('data-schedule');
+    schedule.innerHTML = scheduleHtmlString;
+</script>

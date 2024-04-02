@@ -13,14 +13,14 @@ function route(app) {
     app.use('/api/place', placeRouter);
     app.use('/api/user', userRouter);
     app.use('/api/tour', tourRouter);
+    app.use('/api/up', uploadRoute);
+    app.use('/api/review', reviewRouter);
+    app.use('/api/payment', paymentRouter);
+    app.use('/api', authRouter);
     app.use('/user', authRouter);
     app.use('/dashboard', dashboardRouter);
-    app.use('/api/up', uploadRoute);
-    app.use('/api', authRouter);
     app.use('/booking', bookingRouter);
     app.use('/', indexRouter);
-    app.use('/api/review',reviewRouter)
-    app.use('/api/payment',paymentRouter)
 }
 
 module.exports = route;
