@@ -6,7 +6,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
-const  jwtDecode  =require( 'jwt-decode');
+const jwtDecode = require('jwt-decode');
 
 dotenv.config();
 
@@ -21,7 +21,6 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 app.use(expressLayouts);
 app.set('layout', 'layouts/header-layout'); // set custom default layout
-
 
 app.use(cookieParser());
 // static files

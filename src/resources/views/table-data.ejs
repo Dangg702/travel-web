@@ -87,11 +87,8 @@
         const deleteButtons = document.querySelectorAll('.delete-place-link');
         deleteButtons.forEach((button) => {
             button.addEventListener('click', function (event) {
-                event.preventDefault(); // Ngăn chặn hành động mặc định của link
-
+                event.preventDefault();
                 const placeId = this.getAttribute('data-place-id'); // Lấy id từ data-place-id
-
-                // Gửi yêu cầu DELETE sử dụng Fetch API
                 fetch(`http://localhost:9000/api/place/delete-place/${placeId}`, {
                     method: 'DELETE',
                 })
@@ -102,14 +99,12 @@
                         return response.json();
                     })
                     .then((data) => {
-                        // Xử lý phản hồi từ server (nếu cần)
                         console.log(data.message);
                         // Load lại trang sau khi xóa thành công
                         window.location.reload();
                     })
                     .catch((error) => {
                         console.error('Error:', error);
-                        // Xử lý lỗi (nếu cần)
                     });
             });
         });

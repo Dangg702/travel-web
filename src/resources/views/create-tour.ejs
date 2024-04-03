@@ -14,7 +14,12 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Add Tour</h4>
-                    <form class="upload-form" id="upload-form">
+                    <form
+                        class="upload-form"
+                        id="upload-form"
+                        action="http://localhost:9000/api/tour/add-tour"
+                        method="post"
+                    >
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
@@ -53,7 +58,7 @@
                         </div>
                         <div class="form-group">
                             <label for="price">Price</label>
-                            <input type="text" class="form-control" id="price" name="price" placeholder="2.300.000" />
+                            <input type="text" class="form-control" id="price" name="price" placeholder="2,300,000" />
                         </div>
                         <div class="form-group">
                             <label for="departure">Departure</label>
@@ -85,25 +90,34 @@
                                 placeholder="xe khách"
                             />
                         </div>
-
-                        <div class="input-group mb-3 custom-file-button">
-                            <label class="input-group-text" for="inputGroupFile">Upload Image</label>
-                            <input
-                                type="file"
-                                class="form-control"
-                                id="image"
-                                name="image"
-                                accept="image/*"
-                            />
+                        <div class="form-group">
+                            <label for="scheduleHtml">Schedule</label>
+                            <textarea
+                                name="scheduleHtml"
+                                id="scheduleHtml"
+                                cols="30"
+                                rows="10"
+                                placeholder="This is Schedule content"
+                            >
+                            </textarea>
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="uploadAndAddPlace()">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="/ckeditor/ckeditor.js"></script>
 <script>
+    CKEDITOR.replace('scheduleHtml', {
+        extraPlugins: 'filebrowser',
+        filebrowserBrowseUrl: '/list', //upload location
+        filebrowserUploadMethod: 'form',
+        filebrowserUploadUrl: '/api/tour/upload', //route
+        removePlugins: 'exportpdf',
+    });
+
     async function uploadAndAddTour() {
         // Lấy thông tin từ biểu mẫu
         const name = document.getElementById('name').value;
@@ -162,11 +176,9 @@
             });
 
             const alertContainer = document.getElementById('alert-container');
-            
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to add tour.');
         }
     }
 </script>
-
