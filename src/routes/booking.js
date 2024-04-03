@@ -6,5 +6,6 @@ const { authUserMiddleware, authenticateToken } = require('../middleware/authMid
 
 router.get('/booking-form/:id', authUserMiddleware, bookingController.showBookTour);
 router.post('/book-tour/:id', authUserMiddleware, authenticateToken, bookingController.bookTour);
+router.patch('/update/:id', authUserMiddleware, authenticateToken, bookingController.updateBooking);
 
 module.exports = router;

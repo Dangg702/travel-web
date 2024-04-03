@@ -167,6 +167,9 @@ header {
   right: -45px;
   left: auto; }
 
+.dropdown-item:hover {
+  background-color: #fff; }
+
 /* icon */
 .navbar__ham {
   display: flex;

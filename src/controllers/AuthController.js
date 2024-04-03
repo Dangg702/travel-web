@@ -10,20 +10,17 @@ class AuthController {
     // POST /register
     register(req, res, next) {
         const { email, username, password } = req.body;
-
-        User.findOne({ email })
-            .then((user) => {
-                if (user) {
-                    res.redirect('/user/login');
-                } else {
-                    const hash = bcrypt.hashSync(password, 10);
-                    const user = new User({ email, username, password: hash });
-                    user.save()
-                        .then(() => {
-                            res.redirect('/');
-                        })
-                        .catch(next);
+        User.exists({ email })
+            .then((exists) => {
+                if (exists) {
+                    return res.redirect('/user/login');
                 }
+                const hash = bcrypt.hashSync(password, 10);
+                const user = new User({ email, username, password: hash });
+                return user.save();
+            })
+            .then(() => {
+                res.redirect('/');
             })
             .catch(next);
     }
@@ -58,12 +55,15 @@ class AuthController {
 
     // POST /logout
     logout(req, res, next) {
-        // Xóa token từ cookie
-        res.clearCookie('access_token');
-        res.clearCookie('refresh_token');
-        // Chuyển hướng người dùng đến trang đăng nhập hoặc trang chính
-        res.redirect('/user/login');
-        console.log('Đã logout');
+        try {
+            // Xóa token từ cookie
+            res.clearCookie('access_token');
+            res.clearCookie('refresh_token');
+            // Chuyển hướng người dùng đến trang đăng nhập hoặc trang chính
+            res.redirect('/user/login');
+        } catch (error) {
+            next(error);
+        }
     }
 
     // GET /check-login

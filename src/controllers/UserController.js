@@ -6,7 +6,7 @@ class UserController {
     async getAccount(req, res, next) {
         const userId = req.params.id;
         const user = await User.findById(userId);
-        res.render('account', { user });
+        res.render('account', { cssLink: '/css/account.css', user });
     }
 
     // GET /api/user/edit-form/:id
@@ -20,20 +20,20 @@ class UserController {
         }
     }
 
-    // PUT /api/user/update-user/:id
+    // PATCH /api/user/update-user/:id
     updateUser(req, res, next) {
         const userId = req.params.id;
         const updateData = req.body;
-        User.findByIdAndUpdate(userId, updateData, { new: true })
+        User.findByIdAndUpdate(userId, updateData)
             .then((updateUser) => {
                 const successMessage = 'User updated successfully';
-                res.write(
-                    '<script>alert("' +
-                        successMessage +
-                        '"); window.location.href="http://localhost:9000/api/user/manage";</script>',
-                );
-                res.end();
-
+                res.write('<script>alert("' + successMessage + '");</script>');
+                // res.write(
+                //     '<script>alert("' +
+                //         successMessage +
+                //         '"); window.location.href="http://localhost:9000/api/user/manage";</script>',
+                // );
+                // res.end();
                 return;
             })
             .catch(next);

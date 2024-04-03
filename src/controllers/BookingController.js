@@ -46,17 +46,16 @@ class BookingController {
             next(err);
         }
     }
-
-    // PUT /booking/update-tour/:id
-    async updateTour(req, res, next) {
+    // PATCH /booking/update-tour/:id
+    async updateBooking(req, res, next) {
         try {
-            const tourId = req.params.id;
+            const bookingId = req.params.id;
             const updateData = req.body;
-            const updatedTour = await Tour.findByIdAndUpdate(tourId, updateData, { new: true });
+            const updatedTour = await Booking.findByIdAndUpdate(bookingId, updateData);
             if (!updatedTour) {
-                return res.status(404).json({ message: 'No tour found' });
+                return res.status(404).json({ message: 'No booking found', status: 'fail' });
             }
-            res.status(200).json({ message: 'Tour updated successfully', status: 'ok', tour: updatedTour });
+            res.status(200).json({ message: 'Booking updated successfully', status: 'ok', tour: updatedTour });
         } catch (err) {
             next(err);
         }
@@ -70,6 +69,20 @@ class BookingController {
                 return res.status(404).json({ message: 'No tour found' });
             }
             res.status(200).json({ message: 'Tour deleted successfully', status: 'ok' });
+        } catch (err) {
+            next(err);
+        }
+    }
+    // GET /user/account/:id/booking-info
+    async getUserBookingInfo(req, res, next) {
+        try {
+            const userId = req.params.id;
+            const bookings = await Booking.find({ userId }).populate('tourId');
+            console.log('bookings', bookings);
+            res.render('booking-info', {
+                cssLink: '/css/booking-info.css',
+                bookings,
+            });
         } catch (err) {
             next(err);
         }
