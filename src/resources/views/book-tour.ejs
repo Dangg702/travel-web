@@ -252,3 +252,49 @@
         </div>
     </div>
 </div>
+<!-- Mã HTML -->
+<button id="btnThanhToan" class="btn btn-lg btn-outline-primary w-100" style="height: 40px">
+    Thanh toán
+</button>
+
+<script>
+    // JavaScript để xử lý sự kiện click vào nút "Thanh toán"
+    document.getElementById('btnThanhToan').addEventListener('click', async () => {
+        try {
+            const tourId = '<% tour._id %>'; // Thay đổi cách lấy tourId tùy theo mã EJS của bạn
+            const userId = ''; // Thay đổi cách lấy userId tùy theo mã EJS của bạn
+            const numOfPeople = document.querySelector('input[name="numOfPeople"]').value;
+            const totalPrice = document.getElementById('total-price').innerText;
+            const contactName = document.querySelector('input[name="contact[name]"]').value;
+            const contactPhone = document.querySelector('input[name="contact[mobilePhone]"]').value;
+            const contactEmail = document.querySelector('input[name="contact[email]"]').value;
+            const contactAddress = document.querySelector('input[name="contact[address]"]').value;
+
+            // Gửi dữ liệu thanh toán đến server
+            const response = await fetch('/api/payment/vnpay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    tourId,
+                    userId,
+                    numOfPeople,
+                    totalPrice,
+                    contact: {
+                        name: contactName,
+                        mobilePhone: contactPhone,
+                        email: contactEmail,
+                        address: contactAddress,
+                    },
+                }),
+            });
+
+            // Chuyển hướng người dùng đến trang thanh toán của VNPay
+            window.location.href = await response.text();
+        } catch (error) {
+            console.error('Error occurred during payment:', error);
+            // Xử lý lỗi khi gửi dữ liệu đến server
+        }
+    });
+</script>

@@ -1,12 +1,9 @@
 
-    <h1 style="margin:100px">Test Payment</h1>
-    <form style="margin:100px" action="/api/payment/create" method="POST">
-        <!-- Các trường dữ liệu cần thiết cho việc tạo yêu cầu thanh toán -->
-        <input type="hidden" name="tourId" value="YOUR_TOUR_ID">
-        <input type="hidden" name="userId" value="YOUR_USER_ID">
-        <input type="hidden" name="numOfPeople" value="1">
-        <input type="hidden" name="unitPrice" value="100000"> <!-- Giá mỗi vé -->
-        <input type="hidden" name="totalPrice" value="100000"> <!-- Tổng giá -->
-        <button type="submit">Proceed to Payment</button>
+    <h1 style="margin: 200px;">Test Payment</h1>
+    <form action="/api/payment/payment" method="post">
+        <label for="idbooking">ID Booking:</label>
+        <input type="text" id="idbooking" name="idbooking" required><br><br>
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount" required><br><br>
+        <button type="submit">Pay Now</button>
     </form>
-
