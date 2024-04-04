@@ -40,7 +40,7 @@ class BookingController {
                 };
                 const newBooking = new Booking(bookingData);
                 await newBooking.save();
-                res.status(200).json({ message: 'Tour booked successfully', status: 'ok' });
+                res.status(200).json({ message: 'Tour booked successfully', status: 'ok',data: newBooking });
             }
         } catch (err) {
             next(err);

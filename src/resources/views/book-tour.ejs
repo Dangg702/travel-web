@@ -176,7 +176,8 @@
                                 id="btnBooking"
                                 class="btn btn-lg btn-outline-primary w-100"
                                 style="height: 40px"
-                                type="submit"
+                                type="button"
+                                onclick="handleSubmitForm()"
                             >
                                 Thanh toán
                             </button>
@@ -256,8 +257,7 @@
         const total = price * numOfPeople.value;
         totalPrice.innerText = total.toLocaleString('en-US', { useGrouping: true });
     }
-    bookingForm.addEventListener('submit', (e) => {
-       
+    function handleSubmitForm() {
         const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
         if (!paymentMethod) {
             alert('Vui lòng chọn phương thức thanh toán');
@@ -275,7 +275,24 @@
             numOfPeople: numOfPeople.value,
         };
 
-        window.location.href = `/api/payment/create_payment_url?tourId=${tourId}&tourPrice=${tourPrice}`;
-    });
-    
+        fetch(`http://localhost:9000/booking/book-tour/${tourId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(function (response) {
+                console.log(response);
+                const dataBooking = response.json();
+                if (response.ok) {
+                    alert('Đặt tour thành công');
+                    console.log('dataBooking', dataBooking);
+                    window.location.href = `/api/payment/create_payment_url?orderId=aaaaa&amount=12000000`;
+                }
+            })
+            .catch(function (error) {
+                console.error('Lỗi khi gửi dữ liệu lên server:', error);
+            });
+    }
 </script>
