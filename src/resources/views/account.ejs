@@ -87,7 +87,7 @@
     async function uploadCloud(userId) {
         const avatar = document.getElementById('avatarInput').files[0];
         const formData = new FormData();
-        formData.append('avatar', avatar);
+        formData.append('image', avatar);
         try {
             const cloudinaryResponse = await fetch('/api/up/upload', {
                 method: 'POST',
