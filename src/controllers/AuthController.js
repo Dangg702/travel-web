@@ -79,13 +79,11 @@ class AuthController {
             if (err) {
                 console.error('Error decoding JWT:', err);
             } else {
-                console.log('Decoded JWT payload:', decoded);
                 req.user = decoded;
                 // Sử dụng id từ decoded để tìm kiếm người dùng trong model user
                 User.findOne({ _id: decoded.id })
                     .then((user) => {
                         if (user) {
-                            console.log('User found:', user);
                             // Thực hiện các thao tác tiếp theo với người dùng đã tìm thấy
                             if (!access_token) {
                                 res.json({ isLoggedIn: false, user: user });
