@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const dotenvFlow = require('dotenv-flow');
+dotenvFlow.config();
 
 const connect = () => {
     mongoose

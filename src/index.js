@@ -7,8 +7,9 @@ const methodOverride = require('method-override');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const jwtDecode = require('jwt-decode');
-
-dotenv.config();
+const dotenvFlow = require('dotenv-flow');
+dotenvFlow.config();
+// dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -46,6 +47,8 @@ app.use(cors());
 // Routes init
 route(app);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });
+
+module.exports = { app, server };

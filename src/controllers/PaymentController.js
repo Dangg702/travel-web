@@ -1,42 +1,30 @@
-const vnpay = require('vnpay');
-const Booking = require('../models/Booking');
-//const config = require('../config');
+const Vnpay = require('vnpay');
+const config = require('../config/vnpay');
 
-class PaymentController {
-    async createPaymentRequest(req, res) {
-        try {
-            const { tourId, userId, numOfPeople, unitPrice, totalPrice } = req.body;
+exports.createPayment = async (req, res) => {
+  try {
+    const { idbooking, totalprice } = req.body;
 
-            // Tạo yêu cầu thanh toán
-            const vnpayConfig = {
-                vnp_TmnCode: 'B9J82O5K',
-                vnp_HashSecret: 'CYKEBWCVDUWVRNICDHGUWDGRNNVXZGBS',
-                vnp_Url: 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html',
-                vnp_ReturnUrl: 'http://localhost:9000/api/payment/create',
-            };
+    // Lấy cấu hình từ file config
+    const vnpayConfig = config.vnpay;
 
-            const orderInfo = `Thanh toán đơn đặt tour ${tourId} của người dùng ${userId}`;
-            const vnpParams = {
-                vnp_Amount: parseInt(totalPrice), // Số tiền thanh toán, tính bằng VNĐ và nhân 100
-                vnp_Command: 'pay',
-                vnp_CreateDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
-                vnp_CurrCode: 'VND',
-                vnp_Locale: 'vn',
-                vnp_OrderInfo: orderInfo,
-                vnp_OrderType: 'billpayment',
-                vnp_ReturnUrl: 'http://localhost:9000/api/payment/create',
-               // vnp_TxnRef: orderId.toString(),
-                vnp_Version: '2.0.0',
-            };
+    // Khởi tạo đối tượng Vnpay với cấu hình
+    const vnpay = new Vnpay(vnpayConfig);
 
-            //const paymentUrl = vnpayClient.buildPaymentUrl(vnpParams);
-            //res.json({ paymentUrl });
-        } catch (error) {
-            console.error('Error creating payment request:', error);
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    }
-    
-}
+    // Dữ liệu thanh toán
+    const paymentData = {
+      amount: totalprice,
+      orderInfo: `Payment for booking ${idbooking}`,
+      returnUrl: vnpayConfig.vnp_ReturnUrl,
+      ipAddr: req.ip, // Lấy địa chỉ IP của client
+    };
 
-module.exports = new PaymentController();
+    // Tạo URL thanh toán
+    const paymentUrl = await vnpay.buildPaymentUrl(paymentData);
+
+    // Redirect đến trang thanh toán
+    res.redirect(paymentUrl);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

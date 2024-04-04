@@ -24,11 +24,11 @@ fetch('/user/check-login')
                     <img src="${data.user.avatar}" alt="${data.user.username}" style="width: 50px; height: 48px; border-radius: 50%;">
                 </a>
                 <ul class="dropdown-menu navbar__menu" aria-labelledby="accountDropdown">
-                    <li><a class="dropdown-item" href="#">Thông tin đơn hàng</a></li>
+                    <li><a class="dropdown-item" href="http://localhost:9000/user/account/${data.user._id}/booking-info">Thông tin đơn hàng</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="/user/account/${data.user._id}">Tài khoản</a></li>
+                    <li><a class="dropdown-item" href="http://localhost:9000/user/account/${data.user._id}">Tài khoản</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="/user/logout">Đăng xuất</a></li>
+                    <li><a class="dropdown-item" href="http://localhost:9000/user/logout">Đăng xuất</a></li>
                 </ul>
             `;
             // userAvatar.src = data.user.avatar;
@@ -51,7 +51,6 @@ handleReviews = () => {
     const reviewsString = moreReviews.getAttribute('data-reviews');
     // Convert reviewsString to an array
     const reviews = JSON.parse(reviewsString);
-    console.log('typeof:', typeof reviews);
     const templateCode = `
     <% if (reviews.length > 0) { %>
       <% reviews.forEach(review => { %>

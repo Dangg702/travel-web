@@ -40,36 +40,63 @@ class BookingController {
                 };
                 const newBooking = new Booking(bookingData);
                 await newBooking.save();
-                res.status(200).json({ message: 'Tour booked successfully', status: 'ok' });
+                res.status(200).json({ message: 'Tour booked successfully', status: 'ok',data: newBooking });
             }
         } catch (err) {
             next(err);
         }
     }
-
-    // PUT /booking/update-tour/:id
-    async updateTour(req, res, next) {
+    // PATCH /booking/update/:id
+    async updateBooking(req, res, next) {
         try {
-            const tourId = req.params.id;
+            const bookingId = req.params.id;
             const updateData = req.body;
-            const updatedTour = await Tour.findByIdAndUpdate(tourId, updateData, { new: true });
-            if (!updatedTour) {
-                return res.status(404).json({ message: 'No tour found' });
+            const updatedBooking = await Booking.findByIdAndUpdate(bookingId, updateData);
+            if (!updatedBooking) {
+                return res.status(404).json({ message: 'No booking found', status: 'fail' });
             }
-            res.status(200).json({ message: 'Tour updated successfully', status: 'ok', tour: updatedTour });
+            res.status(200).json({ message: 'Booking updated successfully', status: 'ok', tour: updatedTour });
         } catch (err) {
             next(err);
         }
     }
-    // DELETE /booking/delete-tour/:id
-    async deleteTour(req, res, next) {
+    // DELETE /booking/delete-booking/:id
+    async deleteBooking(req, res, next) {
         try {
-            const tourId = req.params.id;
-            const deletedTour = await Tour.findByIdAndDelete(tourId);
-            if (!deletedTour) {
-                return res.status(404).json({ message: 'No tour found' });
+            const bookingId = req.params.id;
+            const deletedBooking = await Booking.findByIdAndDelete(bookingId);
+            if (!deletedBooking) {
+                return res.status(404).json({ message: 'No booking found' });
             }
-            res.status(200).json({ message: 'Tour deleted successfully', status: 'ok' });
+            res.status(200).json({ message: 'Booking deleted successfully', status: 'ok' });
+        } catch (err) {
+            next(err);
+        }
+    }
+    // GET /user/account/:id/booking-info
+    async getUserBookingInfo(req, res, next) {
+        try {
+            const userId = req.params.id;
+            const bookings = await Booking.find({ userId }).populate('tourId');
+            console.log('bookings', bookings);
+            res.render('booking-info', {
+                cssLink: '/css/booking-info.css',
+                bookings,
+            });
+        } catch (err) {
+            next(err);
+        }
+    }
+    // GET /booking/all-bookings
+    async getAllBookings(req, res, next) {
+        try {
+            const bookings = await Booking.find();
+            // res.status(200).json({ message: 'Success', status: 'ok', bookings });
+            console.log('bookings', bookings);
+            res.render('admin-booking', {
+                layout: 'layouts/dashboard-layout',
+                bookings,
+            });
         } catch (err) {
             next(err);
         }
