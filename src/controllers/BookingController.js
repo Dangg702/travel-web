@@ -46,13 +46,13 @@ class BookingController {
             next(err);
         }
     }
-    // PATCH /booking/update-tour/:id
+    // PATCH /booking/update/:id
     async updateBooking(req, res, next) {
         try {
             const bookingId = req.params.id;
             const updateData = req.body;
-            const updatedTour = await Booking.findByIdAndUpdate(bookingId, updateData);
-            if (!updatedTour) {
+            const updatedBooking = await Booking.findByIdAndUpdate(bookingId, updateData);
+            if (!updatedBooking) {
                 return res.status(404).json({ message: 'No booking found', status: 'fail' });
             }
             res.status(200).json({ message: 'Booking updated successfully', status: 'ok', tour: updatedTour });
@@ -60,15 +60,15 @@ class BookingController {
             next(err);
         }
     }
-    // DELETE /booking/delete-tour/:id
-    async deleteTour(req, res, next) {
+    // DELETE /booking/delete-booking/:id
+    async deleteBooking(req, res, next) {
         try {
-            const tourId = req.params.id;
-            const deletedTour = await Tour.findByIdAndDelete(tourId);
-            if (!deletedTour) {
-                return res.status(404).json({ message: 'No tour found' });
+            const bookingId = req.params.id;
+            const deletedBooking = await Booking.findByIdAndDelete(bookingId);
+            if (!deletedBooking) {
+                return res.status(404).json({ message: 'No booking found' });
             }
-            res.status(200).json({ message: 'Tour deleted successfully', status: 'ok' });
+            res.status(200).json({ message: 'Booking deleted successfully', status: 'ok' });
         } catch (err) {
             next(err);
         }
@@ -81,6 +81,20 @@ class BookingController {
             console.log('bookings', bookings);
             res.render('booking-info', {
                 cssLink: '/css/booking-info.css',
+                bookings,
+            });
+        } catch (err) {
+            next(err);
+        }
+    }
+    // GET /booking/all-bookings
+    async getAllBookings(req, res, next) {
+        try {
+            const bookings = await Booking.find();
+            // res.status(200).json({ message: 'Success', status: 'ok', bookings });
+            console.log('bookings', bookings);
+            res.render('admin-booking', {
+                layout: 'layouts/dashboard-layout',
                 bookings,
             });
         } catch (err) {

@@ -1,4 +1,5 @@
 const Place = require('../models/Place');
+<<<<<<< HEAD
 const User = require('../models/User');
 
 const jwt = require('jsonwebtoken'); // Thêm dòng này
@@ -30,6 +31,13 @@ class DashboardController {
             }
         });
         
+=======
+const Booking = require('../models/Booking');
+class DashboardController {
+    async getIndex(req, res, next) {
+        const bookings = await Booking.find();
+        res.render('dashboard', { layout: 'layouts/dashboard-layout', bookings });
+>>>>>>> 03454a85631f9b1f0628781366719bcbebd10a52
     }
 }
 
