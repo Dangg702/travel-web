@@ -7,7 +7,6 @@ const uploadController = require('../controllers/uploadController');
 
 // Hiển thị trang upload
 
-
 // Xử lý tải lên ảnh
 router.post('/upload', uploadMiddleware.single('image'), uploadController.uploadImage);
 

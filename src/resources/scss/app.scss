@@ -29,6 +29,9 @@ a {
     color: $text-color;
     font-size: 1.6rem;
 }
+main {
+    margin-top: 70px;
+}
 
 /* === Overlay === */
 #overlay {
@@ -125,13 +128,14 @@ header {
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background-color: $light-pink-color;
     padding: 4px 20px;
 }
-
+.navbar-nav .dropdown-menu {
+    position: absolute;
+    border: none;
+    box-shadow: $shadow;
+}
 /* Logo */
 .navbar__logo img {
     width: 63px;
@@ -147,9 +151,7 @@ header {
 
 /* Menu */
 .navbar__links {
-    position: fixed;
-    top: 0;
-    left: 0;
+    flex-direction: row;
     width: 60%;
     height: 100%;
     transform: translateX(-100%);
@@ -184,7 +186,16 @@ header {
     margin-left: 25px;
     border: 2px solid $pink-color;
 }
-
+.navbar__menu {
+    z-index: 10000;
+}
+.dropdown-menu[data-bs-popper] {
+    right: -45px;
+    left: auto;
+}
+.dropdown-item:hover {
+    background-color: #fff;
+}
 /* icon */
 .navbar__ham {
     display: flex;
@@ -259,6 +270,7 @@ header {
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        flex-direction: row;
     }
     .navbar__link {
         margin: 0 25px;

@@ -3,7 +3,5 @@ const router = express.Router();
 const { authMiddleware } = require('../middleware/authMiddleware');
 const dashboardController = require('../controllers/DashboardController');
 
-router.get('/',authMiddleware , async (req, res, next) => {
-    await dashboardController.getIndex(req, res, next);
-});
+router.get('/', authMiddleware, dashboardController.getIndex);
 module.exports = router;

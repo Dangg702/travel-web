@@ -4,27 +4,23 @@ const { generateAccessToken, generateRefreshToken } = require('../services/JwtSe
 const jwt = require('jsonwebtoken'); // Thêm dòng này
 const cookieParser = require('cookie-parser'); // Thêm dòng này
 
-const  jwtDecode  =require( 'jwt-decode');
-
+const jwtDecode = require('jwt-decode');
 
 class AuthController {
     // POST /register
     register(req, res, next) {
         const { email, username, password } = req.body;
-
-        User.findOne({ email })
-            .then((user) => {
-                if (user) {
-                    res.redirect('/user/login');
-                } else {
-                    const hash = bcrypt.hashSync(password, 10);
-                    const user = new User({ email, username, password: hash });
-                    user.save()
-                        .then(() => {
-                            res.redirect('/');
-                        })
-                        .catch(next);
+        User.exists({ email })
+            .then((exists) => {
+                if (exists) {
+                    return res.redirect('/user/login');
                 }
+                const hash = bcrypt.hashSync(password, 10);
+                const user = new User({ email, username, password: hash });
+                return user.save();
+            })
+            .then(() => {
+                res.redirect('/');
             })
             .catch(next);
     }
@@ -59,54 +55,53 @@ class AuthController {
 
     // POST /logout
     logout(req, res, next) {
-        // Xóa token từ cookie
-        res.clearCookie('access_token');
-        res.clearCookie('refresh_token');
-        // Chuyển hướng người dùng đến trang đăng nhập hoặc trang chính
-        res.redirect('/user/login');
-        console.log('Đã logout');
+        try {
+            // Xóa token từ cookie
+            res.clearCookie('access_token');
+            res.clearCookie('refresh_token');
+            // Chuyển hướng người dùng đến trang đăng nhập hoặc trang chính
+            res.redirect('/user/login');
+        } catch (error) {
+            next(error);
+        }
     }
 
     // GET /check-login
     checkLoginStatus(req, res, next) {
-        // Kiểm tra xem cookies có tồn tại không
-        if (!req.cookies.access_token) {
-            res.json({ iisLoggedIn: false });
-            return; // Dừng hàm và trả về kết quả
-        }
-
-        // Kiểm tra xem cookie access_token có tồn tại không
         const access_token = req.cookies.access_token;
-        jwt.verify(access_token, process.env.ACCESS_TOKEN, function(err, decoded) {
+        // Kiểm tra xem cookies có tồn tại không
+        if (!access_token) {
+            res.json({ isLoggedIn: false });
+            return;
+        }
+        // Kiểm tra xem cookie access_token có tồn tại không
+        jwt.verify(access_token, process.env.ACCESS_TOKEN, function (err, decoded) {
             if (err) {
                 console.error('Error decoding JWT:', err);
             } else {
                 console.log('Decoded JWT payload:', decoded);
-                
+                req.user = decoded;
                 // Sử dụng id từ decoded để tìm kiếm người dùng trong model user
                 User.findOne({ _id: decoded.id })
-                    .then(user => {
+                    .then((user) => {
                         if (user) {
                             console.log('User found:', user);
                             // Thực hiện các thao tác tiếp theo với người dùng đã tìm thấy
                             if (!access_token) {
-                                res.json({ isLoggedIn: false,user:user });
+                                res.json({ isLoggedIn: false, user: user });
                                 return; // Dừng hàm và trả về kết quả
                             } else {
-                                
-                                res.json({ isLoggedIn: true ,user:user });
+                                res.json({ isLoggedIn: true, user: user });
                             }
                         } else {
                             console.log('User not found');
                         }
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         console.error('Error finding user:', err);
                     });
-                   
             }
         });
-        
     }
 }
 

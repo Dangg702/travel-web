@@ -6,9 +6,10 @@ const path = require('path');
 const methodOverride = require('method-override');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
-const  jwtDecode  =require( 'jwt-decode');
-
-dotenv.config();
+const jwtDecode = require('jwt-decode');
+const dotenvFlow = require('dotenv-flow');
+dotenvFlow.config();
+// dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -21,7 +22,6 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 app.use(expressLayouts);
 app.set('layout', 'layouts/header-layout'); // set custom default layout
-
 
 app.use(cookieParser());
 // static files
@@ -47,6 +47,8 @@ app.use(cors());
 // Routes init
 route(app);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });
+
+module.exports = { app, server };

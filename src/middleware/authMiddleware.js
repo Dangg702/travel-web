@@ -8,16 +8,21 @@ const authMiddleware = (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
             if (err) {
-                return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
+                res.render('404', {
+                    layout: false,
+                    message: 'Unauthorization',
+                    status: 'ERROR',
+                });
             }
-            // console.log('user: ', user);
             if (user.isAdmin) {
                 next();
             } else {
-                //res.redirect('/');
-                //return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
-                res.render('403', { 
-                    user
+                // res.redirect('/user/login');
+                res.render('403', {
+                    layout: false,
+                    user,
+                    message: 'Unauthorization',
+                    status: 'ERROR',
                 });
             }
         });
@@ -34,13 +39,12 @@ const authUserMiddleware = (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
             if (err) {
-                return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
+                // return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
+                res.redirect('/user/login');
             }
-            // console.log('user: ', user);
             if (user.isAdmin || user.name === userName) {
                 next();
             } else {
-                //return res.status(404).json({ message: 'Unauthorization', status: 'ERROR' });
                 res.redirect('/user/login');
             }
         });
@@ -49,4 +53,26 @@ const authUserMiddleware = (req, res, next) => {
     }
 };
 
-module.exports = { authMiddleware, authUserMiddleware };
+// phương thức middleware authenticateToken để xác thực access token.
+// Sau đó, trong xử lý endpoint, có thể truy cập thông tin người dùng từ req.user
+// và sử dụng nó trong xử lý.
+const authenticateToken = (req, res, next) => {
+    const access_token = req.cookies.access_token;
+    // Kiểm tra xem cookies có tồn tại không. Nếu tồn tại thì thực hiện xác thực token
+    if (!access_token) {
+        res.json({ isLoggedIn: false });
+        return;
+    }
+    jwt.verify(access_token, process.env.ACCESS_TOKEN, function (err, user) {
+        if (err) {
+            console.error('Error decoding JWT:', err);
+            res.render('403', { layout: false });
+        } else {
+            // console.log('Decoded JWT payload:', decoded);
+            req.user = user;
+            next();
+        }
+    });
+};
+
+module.exports = { authMiddleware, authUserMiddleware, authenticateToken };

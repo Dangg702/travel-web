@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-md-8 col-sm-12 col-xs-12">
             <div class="payment-wrap bookingForm">
-                <form role="form" method="post" class="form" id="info-form" novalidate="">
-                    <div class="no-padding">
+                <form method="post" class="form" id="info-form">
+                    <div>
                         <div class="title">
                             <h3>SỐ LƯỢNG HÀNH KHÁCH</h3>
                         </div>
@@ -17,17 +17,18 @@
                                     <input
                                         type="number"
                                         name="numOfPeople"
-                                        placeholder=""
-                                        value="1"
+                                        id="numOfPeople"
                                         class="form-control has-value"
                                         required="required"
+                                        value="1"
                                         min="1"
                                         pattern="^\d+$"
+                                        oninput="handleNumOfPeople()"
                                     />
                                     <span class="error"></span>
                                 </div>
                             </div>
-                            <div class="col-md-7 col-sm-7 col-xs-12 no-padding"></div>
+                            <div class="col-md-7 col-sm-7 col-xs-12"></div>
                         </div>
                     </div>
                     <div class="title">
@@ -37,13 +38,13 @@
                     <div class="methods">
                         <div class="method" data-payment-type="offline">
                             <input
-                                value="1"
+                                value="offline"
                                 style="display: none"
                                 type="radio"
                                 id="pament-method3"
                                 data-fee="0"
                                 class="payment-method"
-                                name="method"
+                                name="paymentMethod"
                             />
                             <div class="method-content">
                                 <label class="title" toggle="Cash" for="pament-method3">
@@ -77,13 +78,13 @@
                         </div>
                         <div class="method" data-payment-type="online">
                             <input
-                                value="6"
+                                value="online"
                                 style="display: none"
                                 type="radio"
                                 id="pament-method5"
                                 data-fee="0"
                                 class="payment-method"
-                                name="method"
+                                name="paymentMethod"
                             />
                             <div class="method-content">
                                 <label class="title" toggle="Momo" for="pament-method5">
@@ -113,12 +114,11 @@
                                     <label>Tên (*)</label>
                                     <input
                                         type="text"
-                                        name="contact[name]"
+                                        name="contactInfo[name]"
                                         placeholder=""
                                         value=""
                                         class="form-control"
-                                        required="required"
-                                        data-validation="required"
+                                        required
                                     />
                                     <span class="error"></span>
                                 </div>
@@ -128,16 +128,11 @@
                                     <label>Số điện thoại (*)</label>
                                     <input
                                         type="text"
-                                        name="contact[mobilePhone]"
+                                        name="contactInfo[mobilePhone]"
                                         placeholder=""
                                         value=""
                                         class="form-control"
-                                        required="required"
-                                        pattern="^(\d{8,})$"
-                                        maxlength="15"
-                                        data-validation="required custom length"
-                                        data-validation-regexp="^(\d{8,})$"
-                                        data-validation-length="max15"
+                                        required
                                     />
                                     <span class="error"></span>
                                 </div>
@@ -149,12 +144,11 @@
                                     <label>Email (*)</label>
                                     <input
                                         type="email"
-                                        name="contact[email]"
+                                        name="contactInfo[email]"
                                         placeholder=""
                                         value=""
                                         class="form-control"
-                                        required="required"
-                                        data-validation="required email"
+                                        required
                                     />
                                     <span class="error"></span>
                                 </div>
@@ -164,7 +158,7 @@
                                     <label>Địa chỉ (*)</label>
                                     <input
                                         type="text"
-                                        name="contact[address]"
+                                        name="contactInfo[address]"
                                         placeholder=""
                                         value=""
                                         class="form-control"
@@ -178,7 +172,12 @@
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="buttonArea galleryBtnArea">
-                            <button href="#" class="btn btn-lg btn-outline-primary w-100" style="height: 40px">
+                            <button
+                                id="btnBooking"
+                                class="btn btn-lg btn-outline-primary w-100"
+                                style="height: 40px"
+                                type="submit"
+                            >
                                 Thanh toán
                             </button>
                         </div>
@@ -188,13 +187,16 @@
         </div>
         <div class="col-md-4 col-sm-12 col-xs-12">
             <div class="bookDetailsInfo">
-                <img class="w-100" src="<%= tour.placeData.img %>" alt="image" />
+                <img class="w-100" src="<%= tour.placeData.img %>" alt="image" style="height: 333px" />
                 <div class="infoArea">
                     <h3 class="mb-4">
                         <a target="_blank" href="/api/tour/get-tour/<%= tour.name %>"><%= tour.name%></a>
                     </h3>
                     <ul class="mb-4 list-unstyled">
-                        <li><i class="fa fa-barcode me-2" aria-hidden="true"></i>Code: <span><%= tour._id%></span></li>
+                        <li>
+                            <i class="fa fa-barcode me-2" aria-hidden="true"></i>Code:
+                            <span class="tour-id"><%= tour._id%></span>
+                        </li>
                         <li>
                             <i class="fa fa-calendar-minus me-2" aria-hidden="true"></i>Ngày đi:
                             <span><%= tour.dateGo %></span>
@@ -209,20 +211,13 @@
                         </li>
                         <li id="liAdult" class="display-hidden" style="display: list-item">
                             <i class="fa fa-user-secret me-2" aria-hidden="true"></i>Giá:
-                            <span><strong>9.979.000</strong> đ</span><span id="adult"> X 1</span>
-                        </li>
-                        <li id="liExtraServices" class="display-hidden" style="display: none">
-                            <i class="fa fa-cart-plus me-2" aria-hidden="true"></i>Dịch vụ cộng thêm :
-                            <span><strong id="priceExtraServices">0</strong> đ</span>
-                        </li>
-                        <li id="liPromotion" class="display-hidden" style="display: none">
-                            <i class="fa fa-minus-square me-2" aria-hidden="true"></i>Mã khuyến mãi :
-                            <span><strong id="promotionPrice"></strong> đ</span>
+                            <span><strong><%= tour.price %></strong> đ</span
+                            ><span id="adult" data-price="<%= tour.price %>"> x 1</span>
                         </li>
                     </ul>
                     <div class="priceTotal">
                         <h2>
-                            Tổng: <span id="total-price">9.979.000</span>
+                            Tổng: <span id="totalPrice" name="totalPrice"> <%= tour.price %></span>
                             <span
                                 style="
                                     font-size: 16px;
@@ -236,65 +231,51 @@
                             >
                         </h2>
                     </div>
-                    <div id="prepayment-total" class="prepayment-total display-hidden" style="display: none">
-                        <div class="prepayment-total-title">Thanh toán</div>
-                        <div class="prepayment-total-description">
-                            Bạn đã chọn hình thức <strong> Đặt cọc 50%</strong>
-                        </div>
-                        <div class="prepayment-total-price">
-                            Cần thanh toán:
-                            <span id="prepayment-total-price" class="price-amount">4.989.500</span>
-                            <span class="price-label"> đ</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Mã HTML -->
-<button id="btnThanhToan" class="btn btn-lg btn-outline-primary w-100" style="height: 40px">
-    Thanh toán
-</button>
-
 <script>
-    // JavaScript để xử lý sự kiện click vào nút "Thanh toán"
-    document.getElementById('btnThanhToan').addEventListener('click', async () => {
-        try {
-            const tourId = '<% tour._id %>'; // Thay đổi cách lấy tourId tùy theo mã EJS của bạn
-            const userId = ''; // Thay đổi cách lấy userId tùy theo mã EJS của bạn
-            const numOfPeople = document.querySelector('input[name="numOfPeople"]').value;
-            const totalPrice = document.getElementById('total-price').innerText;
-            const contactName = document.querySelector('input[name="contact[name]"]').value;
-            const contactPhone = document.querySelector('input[name="contact[mobilePhone]"]').value;
-            const contactEmail = document.querySelector('input[name="contact[email]"]').value;
-            const contactAddress = document.querySelector('input[name="contact[address]"]').value;
+    const numOfPeople = document.querySelector('#numOfPeople');
+    const adult = document.querySelector('#adult');
+    const priceStr = adult.getAttribute('data-price');
+    const price = parseInt(priceStr.replace(/\,/g, ''));
+    const totalPrice = document.querySelector('#totalPrice');
+    const bookingForm = document.querySelector('#info-form');
+    const tourId = document.querySelector('.tour-id').innerText;
+    const data = new FormData();
+    const btnBooking = document.querySelector('#btnBooking');
 
-            // Gửi dữ liệu thanh toán đến server
-            const response = await fetch('/api/payment/vnpay', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    tourId,
-                    userId,
-                    numOfPeople,
-                    totalPrice,
-                    contact: {
-                        name: contactName,
-                        mobilePhone: contactPhone,
-                        email: contactEmail,
-                        address: contactAddress,
-                    },
-                }),
-            });
-
-            // Chuyển hướng người dùng đến trang thanh toán của VNPay
-            window.location.href = await response.text();
-        } catch (error) {
-            console.error('Error occurred during payment:', error);
-            // Xử lý lỗi khi gửi dữ liệu đến server
+    function handleNumOfPeople() {
+        numOfPeople.value = numOfPeople.value;
+        adult.innerText = ' x ' + numOfPeople.value;
+        calcTotalPrice(price);
+    }
+    function calcTotalPrice(price) {
+        const total = price * numOfPeople.value;
+        totalPrice.innerText = total.toLocaleString('en-US', { useGrouping: true });
+    }
+    bookingForm.addEventListener('submit', (e) => {
+       
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+        if (!paymentMethod) {
+            alert('Vui lòng chọn phương thức thanh toán');
+            return;
         }
+        const contact = {
+            name: document.querySelector('input[name="contactInfo[name]"]').value,
+            mobilePhone: document.querySelector('input[name="contactInfo[mobilePhone]"]').value,
+            email: document.querySelector('input[name="contactInfo[email]"]').value,
+            address: document.querySelector('input[name="contactInfo[address]"]').value,
+        };
+        const data = {
+            contactInfo: contact,
+            paymentMethod: paymentMethod.value,
+            numOfPeople: numOfPeople.value,
+        };
+
+        window.location.href = `/api/payment/create_payment_url?tourId=${tourId}&tourPrice=${tourPrice}`;
     });
+    
 </script>

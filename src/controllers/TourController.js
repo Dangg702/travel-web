@@ -1,5 +1,7 @@
 const Tour = require('../models/Tour');
 const review = require('../controllers/reviewController');
+const fs = require('fs');
+
 class TourController {
     async show(req, res, next) {
         try {
@@ -8,25 +10,33 @@ class TourController {
             next(err);
         }
     }
-
     createForm(req, res, next) {
         res.render('create-tour', { layout: 'layouts/dashboard-layout' });
     }
-
+    async editForm(req, res, next) {
+        const tourId = req.params.id;
+        const tour = await Tour.findById(tourId);
+        if (!tour) {
+            res.status(404).json({ message: 'Tour not found' });
+        } else {
+            res.render('edit-tour', { layout: 'layouts/dashboard-layout', tour });
+        }
+    }
     // POST api/tour/add-tour
     async addTour(req, res, next) {
         try {
             const newTour = new Tour(req.body);
-            const savedTour = await newTour.save();
-            console.log(savedTour);
-            return res.json({ message: 'Tour created successfully', data: savedTour, isupload: true });
+            await newTour.save();
+            const successMessage = 'Tour created successfully';
+            res.write(
+                '<script>alert("' + successMessage + '"); window.location.href="/api/tour/create-tour";</script>',
+            );
+            res.end(); // Add this line to end the response
+            return;
         } catch (err) {
             console.log(err);
             next(err);
         }
-    }
-    createForm(req, res, next) {
-        res.render('create-tour', { layout: 'layouts/dashboard-layout' });
     }
     // PUT api/tour/edit-tour/:id
     async editTour(req, res, next) {
@@ -37,7 +47,12 @@ class TourController {
             if (!tour) {
                 return res.status(404).json({ message: 'No tour found' });
             } else {
-                return res.status(200).json({ message: 'Edit tour successfully', data: tour });
+                const successMessage = 'Tour updated successfully';
+                res.write(
+                    '<script>alert("' + successMessage + '"); window.location.href="/api/tour/all-tours";</script>',
+                );
+                res.end(); // Add this line to end the response
+                return;
             }
         } catch (err) {
             next(err);
@@ -57,20 +72,20 @@ class TourController {
             next(err);
         }
     }
-
     // GET api/tour/get-tour/:id
     async getTour(req, res, next) {
         try {
             const tourId = req.params.id;
             const tour = await Tour.find({ _id: tourId }).populate('placeData');
+            console.log(tour);
             if (tour) {
-                const { reviews, users, tours, tourImages } = await review.getReviewsByTourId(tourId);
+                const { reviews, limitReviews } = await review.getReviewsByTourId(tourId);
                 res.render('tour-detail', {
                     cssLink: '/css/tourDetail.css',
                     message: 'Success',
                     tour: tour[0],
                     reviews,
-                    users,
+                    limitReviews,
                 });
             } else {
                 return res.status(404).json({ message: 'No tour found' });
@@ -79,7 +94,6 @@ class TourController {
             next(err);
         }
     }
-
     // GET api/tour/search-tours/:name
     async searchTours(req, res, next) {
         try {
@@ -117,7 +131,6 @@ class TourController {
             next(err);
         }
     }
-
     // GET api/tour/all-tours
     async getAll(req, res, next) {
         try {
@@ -126,8 +139,8 @@ class TourController {
                 res.status(404).json({ message: 'No tour found' });
                 res.render('404', { layout: false });
             } else {
-                res.render('tours', {
-                    layout: 'layouts/sidebar-layout',
+                res.render('tours-table', {
+                    layout: 'layouts/dashboard-layout',
                     cssLink: '/css/tours.css',
                     tours,
                 });
@@ -156,7 +169,40 @@ class TourController {
     }
     // GET api/tour/:region
     async fillerRegion(req, res, next) {}
-    // GET api/tour/create-tour
+    // POST api/tour/upload ==> upload ảnh từ ckeditor lên máy chủ
+    async uploadCK(req, res, next) {
+        try {
+            fs.readFile(req.files.upload.path, function (err, data) {
+                var newPath = 'D:/PTHTTHNC/travel-api/src/public/img/' + req.files.upload.name;
+                fs.writeFile(newPath, data, function (err) {
+                    if (err) console.log({ err: err });
+                    else {
+                        console.log(req.files.upload.originalFilename);
+                        //     imgl = '/img/req.files.upload.originalFilename';
+                        //     let img = "<script>window.parent.CKEDITOR.tools.callFunction('','"+imgl+"','ok');</script>";
+                        //    res.status(201).send(img);
+
+                        let fileName = req.files.upload.name;
+                        let url = '/img/' + fileName;
+                        let msg = 'Upload successfully';
+                        let funcNum = req.query.CKEditorFuncNum;
+                        console.log({ url, msg, funcNum });
+                        res.status(201).send(
+                            "<script>window.parent.CKEDITOR.tools.callFunction('" +
+                                funcNum +
+                                "','" +
+                                url +
+                                "','" +
+                                msg +
+                                "');</script>",
+                        );
+                    }
+                });
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
 }
 
 module.exports = new TourController();

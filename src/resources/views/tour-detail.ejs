@@ -1,7 +1,7 @@
 <div class="page-title" style="background: no-repeat center/100% url('<%= tour.placeData.img %>')">
     <div class="background-desc"><%= tour.name %></div>
 </div>
-<div class="container ps-5 pe-5 mt-5 main-content">
+<div class="container mt-5 main-content" style="padding: 0 80px">
     <div class="mb-4 tour-detail">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -61,8 +61,8 @@
                                     </div>
                                     <div class="col-md 2 col-xs-12 packageInfo">
                                         <div class="action-book">
-                                            <a class="btn btn-buy-tour" href="/booking/book-tour/<%= tour.id %>">
-                                                Mua Online
+                                            <a class="btn btn-buy-tour" href="/booking/booking-form/<%= tour.id %>">
+                                                Mua
                                             </a>
                                         </div>
                                     </div>
@@ -75,13 +75,14 @@
                     <div class="title-description">Tour này có gì hay</div>
                     <div class="content-description"><%= tour.desc %></div>
                 </div>
-                <div class="row gx-5 row-image-box isdesktop">
-                    <% tour.img.forEach(itemSrc => { %>
+                <!-- <div class="row gx-5 row-image-box isdesktop">
+                    <% if (tour.img) { %> <% tour.img.forEach(itemSrc => { %>
                     <div class="col-md-3 col-sm-6 col-xs-12 isotopeSelector" style="margin-bottom: 25px">
                         <img width="100%" height="80%" alt="image tour" src="<%= itemSrc %>" />
                     </div>
-                    <% }) %>
-                </div>
+                    <% }) %> <% } %>
+                    <div></div>
+                </div> -->
                 <div class="row-info-tour">
                     <div class="title-description">Chương trình tour</div>
                     <div class="content-description">
@@ -89,25 +90,76 @@
                             <p class="sub-title">Điểm đón</p>
                             <p><%= tour.departure %></p>
                         </div>
-                        <% tour.schedule.forEach(element => { %>
-                        <div>
-                            <p class="sub-title"><%= element.title %></p>
-                            <p class="detail"><%= element.content %></p>
-                            <img class="d-flex" style="width: 70%; margin: 0 auto;" src="<%= element.img %>" alt="<%= element.title %>" />
-                        </div>
-
-                        <% }) %>
+                        <div class="schedule" data-schedule="<%= tour.scheduleHtml %>"></div>
                     </div>
                 </div>
                 <div class="row-rating tour-review">
                     <div class="title-description">Đánh giá khách hàng về Tour <%= tour.name %></div>
+                    <div class="col-xs-12 mt-5 mb-5">
+                        <form id="reviewForm">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-xs-12 col-md-3 col-lg-2">
+                                    <div class="row">
+                                        <div class="col-xs-12 customerReviewName">
+                                            <img
+                                                width="50px"
+                                                height="50px"
+                                                class="review-user-avatar"
+                                                src=""
+                                                alt="avatar"
+                                            />
+                                            <span class="review-user-name"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-2 col-lg-1">
+                                    <div class="row">
+                                        <div class="col-xs-12 customerReviewName">
+                                            <select class="form-select" id="rating" name="rating" required>
+                                                <option value="1">1 sao</option>
+                                                <option value="2">2 sao</option>
+                                                <option value="3">3 sao</option>
+                                                <option value="4">4 sao</option>
+                                                <option value="5" selected>5 sao</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-4 col-lg-7">
+                                    <div class="row">
+                                        <div class="col-xs-12 customerReviewName">
+                                            <textarea
+                                                class="form-control comment"
+                                                id="comment"
+                                                name="comment"
+                                                rows="1"
+                                                placeholder="Viết đánh giá của bạn..."
+                                                required
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-3 col-lg-2">
+                                    <div class="row">
+                                        <div class="col-xs-12 customerReviewName">
+                                            <button type="submit" class="btn btn-lg btn-outline-primary">
+                                                Gửi đánh giá
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="col-xs-12 mt-3 mb-3">
                         <span class="recentReviews">
-                            Đánh giá gần đây
+                            Đánh giá gần đây <% if (reviews ) { %>
+                            <span class="fst-italic fw-light">(<%= reviews.length %> đánh giá)</span>
+                            <% } %>
                         </span>
                     </div>
-                    <div class="review-detail-container">
-                        <% if (reviews.length > 0) { %> <% reviews.forEach(review => { %> <% const user = review.userId;
+                    <div class="col-xs-12 mt-3 mb-3 review-detail-container">
+                        <% if (limitReviews) { %> <% limitReviews.forEach(review => { %> <% const user = review.userId;
                         %> <% tour = review.tourId %>
                         <div class="horizontalLine"></div>
                         <div class="review-detail pt-4 pb-4">
@@ -115,7 +167,7 @@
                                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
                                     <div class="row">
                                         <div class="col-xs-12 vspacing3 customerReviewName">
-                                            <img width="80px" height="50px" src="<%= user.avatar %>" alt="avatar">
+                                            <img width="50px" height="50px" src="<%= user.avatar %>" alt="avatar" />
                                             <span><%= user.username %></span>
                                         </div>
                                     </div>
@@ -127,23 +179,34 @@
                                             <span class="scoreReviewDate"><%= review.updatedAt %></span>
                                         </div>
                                         <div class="col-xs-12">
-                                            <span class="customerReviewContent">
-                                                <%= review.comment %>
-                                            </span>
+                                            <span class="customerReviewContent"> <%= review.comment %> </span>
                                         </div>
-                                   </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                            <% }) %> <% } else { %>
-                            <div class="col-xs-12">
-                                <p>Không có đánh giá nào cho tour này.</p>
-                            </div>
-                            <% } %>
+                        <% }) %> <% } else { %>
+                        <div class="col-xs-12">
+                            <p>Không có đánh giá nào cho tour này.</p>
                         </div>
+                        <% } %>
+                    </div>
+                    <div class="col-xs-12 mt-3 mb-3 d-flex justify-content-center">
+                        <button
+                            class="btn btn-lg btn-outline-primary more-reviews"
+                            data-reviews="<%= JSON.stringify(reviews) %>"
+                            onclick="handleReviews()"
+                        >
+                            Xem tất cả
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    const schedule = document.querySelector('.schedule');
+    const scheduleHtmlString = schedule.getAttribute('data-schedule');
+    schedule.innerHTML = scheduleHtmlString;
+</script>
