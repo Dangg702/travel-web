@@ -2,13 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const tourController = require('../controllers/TourController');
-<<<<<<< HEAD
-=======
-const reviewsController = require('../controllers/reviewController');
-const reviewController = require('../controllers/reviewController');
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart();
->>>>>>> 054d020bbe9bcdd09dfd2416f9bab237901eeb20
 
 router.post('/upload', multipartMiddleware, tourController.uploadCK);
 router.post('/add-tour', tourController.addTour);
