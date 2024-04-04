@@ -22,8 +22,7 @@ const refreshTokenJwtService = (token) => {
                     status: 'ERROR',
                 });
             }
-            console.log('user: ' + user);
-            const accessToken = generateAccessToken({ id: user.id, isAdmin: user.isAdmin});
+            const accessToken = generateAccessToken({ id: user.id, isAdmin: user.isAdmin });
             console.log('accessToken: ', accessToken);
             resolve({
                 message: 'Success',

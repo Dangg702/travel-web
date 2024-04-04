@@ -77,7 +77,6 @@ class TourController {
         try {
             const tourId = req.params.id;
             const tour = await Tour.find({ _id: tourId }).populate('placeData');
-            console.log(tour);
             if (tour) {
                 const { reviews, limitReviews } = await review.getReviewsByTourId(tourId);
                 res.render('tour-detail', {

@@ -7,23 +7,23 @@ let router = express.Router();
 let $ = require('jquery');
 const request = require('request');
 const moment = require('moment');
-
+const bookingcontroller = require('../controllers/BookingController');
 router.get('/', function (req, res, next) {
-    res.render('orderlist', { title: 'Danh sách đơn hàng' });
+    res.render('orderlist', { title: 'Danh sách đơn hàng', layout: 'layouts/layout' });
 });
 
 router.get('/create_payment_url', function (req, res, next) {
-    res.render('order', { title: 'Tạo mới đơn hàng', amount: 10000 });
+    res.render('order', { title: 'Tạo mới đơn hàng', layout: 'layouts/layout' });
 });
 
 router.get('/querydr', function (req, res, next) {
     let desc = 'truy van ket qua thanh toan';
-    res.render('querydr', { title: 'Truy vấn kết quả thanh toán' });
+    res.render('querydr', { title: 'Truy vấn kết quả thanh toán', layout: 'layouts/layout' });
 });
 
 router.get('/refund', function (req, res, next) {
     let desc = 'Hoan tien GD thanh toan';
-    res.render('refund', { title: 'Hoàn tiền giao dịch thanh toán' });
+    res.render('refund', { title: 'Hoàn tiền giao dịch thanh toán', layout: 'layouts/layout' });
 });
 
 router.post('/create_payment_url', function (req, res, next) {
@@ -105,10 +105,10 @@ router.get('/vnpay_return', function (req, res, next) {
 
     if (secureHash === signed) {
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
-
-        res.render('success', { code: vnp_Params['vnp_ResponseCode'] });
+        // res.redirect('/booking/update/:id')
+        res.render('success', { code: vnp_Params['vnp_ResponseCode'], layout: 'layouts/layout', title: 'Ket qua GD' });
     } else {
-        res.render('success', { code: '97' });
+        res.render('success', { code: '97', layout: 'layouts/layout' });
     }
 });
 

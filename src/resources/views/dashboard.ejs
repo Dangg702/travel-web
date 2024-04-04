@@ -320,109 +320,12 @@
                                     <td><%= booking.status %></td>
                                     <td><%= booking.updatedAt.toLocaleDateString() %></td>
                                     <td>
-<<<<<<< HEAD
-                                        <img src="<%=user.avatar%>" alt="image" />
-                                        <span class="ps-2"><%=user.username%></span>
-                                    </td>
-                                    <td>02312</td>
-                                    <td>$14,500</td>
-                                    <td>Dashboard</td>
-                                    <td>Credit card</td>
-                                    <td>04 Dec 2019</td>
-                                    <td>
-                                        <div class="badge badge-outline-success">Approved</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check form-check-muted m-0">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" />
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img src="img/avatar-default.png" alt="image" />
-                                        <span class="ps-2">Estella Bryan</span>
-                                    </td>
-                                    <td>02312</td>
-                                    <td>$14,500</td>
-                                    <td>Website</td>
-                                    <td>Cash on delivered</td>
-                                    <td>04 Dec 2019</td>
-                                    <td>
-                                        <div class="badge badge-outline-warning">Pending</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check form-check-muted m-0">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" />
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img src="img/avatar-default.png" alt="image" />
-                                        <span class="ps-2">Lucy Abbott</span>
-                                    </td>
-                                    <td>02312</td>
-                                    <td>$14,500</td>
-                                    <td>App design</td>
-                                    <td>Credit card</td>
-                                    <td>04 Dec 2019</td>
-                                    <td>
-                                        <div class="badge badge-outline-danger">Rejected</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check form-check-muted m-0">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" />
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img src="img/avatar-default.png" alt="image" />
-                                        <span class="ps-2">Peter Gill</span>
-                                    </td>
-                                    <td>02312</td>
-                                    <td>$14,500</td>
-                                    <td>Development</td>
-                                    <td>Online Payment</td>
-                                    <td>04 Dec 2019</td>
-                                    <td>
-                                        <div class="badge badge-outline-success">Approved</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check form-check-muted m-0">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" />
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img src="img/avatar-default.png" alt="image" />
-                                        <span class="ps-2">Sallie Reyes</span>
-                                    </td>
-                                    <td>02312</td>
-                                    <td>$14,500</td>
-                                    <td>Website</td>
-                                    <td>Credit card</td>
-                                    <td>04 Dec 2019</td>
-                                    <td>
-                                        <div class="badge badge-outline-success">Approved</div>
-=======
                                         <a
                                             href="javascript:void(0);"
                                             class="btn btn-outline-danger delete-booking"
                                             data-booking-id="<%= booking._id %>"
                                             >Delete</a
                                         >
->>>>>>> 03454a85631f9b1f0628781366719bcbebd10a52
                                     </td>
                                 </tr>
                                 <% }) %>
@@ -453,7 +356,6 @@
                         return response.json();
                     })
                     .then((data) => {
-                        console.log(data.message);
                         alert(data.message);
                         window.location.reload();
                     })

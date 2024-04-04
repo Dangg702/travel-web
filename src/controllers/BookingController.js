@@ -6,7 +6,6 @@ class BookingController {
         try {
             const tourId = req.params.id;
             const tour = await Tour.findById(tourId).populate('placeData');
-            console.log('showBookTour', tour);
             if (!tour) {
                 return res.status(404).json({ message: 'No tour found' });
             } else {
@@ -40,7 +39,7 @@ class BookingController {
                 };
                 const newBooking = new Booking(bookingData);
                 await newBooking.save();
-                res.status(200).json({ message: 'Tour booked successfully', status: 'ok',data: newBooking });
+                res.status(200).json({ message: 'Tour booked successfully', status: 'ok', data: newBooking });
             }
         } catch (err) {
             next(err);
@@ -78,7 +77,6 @@ class BookingController {
         try {
             const userId = req.params.id;
             const bookings = await Booking.find({ userId }).populate('tourId');
-            console.log('bookings', bookings);
             res.render('booking-info', {
                 cssLink: '/css/booking-info.css',
                 bookings,
@@ -92,7 +90,6 @@ class BookingController {
         try {
             const bookings = await Booking.find();
             // res.status(200).json({ message: 'Success', status: 'ok', bookings });
-            console.log('bookings', bookings);
             res.render('admin-booking', {
                 layout: 'layouts/dashboard-layout',
                 bookings,

@@ -30,7 +30,6 @@
         try {
             const response = await fetch(`/api/user/get-user/${searchInput}`);
             const searchData = await response.json();
-            console.log(searchData);
             if (response.ok) {
                 displaySearchResults(searchData.user);
             } else {

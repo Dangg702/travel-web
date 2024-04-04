@@ -17,7 +17,6 @@ class PlaceController {
             const existingPlace = await Place.findOne({ name: placeData.name });
 
             if (existingPlace) {
-                console.log(existingPlace);
                 return res.status(200).json({ message: 'Place with this name already exists', isupload: true });
             }
 
@@ -43,7 +42,6 @@ class PlaceController {
         const placeId = req.params.id;
         Place.findById(placeId)
             .then((place) => {
-                console.log(place);
                 if (!place) {
                     return res.status(404).json({ message: 'Place not found' });
                 } else {
@@ -68,7 +66,7 @@ class PlaceController {
     }
     async editForm(req, res, next) {
         const places = await Place.find();
-        res.render('edit-form', { layout: 'layouts/dashboard-layout',places: places  });
+        res.render('edit-form', { layout: 'layouts/dashboard-layout', places: places });
     }
     // DELETE api/place/delete-place/:id
     deletePlace(req, res, next) {
@@ -86,13 +84,13 @@ class PlaceController {
     }
     async deleteForm(req, res, next) {
         const places = await Place.find();
-        res.render('delete-form', { layout: 'layouts/dashboard-layout',places: places  });
+        res.render('delete-form', { layout: 'layouts/dashboard-layout', places: places });
     }
 
     // GET api/place/search-place
     async searchForm(req, res, next) {
         const places = await Place.find();
-        res.render('search-form', { layout: 'layouts/dashboard-layout',places: places  });
+        res.render('search-form', { layout: 'layouts/dashboard-layout', places: places });
     }
 
     // GET api/place/search-place/:name
@@ -171,7 +169,6 @@ class PlaceController {
     placeTable(req, res, next) {
         Place.find()
             .then((places) => {
-                console.log('places', places);
                 if (places.length === 0) {
                     return res.status(404).json({ message: 'Empty' });
                 } else {

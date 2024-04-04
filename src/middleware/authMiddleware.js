@@ -34,7 +34,6 @@ const authMiddleware = (req, res, next) => {
 const authUserMiddleware = (req, res, next) => {
     const token = req.cookies.access_token;
     const userName = req.params.name;
-    // console.log('userName', userName);
 
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
@@ -68,7 +67,6 @@ const authenticateToken = (req, res, next) => {
             console.error('Error decoding JWT:', err);
             res.render('403', { layout: false });
         } else {
-            // console.log('Decoded JWT payload:', decoded);
             req.user = user;
             next();
         }
