@@ -2,16 +2,16 @@ const Place = require('../models/Place');
 const Tour = require('../models/Tour');
 class IndexController {
     async getIndex(req, res, next) {
+        // const regions = ['Bắc Bộ', 'Bắc Trung Bộ', 'Duyên hải Nam Trung Bộ', 'Tây Nguyên', 'Đông Nam Bộ', 'Tây Nam Bộ'];
         const limitNumber = 6;
-        const places = await Place.find().limit(limitNumber);
+        const tours = await Tour.find().populate('placeData');
         const latestTours = await Tour.find().sort({ createdAt: -1 }).limit(limitNumber).populate('placeData');
+        console.log('getIndex', tours);
         res.render('home', {
             cssLink: '/css/home.css',
-            places,
+            tours,
             latestTours,
         });
-
-        // res.render('500', { layout: false });
     }
 
     getContact(req, res, next) {
@@ -19,7 +19,6 @@ class IndexController {
             cssLink: '/css/contact.css',
         });
     }
-   
 }
 
 module.exports = new IndexController();

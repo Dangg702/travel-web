@@ -126,9 +126,9 @@
             </div>
         </div>
         <div class="row gy-5">
-            <% if (places != '') { %> <% places.forEach((place, index) => { %>
+            <% if (tours != '') { %> <% tours.forEach((tour, index) => { %>
             <div class="col-xs-12 col-md-4">
-                <a href="/api/tour/get-tour/<%= place.name %>">
+                <a href="/api/tour/get-tour/<%= tour.name %>">
                     <div class="item">
                         <div class="item__info">
                             <h4>5.999.000</h4>
@@ -137,15 +137,14 @@
                         <img
                             class="card-img-top"
                             style="height: 300px"
-                            data-src="<%= place.img %>"
+                            data-src="<%= tour.placeData.img %>"
                             alt="Tour 1"
-                            src="<%= place.img %>"
+                            src="<%= tour.placeData.img %>"
                             loading="lazy"
                         />
                         <div class="border-bottom item__content">
-                            <div class="item__pre_title">25% Off</div>
-                            <h3 class="item__title"><%= place.name %></h3>
-                            <p class="item__desc"><%= place.desc %></p>
+                            <h3 class="item__title"><%= tour.name %></h3>
+                            <p class="item__desc"><%= tour.desc %></p>
                         </div>
                     </div>
                 </a>

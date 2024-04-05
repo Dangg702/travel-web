@@ -38,8 +38,8 @@ class BookingController {
                     paymentMethod: req.body.paymentMethod,
                 };
                 const newBooking = new Booking(bookingData);
-                await newBooking.save();
-                res.status(200).json({ message: 'Tour booked successfully', status: 'ok', data: newBooking });
+                const bookingResult = await newBooking.save();
+                res.status(200).json({ message: 'Tour booked successfully', status: 'ok', booking: bookingResult });
             }
         } catch (err) {
             next(err);

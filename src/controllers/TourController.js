@@ -167,7 +167,23 @@ class TourController {
         }
     }
     // GET api/tour/:region
-    async fillerRegion(req, res, next) {}
+    async fillerRegion(req, res, next) {
+        try {
+            const region = req.params.region;
+            const tours = await Tour.find({ region: region });
+            if (!tours) {
+                res.render('404', { layout: false });
+            } else {
+                res.render('tours', {
+                    layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tours.css',
+                    tours,
+                });
+            }
+        } catch (error) {
+            res.render('500', { layout: false });
+        }
+    }
     // POST api/tour/upload ==> upload ảnh từ ckeditor lên máy chủ
     async uploadCK(req, res, next) {
         try {
