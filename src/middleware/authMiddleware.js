@@ -59,18 +59,21 @@ const authenticateToken = (req, res, next) => {
     const access_token = req.cookies.access_token;
     // Kiểm tra xem cookies có tồn tại không. Nếu tồn tại thì thực hiện xác thực token
     if (!access_token) {
-        res.json({ isLoggedIn: false });
-        return;
+        // res.json({ isLoggedIn: false });
+        req.user = null;
+        // return;
+        next();
+    } else {
+        jwt.verify(access_token, process.env.ACCESS_TOKEN, function (err, user) {
+            if (err) {
+                console.error('Error decoding JWT:', err);
+                res.render('403', { layout: false });
+            } else {
+                req.user = user;
+                next();
+            }
+        });
     }
-    jwt.verify(access_token, process.env.ACCESS_TOKEN, function (err, user) {
-        if (err) {
-            console.error('Error decoding JWT:', err);
-            res.render('403', { layout: false });
-        } else {
-            req.user = user;
-            next();
-        }
-    });
 };
 
 module.exports = { authMiddleware, authUserMiddleware, authenticateToken };

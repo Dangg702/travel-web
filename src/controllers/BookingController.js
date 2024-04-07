@@ -1,9 +1,15 @@
 const Tour = require('../models/Tour');
 const Booking = require('../models/Booking');
+const User = require('../models/User');
 class BookingController {
     // GET booking/booking-form/:id
     async showBookTour(req, res, next) {
         try {
+            const userId = req.user ? req.user.id : null;
+            let user = null;
+            if (userId != null) {
+                user = await User.findById(userId);
+            }
             const tourId = req.params.id;
             const tour = await Tour.findById(tourId).populate('placeData');
             if (!tour) {
@@ -13,6 +19,7 @@ class BookingController {
                     cssLink: '/css/tourDetail.css',
                     message: 'Success',
                     tour,
+                    user,
                 });
             }
         } catch (err) {
@@ -75,11 +82,17 @@ class BookingController {
     // GET /user/account/:id/booking-info
     async getUserBookingInfo(req, res, next) {
         try {
+            const userID = req.user ? req.user.id : null;
+            let user = null;
+            if (userID != null) {
+                user = await User.findById(userID);
+            }
             const userId = req.params.id;
             const bookings = await Booking.find({ userId }).populate('tourId');
             res.render('booking-info', {
                 cssLink: '/css/booking-info.css',
                 bookings,
+                user,
             });
         } catch (err) {
             next(err);

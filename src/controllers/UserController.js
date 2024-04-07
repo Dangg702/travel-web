@@ -27,13 +27,12 @@ class UserController {
         User.findByIdAndUpdate(userId, updateData)
             .then((updateUser) => {
                 const successMessage = 'User updated successfully';
-                res.write('<script>alert("' + successMessage + '");</script>');
-                // res.write(
-                //     '<script>alert("' +
-                //         successMessage +
-                //         '"); window.location.href="http://localhost:9000/api/user/manage";</script>',
-                // );
-                // res.end();
+                res.write(
+                    '<script>alert("' +
+                        successMessage +
+                        '"); window.location.href="http://localhost:9000/api/user/manage";</script>',
+                );
+                res.end();
                 return;
             })
             .catch(next);

@@ -361,6 +361,10 @@ footer {
 }
 
 // search Form
+.search-container {
+    display: flex;
+    justify-content: center;
+}
 .search-form {
     max-width: 1000px;
     width: 100%;

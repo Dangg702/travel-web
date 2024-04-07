@@ -118,9 +118,11 @@ router.get('/vnpay_return', async function (req, res, next) {
 router.get('/vnpay_ipn', function (req, res, next) {
     let vnp_Params = req.query;
     let secureHash = vnp_Params['vnp_SecureHash'];
+    console.log('vnp_Params: ', vnp_Params);
 
     let orderId = vnp_Params['vnp_TxnRef'];
     let rspCode = vnp_Params['vnp_ResponseCode'];
+    console.log('orderId: ', orderId);
 
     delete vnp_Params['vnp_SecureHash'];
     delete vnp_Params['vnp_SecureHashType'];
