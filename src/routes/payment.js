@@ -6,8 +6,8 @@ let router = express.Router();
 let $ = require('jquery');
 const request = require('request');
 const moment = require('moment');
-const bookingController = require('../controllers/BookingController');
 const EmailService = require('../services/EmailService');
+const Booking = require('../models/Booking');
 
 router.get('/', function (req, res, next) {
     res.render('orderlist', { title: 'Danh sách đơn hàng', layout: 'layouts/layout' });
@@ -45,7 +45,8 @@ router.post('/create_payment_url', function (req, res, next) {
     let secretKey = config.vnpay.vnp_HashSecret;
     let vnpUrl = config.vnpay.vnp_Url;
     let returnUrl = config.vnpay.vnp_ReturnUrl;
-    let orderId = moment(date).format('DDHHmmss');
+
+    let orderId = req.body.orderId;
     let amount = req.body.amount;
     let bankCode = req.body.bankCode;
 
@@ -86,7 +87,7 @@ router.post('/create_payment_url', function (req, res, next) {
 
 router.get('/vnpay_return', async function (req, res, next) {
     let vnp_Params = req.query;
-
+    let bookingId = vnp_Params['vnp_TxnRef'];
     let secureHash = vnp_Params['vnp_SecureHash'];
 
     delete vnp_Params['vnp_SecureHash'];
@@ -105,11 +106,17 @@ router.get('/vnpay_return', async function (req, res, next) {
     let signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
 
     if (secureHash === signed) {
+        const bookingData = await Booking.findById(bookingId).populate('tourId');
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
         if (vnp_Params['vnp_ResponseCode'] == '00') {
-            await EmailService.sendEmailCreateBooking();
+            await EmailService.sendEmailCreateBooking(bookingData);
         }
-        res.render('success', { code: vnp_Params['vnp_ResponseCode'], layout: 'layouts/layout', title: 'Ket qua GD' });
+        res.render('success', {
+            code: vnp_Params['vnp_ResponseCode'],
+            layout: 'layouts/layout',
+            title: 'Ket qua GD',
+            bookingId,
+        });
     } else {
         res.render('success', { code: '97', layout: 'layouts/layout' });
     }

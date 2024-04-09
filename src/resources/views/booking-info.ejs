@@ -22,13 +22,25 @@
                             <div class="col-md-4 p-5">
                                 <h5 class="card-title">Tour <%= booking.tourId.name %></h5>
                                 <p class="tour-status"><strong>Trạng thái:</strong> <%= booking.status %></p>
-                                <% if (booking.status != 'cancelled') { %>
-                                <button
-                                    class="btn btn-danger btn-cancel-tour"
-                                    onclick="handleCancel('<%- booking._id %>')"
-                                >
-                                    Hủy
-                                </button>
+                                <% if ((booking.status != 'cancelled') || booking.status == 'failed') { %>
+                                <div>
+                                    <button
+                                        class="btn btn-danger btn-cancel-tour"
+                                        onclick="handleCancel('<%- booking._id %>', '<%- booking.totalPrice %>')"
+                                    >
+                                        Hủy
+                                    </button>
+                                    <% if (booking.status !='success') { %>
+                                    <a
+                                        class="btn btn-danger btn-payment-tour"
+                                        style="font-size: 1.6rem; border-radius: 4px; text-transform: uppercase"
+                                        onclick="handlePaymentRedirect('<%- booking._id %>', '<%- booking.totalPrice %>', '<%- booking.userId %>')"
+                                    >
+                                        Thanh toán
+                                    </a>
+                                    <% } %>
+                                </div>
+
                                 <% } %>
                             </div>
                             <div class="col-md-8 p-5">
@@ -65,27 +77,51 @@
 </div>
 
 <script>
-    function handleCancel(bookingId) {
-        const btnCancel = document.querySelector('btn-cancel-tour');
-        if (confirm('Bạn có chắc chắn muốn hủy tour?')) {
-            fetch(`/booking/update/${bookingId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    status: 'cancelled',
-                }),
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.status == 'ok') {
-                        alert('Hủy tour thành công');
-                        location.reload();
-                    } else {
-                        alert('Hủy tour thất bại');
-                    }
-                });
-        }
+    const moment = require('moment');
+
+    function handlePaymentRedirect(bookingId, totalPrice) {
+        const btnsRedirect = document.querySelectorAll('.btn-payment-tour');
+        const amount = totalPrice.replace(/,/g, '');
+        btnsRedirect.forEach((btn) => {
+            btn.href = `http://localhost:9000/api/payment/create_payment_url?orderId=${bookingId}&amount=${amount}`;
+        });
+    }
+    function handleCancel(bookingId, totalPrice, userId) {
+        const btnsCancel = document.querySelectorAll('.btn-cancel-tour');
+        btnsCancel.forEach((btn) => {
+            if (confirm('Bạn có chắc chắn muốn hủy tour?')) {
+                fetch(`/booking/update/${bookingId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        status: 'cancelled',
+                    }),
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data.status == 'ok') {
+                            alert('Hủy tour thành công');
+                            location.reload();
+                        } else {
+                            alert('Hủy tour thất bại');
+                        }
+                    });
+                fetch(`http://localhost:9000/api/payment/refund`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        orderId: bookingId,
+                        amount: totalPrice,
+                        transType: '02',
+                        transDate: moment(new Date()).format('YYYYMMDDHHmmss'),
+                        user: userId,
+                    }),
+                }).then((res) => res.json());
+            }
+        });
     }
 </script>

@@ -2,6 +2,9 @@
 <h3></h3>
 <div class="table-responsive">
     <form id="createOrder" action="create_payment_url" method="POST">
+        <div class="form-group" style="display: none">
+            <input type="text" class="form-control" id="orderId" name="orderId" placeholder="Mã đơn hàng" value="" />
+        </div>
         <div class="form-group">
             <label for="amount"></label>
             <input
@@ -65,12 +68,16 @@
 </div>
 <p>&nbsp;</p>
 <script>
-  // Lấy tham số price từ URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const price = urlParams.get('amount');
+    // Lấy tham số price từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const price = urlParams.get('amount');
+    const bookingId = urlParams.get('orderId');
 
-  // Nếu price không rỗng, đặt giá trị vào trường input
-  if (price !== null) {
-      document.getElementById('amount').value = price;
-  }
+    // Nếu price không rỗng, đặt giá trị vào trường input
+    if (price !== null) {
+        document.getElementById('amount').value = price;
+    }
+    if (bookingId) {
+        document.getElementById('orderId').value = bookingId;
+    }
 </script>

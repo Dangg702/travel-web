@@ -61,7 +61,7 @@ class BookingController {
             if (!updatedBooking) {
                 return res.status(404).json({ message: 'No booking found', status: 'fail' });
             }
-            res.status(200).json({ message: 'Booking updated successfully', status: 'ok', tour: updatedTour });
+            res.status(200).json({ message: 'Booking updated successfully', status: 'ok', tour: updatedBooking });
         } catch (err) {
             next(err);
         }

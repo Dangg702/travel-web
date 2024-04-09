@@ -2,6 +2,7 @@ const Tour = require('../models/Tour');
 const User = require('../models/User');
 const review = require('../controllers/reviewController');
 const fs = require('fs');
+const TourService = require('../services/TourService');
 
 class TourController {
     async show(req, res, next) {
@@ -103,6 +104,11 @@ class TourController {
     // GET api/tour/search-tours/:name
     async searchTours(req, res, next) {
         try {
+            const userId = req.user ? req.user.id : null;
+            let user = null;
+            if (userId != null) {
+                user = await User.findById(userId);
+            }
             const tourName = req.params.name;
             let queryConditions = {}; // Biến trung gian để lưu điều kiện truy vấn
             if (req.query.dateGo) {
@@ -117,20 +123,19 @@ class TourController {
             }).populate('placeData');
 
             if (tours.length === 0) {
-                9;
                 res.render('tours', {
                     layout: 'layouts/sidebar-layout',
                     cssLink: '/css/tours.css',
                     message: 'Tours không tồn tại',
                     tours,
+                    user,
                 });
             } else {
-                // return res.status(200).json({ message: 'Success', data: tours });
-                console.log('search tours', tours);
                 res.render('tours', {
                     layout: 'layouts/sidebar-layout',
                     cssLink: '/css/tours.css',
                     tours,
+                    user,
                 });
             }
         } catch (err) {
@@ -179,8 +184,8 @@ class TourController {
             res.render('500', { layout: false });
         }
     }
-    // GET api/tour/:region
-    async fillerRegion(req, res, next) {
+    // GET /:region
+    async getToursByRegion(req, res, next) {
         try {
             const userId = req.user ? req.user.id : null;
             let user = null;
@@ -203,6 +208,7 @@ class TourController {
                 });
             }
         } catch (error) {
+            console.error('Error in getToursByRegion:', error);
             res.render('500', { layout: false });
         }
     }
