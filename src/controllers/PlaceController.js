@@ -180,6 +180,7 @@ class PlaceController {
             })
             .catch(next);
     }
+
 }
 
 module.exports = new PlaceController();

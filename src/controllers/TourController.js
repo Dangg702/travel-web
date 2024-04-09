@@ -182,8 +182,16 @@ class TourController {
     // GET api/tour/:region
     async fillerRegion(req, res, next) {
         try {
+            const userId = req.user ? req.user.id : null;
+            let user = null;
+            if (userId != null) {
+                user = await User.findById(userId);
+            }
             const region = req.params.region;
-            const tours = await Tour.find({ region: region });
+            const tours = await Tour.find().populate({
+                path: 'placeData',
+                match: { region: region },
+            });
             if (!tours) {
                 res.render('404', { layout: false });
             } else {
@@ -191,6 +199,7 @@ class TourController {
                     layout: 'layouts/sidebar-layout',
                     cssLink: '/css/tours.css',
                     tours,
+                    user,
                 });
             }
         } catch (error) {

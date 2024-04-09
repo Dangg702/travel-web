@@ -11,13 +11,22 @@ class IndexController {
         }
         // const regions = ['Bắc Bộ', 'Bắc Trung Bộ', 'Duyên hải Nam Trung Bộ', 'Tây Nguyên', 'Đông Nam Bộ', 'Tây Nam Bộ'];
         const limitNumber = 6;
-        const tours = await Tour.find().populate('placeData');
+        const regions = ['miền bắc', 'miền trung', 'miền nam']; // Danh sách các khu vực
+        const toursByRegion = {}; // Object lưu trữ các tour theo khu vực
+        for (const region of regions) {
+            const tours = await Tour.find().populate({
+                path: 'placeData',
+                match: { region: region },
+            });
+            const filteredTours = tours.filter((tour) => tour.placeData !== null); // Lọc ra các tour có placeData không null
+            toursByRegion[region] = filteredTours; // Lưu các tour theo từng khu vực vào object
+        }
         const latestTours = await Tour.find().sort({ createdAt: -1 }).limit(limitNumber).populate('placeData');
         // console.log('getIndex', tours);
         res.render('home', {
             cssLink: '/css/home.css',
             user,
-            tours,
+            toursByRegion,
             latestTours,
         });
     }
