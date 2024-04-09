@@ -1,4 +1,5 @@
 const Tour = require('../models/Tour');
+const User = require('../models/User');
 const review = require('../controllers/reviewController');
 const fs = require('fs');
 
@@ -75,6 +76,11 @@ class TourController {
     // GET api/tour/get-tour/:id
     async getTour(req, res, next) {
         try {
+            const userId = req.user ? req.user.id : null;
+            let user = null;
+            if (userId != null) {
+                user = await User.findById(userId);
+            }
             const tourId = req.params.id;
             const tour = await Tour.find({ _id: tourId }).populate('placeData');
             if (tour) {
@@ -82,6 +88,7 @@ class TourController {
                 res.render('tour-detail', {
                     cssLink: '/css/tourDetail.css',
                     message: 'Success',
+                    user,
                     tour: tour[0],
                     reviews,
                     limitReviews,
@@ -151,6 +158,11 @@ class TourController {
     // GET api/tour/latest-tours
     async getLatestTours(req, res, next) {
         try {
+            const userId = req.user ? req.user.id : null;
+            let user = null;
+            if (userId != null) {
+                user = await User.findById(userId);
+            }
             const limitNumber = 15;
             const tours = await Tour.find().sort({ createdAt: -1 }).limit(limitNumber).populate('placeData');
             if (!tours) {
@@ -160,6 +172,7 @@ class TourController {
                     layout: 'layouts/sidebar-layout',
                     cssLink: '/css/tours.css',
                     tours,
+                    user,
                 });
             }
         } catch (err) {
@@ -167,7 +180,32 @@ class TourController {
         }
     }
     // GET api/tour/:region
-    async fillerRegion(req, res, next) {}
+    async fillerRegion(req, res, next) {
+        try {
+            const userId = req.user ? req.user.id : null;
+            let user = null;
+            if (userId != null) {
+                user = await User.findById(userId);
+            }
+            const region = req.params.region;
+            const tours = await Tour.find().populate({
+                path: 'placeData',
+                match: { region: region },
+            });
+            if (!tours) {
+                res.render('404', { layout: false });
+            } else {
+                res.render('tours', {
+                    layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tours.css',
+                    tours,
+                    user,
+                });
+            }
+        } catch (error) {
+            res.render('500', { layout: false });
+        }
+    }
     // POST api/tour/upload ==> upload ảnh từ ckeditor lên máy chủ
     async uploadCK(req, res, next) {
         try {

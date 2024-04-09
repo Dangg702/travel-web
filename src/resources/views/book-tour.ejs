@@ -283,12 +283,14 @@
             body: JSON.stringify(data),
         })
             .then(function (response) {
-                console.log(response);
-                const dataBooking = response.json();
-                if (response.ok) {
-                    console.log('dataBooking', dataBooking);
-                    alert('Đặt tour thành công');
-                    window.location.href = `/api/payment/create_payment_url?orderId=aaaaa&amount=12000000`;
+                return response.json(); // Parse response as JSON
+            })
+            .then(function (dataBooking) {
+                console.log('dataBooking', dataBooking.booking);
+                if (dataBooking.status == 'ok') {
+                    const bookingId = dataBooking.booking._id;
+                    const amount = dataBooking.booking.totalPrice.replace(/,/g, '');
+                    window.location.href = `/api/payment/create_payment_url?orderId=${bookingId}&amount=${amount}`;
                 }
             })
             .catch(function (error) {

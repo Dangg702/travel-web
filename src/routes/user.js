@@ -7,7 +7,7 @@ const userController = require('../controllers/UserController');
 router.get('/edit-form/:id', authMiddleware, userController.editForm);
 router.patch('/update-user/:id', authUserMiddleware, userController.updateUser);
 router.delete('/delete-user/:id', authMiddleware, userController.deleteUser);
-router.get('/get-user/:name', authUserMiddleware, userController.getUser);
+router.get('/get-user/:name', userController.getUser);
 router.get('/get-all', authMiddleware, userController.getAllUsers);
 router.post('/refresh-token', userController.refreshToken);
 router.get('/manage', authMiddleware, userController.userPage);

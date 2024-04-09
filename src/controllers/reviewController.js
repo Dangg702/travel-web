@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Review = require('../models/Review');
 const User = require('../models/User');
 const Tour = require('../models/Tour');
@@ -18,7 +19,6 @@ const reviewController = {
             tourId: req.body.tourId,
             rating: req.body.rating,
             comment: req.body.comment,
-            createdAt: req.body.createdAt,
         });
         try {
             const newReview = await review.save();
@@ -41,7 +41,11 @@ const reviewController = {
     getReviewsByTourId: async (tourId) => {
         try {
             const reviews = await Review.find({ tourId }).populate('userId').populate('tourId');
-            const limitReviews = await Review.find({ tourId }).populate('userId').populate('tourId').limit(1);
+            const limitReviews = await Review.find({ tourId })
+                .populate('userId')
+                .populate('tourId')
+                .sort({ createdAt: -1 })
+                .limit(2);
             // console.log('review', reviews);
 
             if (!reviews || reviews.length === 0) {

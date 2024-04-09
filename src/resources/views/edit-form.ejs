@@ -45,12 +45,9 @@
                                 <label for="region">Region:</label>
                                 <select class="form-control" id="region<%= place._id %>" name="region">
                                     <option value="none" selected disabled hidden><%= place.region%></option>
-                                    <option value="bắc bộ" <%= place.region === "bắc bộ" ? 'selected' : '' %>>Bắc Bộ</option>
-                                    <option value="bắc trung bộ" <%= place.region === "bắc trung bộ" ? 'selected' : '' %>>Bắc Trung Bộ</option>
-                                    <option value="duyên hải nam trung bộ" <%= place.region === "duyên hải nam trung bộ" ? 'selected' : '' %>>Duyên Hải Nam Trung Bộ</option>
-                                    <option value="tây nguyên" <%= place.region === "tây nguyên" ? 'selected' : '' %>>Tây Nguyên</option>
-                                    <option value="đông nam bộ" <%= place.region === "đông nam bộ" ? 'selected' : '' %>>Đông Nam Bộ</option>
-                                    <option value="tây nam bộ" <%= place.region === "tây nam bộ" ? 'selected' : '' %>>Tây Nam Bộ</option>
+                                    <option value="miền bắc" <%= place.region === "miền bắc" ? 'selected' : '' %>>Bắc Bộ</option>
+                                    <option value="miền trung" <%= place.region === "miền trung" ? 'selected' : '' %>>Trung Bộ</option>
+                                    <option value="miền nam" <%= place.region === "miền nam" ? 'selected' : '' %>>Nam Bộ</option>
                                 </select>
                             </div>
                             

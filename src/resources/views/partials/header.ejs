@@ -14,9 +14,36 @@
                 <li class="nav-item navbar__link"><a href="/blog">Blogs</a></li>
                 <li class="nav-item navbar__link"><a href="/contact">Liên hệ</a></li>
                 <li class="nav-item navbar__link dropdown" id="accountBtn">
+                    <% if (user !== null) { %>
+                    <a class="nav-link" href="/user/login" id="accountDropdown" data-bs-toggle="dropdown">
+                        <img
+                            src="<%= user.avatar %>"
+                            alt="<%= user.avatar %>"
+                            style="width: 50px; height: 48px; border-radius: 50%"
+                        />
+                    </a>
+                    <ul class="dropdown-menu navbar__menu" aria-labelledby="accountDropdown">
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                href="http://localhost:9000/user/account/<%= user._id %>/booking-info"
+                                >Thông tin đơn hàng</a
+                            >
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <a class="dropdown-item" href="http://localhost:9000/user/account/<%= user._id %>"
+                                >Tài khoản</a
+                            >
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="http://localhost:9000/user/logout">Đăng xuất</a></li>
+                    </ul>
+                    <% } else { %>
                     <a class="nav-link" href="/user/login">
                         <button class="navbar__btn">Tài khoản</button>
                     </a>
+                    <% } %>
                 </li>
             </ul>
             <!-- Icon -->
