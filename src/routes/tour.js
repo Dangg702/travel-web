@@ -12,10 +12,10 @@ router.delete('/delete-tour/:id', tourController.deleteTour);
 router.get('/create-tour', tourController.createForm);
 router.get('/edit-tour/:id', tourController.editForm);
 router.get('/get-tour/:id', authenticateToken, tourController.getTour);
-router.get('/search-tours/:name?', tourController.searchTours);
+router.get('/search-tours/:name', authenticateToken, tourController.searchTours);
 router.get('/all-tours', tourController.getAll);
 router.get('/latest-tours', authenticateToken, tourController.getLatestTours);
-router.get('/:region', tourController.fillerRegion);
+router.get(':region', authenticateToken, tourController.getToursByRegion);
 router.get('/', tourController.show);
 
 module.exports = router;

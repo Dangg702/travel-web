@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const generateAccessToken = (payload) => {
-    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN, { expiresIn: '1h' });
+    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN, { expiresIn: '1d' });
     return accessToken;
 };
 
@@ -39,7 +39,7 @@ const setAccessTokenCookie = (res, accessToken) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Đặt secure thành true trong môi trường production
         sameSite: 'strict',
-        maxAge: 60 * 60 * 1000, // Thời gian sống của cookie: 1 giờ
+        maxAge: 24 * 60 * 60 * 1000, // Thời gian sống của cookie: 1 ngày
     });
 };
 
