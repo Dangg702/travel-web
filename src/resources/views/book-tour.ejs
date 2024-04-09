@@ -36,7 +36,7 @@
                     </div>
                     <p><b style="font-size: 1.4rem">Chọn một trong các phương thức sau:</b></p>
                     <div class="methods">
-                        <div class="method" data-payment-type="offline">
+                        <!-- <div class="method" data-payment-type="offline">
                             <input
                                 value="offline"
                                 style="display: none"
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="method" data-payment-type="online">
                             <input
                                 value="online"
@@ -88,7 +88,7 @@
                             />
                             <div class="method-content">
                                 <label class="title" toggle="Momo" for="pament-method5">
-                                    <h4 style="margin: 0 0 10px">Thanh toán bằng ví điện tử Momo</h4>
+                                    <h4 style="margin: 0 0 10px">Thanh toán bằng ví điện tử VNPay</h4>
                                     <div class="description" style="display: unset">
                                         Hạn mức tối đa là 20.000.000 VND. Sau khi đặt vé và thanh toán thành công, Chúng
                                         tôi sẽ gửi vé điện tử của Quý khách qua email.
@@ -97,7 +97,7 @@
                                     <i class="fa fa-check"></i>
                                 </label>
                                 <div class="content" id="Momo">
-                                    <p>Chúng tôi chấp nhận thanh toán bằng Ví điện tử Momo.</p>
+                                    <p>Chúng tôi chấp nhận thanh toán bằng Ví điện tử VNPay.</p>
 
                                     <p><b>(*) Hạn mức tối đa là 20.000.000 VND</b></p>
                                 </div>
@@ -286,8 +286,8 @@
                 console.log(response);
                 const dataBooking = response.json();
                 if (response.ok) {
-                    alert('Đặt tour thành công');
                     console.log('dataBooking', dataBooking);
+                    alert('Đặt tour thành công');
                     window.location.href = `/api/payment/create_payment_url?orderId=aaaaa&amount=12000000`;
                 }
             })
