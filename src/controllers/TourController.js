@@ -13,7 +13,9 @@ class TourController {
         }
     }
     createForm(req, res, next) {
-        res.render('create-tour', { layout: 'layouts/dashboard-layout' });
+        const userId = req.user.id;
+        const user = User.findById(userId);
+        res.render('create-tour', { layout: 'layouts/dashboard-layout', user });
     }
     async editForm(req, res, next) {
         const tourId = req.params.id;
@@ -145,6 +147,11 @@ class TourController {
     // GET api/tour/all-tours
     async getAll(req, res, next) {
         try {
+            const userId = req.user ? req.user.id : null;
+            let user = null;
+            if (userId != null) {
+                user = await User.findById(userId);
+            }
             const tours = await Tour.find();
             if (!tours) {
                 res.status(404).json({ message: 'No tour found' });
@@ -154,6 +161,7 @@ class TourController {
                     layout: 'layouts/dashboard-layout',
                     cssLink: '/css/tours.css',
                     tours,
+                    user,
                 });
             }
         } catch (err) {
@@ -184,7 +192,7 @@ class TourController {
             res.render('500', { layout: false });
         }
     }
-    // GET /:region
+    // GET api/tour/:region
     async getToursByRegion(req, res, next) {
         try {
             const userId = req.user ? req.user.id : null;

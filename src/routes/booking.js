@@ -8,5 +8,5 @@ router.get('/booking-form/:id', authUserMiddleware, authenticateToken, bookingCo
 router.post('/book-tour/:id', authUserMiddleware, authenticateToken, bookingController.bookTour);
 router.patch('/update/:id', authUserMiddleware, authenticateToken, bookingController.updateBooking);
 router.delete('/delete/:id', authMiddleware, bookingController.deleteBooking);
-router.get('/all-bookings', authMiddleware, bookingController.getAllBookings);
+router.get('/all-bookings', authMiddleware, authenticateToken, bookingController.getAllBookings);
 module.exports = router;

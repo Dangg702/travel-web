@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { authenticateToken } = require('../middleware/authMiddleware');
 const placeController = require('../controllers/PlaceController');
 
 router.post('/add-place', placeController.addPlace);
@@ -11,8 +11,8 @@ router.delete('/delete-place/:id', placeController.deletePlace);
 router.get('/search-place/:name', placeController.searchPlace);
 router.get('/search-place/', placeController.searchForm);
 router.get('/all-place/', placeController.getAllPlace);
-router.get('/add-place', placeController.createForm);
+router.get('/add-place', authenticateToken, placeController.createForm);
 router.get('/edit-place/:id', placeController.editForm);
-router.get('/place-data', placeController.placeTable);
+router.get('/place-data', authenticateToken,placeController.placeTable);
 
 module.exports = router;

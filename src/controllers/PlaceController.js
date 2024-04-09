@@ -1,5 +1,5 @@
 const Place = require('../models/Place');
-
+const User = require('../models/User');
 class PlaceController {
     // POST api/place/add-place
     async addPlace(req, res, next) {
@@ -12,20 +12,15 @@ class PlaceController {
                 isFamous: req.body.isFamous || false,
                 region: req.body.region || '',
             };
-
             // Tìm địa điểm có cùng tên trong cơ sở dữ liệu
             const existingPlace = await Place.findOne({ name: placeData.name });
-
             if (existingPlace) {
                 return res.status(200).json({ message: 'Place with this name already exists', isupload: true });
             }
-
             // Tạo mới đối tượng Place từ dữ liệu được cung cấp
             const place = new Place(placeData);
-
             // Lưu đối tượng Place vào MongoDB
             const savedPlace = await place.save();
-
             // Trả về thông báo và đối tượng Place đã lưu thành công
             res.json({ message: 'Place created successfully', data: savedPlace });
         } catch (error) {
@@ -35,7 +30,9 @@ class PlaceController {
     }
 
     createForm(req, res, next) {
-        res.render('create-form', { layout: 'layouts/dashboard-layout' });
+        const userId = req.user.id;
+        const user = User.findById(userId);
+        res.render('create-form', { layout: 'layouts/dashboard-layout', user });
     }
     // GET api/place/edit-place/:id
     editForm(req, res, next) {
@@ -167,6 +164,8 @@ class PlaceController {
 
     // GET api/place/place-data
     placeTable(req, res, next) {
+        const userId = req.user.id;
+        const user = User.findById(userId);
         Place.find()
             .then((places) => {
                 if (places.length === 0) {
@@ -175,12 +174,12 @@ class PlaceController {
                     res.render('table-data', {
                         places,
                         layout: 'layouts/dashboard-layout',
+                        user,
                     });
                 }
             })
             .catch(next);
     }
-
 }
 
 module.exports = new PlaceController();

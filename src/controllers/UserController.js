@@ -72,7 +72,9 @@ class UserController {
 
     // GET /api/user/manage
     userPage(req, res, next) {
-        res.render('user-management', { layout: 'layouts/dashboard-layout' });
+        const userId = req.user.id;
+        const user = User.findById(userId);
+        res.render('user-management', { layout: 'layouts/dashboard-layout', user });
     }
 
     // GET /api/user/refresh-token ( generate a new access token )
