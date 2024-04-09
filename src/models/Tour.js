@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { updatePlaceTourData } = require('../middleware/updatePlaceTourMiddleware');
 
 const tourSchema = new Schema(
     {
@@ -20,5 +21,7 @@ const tourSchema = new Schema(
         timestamps: true,
     },
 );
+// Sử dụng middleware để cập nhật tourData của Place
+tourSchema.post('save', updatePlaceTourData);
 
 module.exports = mongoose.model('Tour', tourSchema);

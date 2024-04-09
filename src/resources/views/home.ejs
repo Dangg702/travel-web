@@ -119,123 +119,52 @@
         </div>
     </div>
     <!-- Tours -->
-    <div class="item-list-container light-bg">
-        <div class="row">
-            <div class="col-xs-12">
-                <h1 class="item-list__title">Tours du lịch miền Bắc</h1>
-            </div>
-        </div>
-        <div class="row gy-5">
-            <% if (toursBac != '') { %> <% toursBac.tours.forEach((tour, index) => { %>
-            <div class="col-xs-12 col-md-4">
-                <a href="/api/tour/get-tour/<%= tour.name %>">
-                    <div class="item">
-                        <div class="item__info">
-                            <h4></h4>
-                            <span>/người</span>
-                        </div>
-                        <img
-                            class="card-img-top"
-                            style="height: 300px"
-                            data-src="<%= tour.placeData.img %>"
-                            alt="Tour 1"
-                            src="<%= tour.placeData.img %>"
-                            loading="lazy"
-                        />
-                        <div class="border-bottom item__content">
-                            <h3 class="item__title"><%= tour.name %></h3>
-                            <p class="item__desc"><%= tour.desc %></p>
-                        </div>
+    <div class="row gy-5">
+        <% for (const region in toursByRegion) { %>
+        <div class="col-md-12">
+            <div class="item-list-container light-bg">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h1 class="item-list__title">Tours du lịch <%= region %></h1>
                     </div>
-                </a>
-            </div>
-            <% }) %> <% } %>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 d-flex justify-content-center">
-                <a class="btn item-list__view-all" href="/api/tour/<%= toursBac.region %>" role="button">Xem thêm</a>
-            </div>
-        </div>
-    </div>
-    <div class="item-list-container light-bg">
-        <div class="row">
-            <div class="col-xs-12">
-                <h1 class="item-list__title">Tours du lịch miền Trung</h1>
-            </div>
-        </div>
-        <div class="row gy-5">
-            <% if (toursTrung != '') { %> <% toursTrung.tours.forEach((tour, index) => { %>
-            <div class="col-xs-12 col-md-4">
-                <a href="/api/tour/get-tour/<%= tour.name %>">
-                    <div class="item">
-                        <div class="item__info">
-                            <h4></h4>
-                            <span>/người</span>
-                        </div>
-                        <img
-                            class="card-img-top"
-                            style="height: 300px"
-                            data-src="<%= tour.placeData.img %>"
-                            alt="Tour 1"
-                            src="<%= tour.placeData.img %>"
-                            loading="lazy"
-                        />
-                        <div class="border-bottom item__content">
-                            <h3 class="item__title"><%= tour.name %></h3>
-                            <p class="item__desc"><%= tour.desc %></p>
-                        </div>
+                </div>
+                <!-- Hiển thị tên khu vực -->
+                <div class="row gy-5">
+                    <% const tours = toursByRegion[region]; %> <% if (tours && tours.length > 0) { %> <%
+                    tours.forEach((tour, index) => { %>
+                    <div class="col-xs-12 col-md-4">
+                        <a href="/api/tour/get-tour/<%= tour._id %>">
+                            <div class="item">
+                                <div class="item__info"></div>
+                                <% if (tour.placeData && tour.placeData.img) { %>
+                                <img
+                                    class="card-img-top"
+                                    style="height: 300px"
+                                    data-src="<%= tour.placeData.img %>"
+                                    alt="<%= tour.placeData.name %>"
+                                    src="<%= tour.placeData.img %>"
+                                    loading="lazy"
+                                />
+                                <% } %>
+                                <div class="border-bottom item__content">
+                                    <h3 class="item__title"><%= tour.name %></h3>
+                                    <p class="item__desc"><%= tour.desc %></p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </a>
+
+                    <% }) %> <% } else { %>
+                    <p>Không có tour nào cho khu vực này.</p>
+                    <% } %>
+                </div>
             </div>
-            <% }) %> <% } %>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 d-flex justify-content-center">
-                <a class="btn item-list__view-all" href="/api/tour/<%= toursTrung.region %>" role="button">Xem thêm</a>
+            <div class="row">
+                <div class="col-xs-12 d-flex justify-content-center">
+                    <a class="btn item-list__view-all" href="/api/tour/<%= region %>" role="button">Xem thêm</a>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="item-list-container light-bg">
-        <div class="row">
-            <div class="col-xs-12">
-                <h1 class="item-list__title">Tours du lịch miền Nam</h1>
-            </div>
-        </div>
-        <div class="row gy-5">
-            <% if (toursNam != '') { %> <% toursNam.tours.forEach((tour, index) => { %>
-            <div class="col-xs-12 col-md-4">
-                <a href="/api/tour/get-tour/<%= tour.name %>">
-                    <div class="item">
-                        <div class="item__info">
-                            <h4></h4>
-                            <span>/người</span>
-                        </div>
-                        <img
-                            class="card-img-top"
-                            style="height: 300px"
-                            data-src="<%= tour.placeData.img %>"
-                            alt="Tour 1"
-                            src="<%= tour.placeData.img %>"
-                            loading="lazy"
-                        />
-                        <div class="border-bottom item__content">
-                            <h3 class="item__title"><%= tour.name %></h3>
-                            <p class="item__desc"><%= tour.desc %></p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <% }) %> <% } %>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 d-flex justify-content-center">
-                <a
-                    class="btn item-list__view-all"
-                    href="/api/tour/<%= encodeURIComponent(toursTrung.region) %>"
-                    role="button"
-                    >Xem thêm</a
-                >
-            </div>
+            <% } %>
         </div>
     </div>
 </div>

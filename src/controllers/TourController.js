@@ -192,10 +192,11 @@ class TourController {
             if (userId != null) {
                 user = await User.findById(userId);
             }
-            const tourService = new TourService();
-            const region = decodeURIComponent(encodedRegion);
-            let tours = await tourService.getToursByRegion(region);
-            console.log('region: ', region);
+            const region = req.params.region;
+            const tours = await Tour.find().populate({
+                path: 'placeData',
+                match: { region: region },
+            });
             if (!tours) {
                 res.render('404', { layout: false });
             } else {

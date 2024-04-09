@@ -14,37 +14,23 @@ class IndexController {
         }
 
         const limitNumber = 6;
+        const regions = ['miền bắc', 'miền trung', 'miền nam']; // Danh sách các khu vực
+        const toursByRegion = {}; // Object lưu trữ các tour theo khu vực
+        for (const region of regions) {
+            const tours = await Tour.find().populate({
+                path: 'placeData',
+                match: { region: region },
+            });
+            const filteredTours = tours.filter((tour) => tour.placeData !== null); // Lọc ra các tour có placeData không null
+            toursByRegion[region] = filteredTours; // Lưu các tour theo từng khu vực vào object
+        }
         const latestTours = await Tour.find().sort({ createdAt: -1 }).limit(limitNumber).populate('placeData');
-        const regionArr = ['miền bắc', 'miền trung', 'miền nam'];
-        let toursBac = {};
-        let toursTrung = {};
-        let toursNam = {};
-        const regionPromises = regionArr.map((region) => {
-            return tourService
-                .getLatestToursByRegion(region, limitNumber)
-                .then((tours) => {
-                    if (region === 'miền bắc') {
-                        toursBac = { region: region, tours: tours };
-                    } else if (region === 'miền trung') {
-                        toursTrung = { region: region, tours: tours };
-                    } else {
-                        toursNam = { region: region, tours: tours };
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error retrieving tours:', error);
-                });
-        });
-
-        await Promise.all(regionPromises);
 
         res.render('home', {
             cssLink: '/css/home.css',
             user,
+            toursByRegion,
             latestTours,
-            toursBac,
-            toursTrung,
-            toursNam,
         });
     }
 
