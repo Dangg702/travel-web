@@ -16,6 +16,7 @@ const tourSchema = new Schema(
         departure: { type: String },
         destination: { type: String },
         vehicle: { type: String },
+        type: { type: String },
     },
     {
         timestamps: true,

@@ -23,6 +23,11 @@
                         />
                     </a>
                     <ul class="dropdown-menu navbar__menu" aria-labelledby="accountDropdown">
+                        <% if (user.isAdmin) { %>
+                        <li>
+                            <a class="dropdown-item" href="http://localhost:9000/dashboard">Dashboard page</a>
+                        </li>
+                        <% } else { %>
                         <li>
                             <a
                                 class="dropdown-item"
@@ -30,6 +35,7 @@
                                 >Thông tin đơn hàng</a
                             >
                         </li>
+                        <% } %>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
                             <a class="dropdown-item" href="http://localhost:9000/user/account/<%= user._id %>"

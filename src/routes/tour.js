@@ -15,7 +15,7 @@ router.get('/get-tour/:id', authenticateToken, tourController.getTour);
 router.get('/search-tours/:name', authenticateToken, tourController.searchTours);
 router.get('/all-tours', authenticateToken, tourController.getAll);
 router.get('/latest-tours', authenticateToken, tourController.getLatestTours);
+router.get('/tours-type/:type', authenticateToken, tourController.getToursByType);
 router.get('/:region', authenticateToken, tourController.getToursByRegion);
-router.get('/', tourController.show);
 
 module.exports = router;
