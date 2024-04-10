@@ -1,1 +1,1 @@
-worker: node scr/app.js
+worker: node scr/index.js
