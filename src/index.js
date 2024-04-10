@@ -12,7 +12,7 @@ dotenvFlow.config();
 // dotenv.config();
 
 const app = express();
-const port = `mongodb+srv://tichhopnangcao:KC7I9Q4yRXDxBVGU@cluster0travel.rsdasvy.mongodb.net/web-travel-test?retryWrites=true&w=majority` || 8080;
+const port = process.env.PORT || 8080;
 
 const route = require('./routes');
 const db = require('./config/db');
