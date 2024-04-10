@@ -13,6 +13,7 @@ router.get('/create-tour', authenticateToken, tourController.createForm);
 router.get('/edit-tour/:id', tourController.editForm);
 router.get('/get-tour/:id', authenticateToken, tourController.getTour);
 router.get('/search-tours/:name', authenticateToken, tourController.searchTours);
+router.get('/search-tour/:id', tourController.searchTourById);
 router.get('/all-tours', authenticateToken, tourController.getAll);
 router.get('/latest-tours', authenticateToken, tourController.getLatestTours);
 router.get('/tours-type/:type', authenticateToken, tourController.getToursByType);

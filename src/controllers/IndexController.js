@@ -19,7 +19,6 @@ class IndexController {
             const filteredTours = await tourService.getLatestToursByRegion(region, limitNumber);
             toursByRegion[region] = filteredTours; // Lưu các tour theo từng khu vực vào object
         }
-
         res.render('home', {
             cssLink: '/css/home.css',
             user,

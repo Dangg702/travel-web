@@ -4,7 +4,6 @@ class PlaceController {
     // POST api/place/add-place
     async addPlace(req, res, next) {
         try {
-            // Tạo mới đối tượng Place từ dữ liệu được gửi từ biểu mẫu
             const placeData = {
                 name: req.body.name,
                 desc: req.body.desc,
@@ -12,37 +11,33 @@ class PlaceController {
                 isFamous: req.body.isFamous || false,
                 region: req.body.region || '',
             };
-            // Tìm địa điểm có cùng tên trong cơ sở dữ liệu
             const existingPlace = await Place.findOne({ name: placeData.name });
             if (existingPlace) {
                 return res.status(200).json({ message: 'Place with this name already exists', isupload: true });
             }
-            // Tạo mới đối tượng Place từ dữ liệu được cung cấp
             const place = new Place(placeData);
-            // Lưu đối tượng Place vào MongoDB
             const savedPlace = await place.save();
-            // Trả về thông báo và đối tượng Place đã lưu thành công
             res.json({ message: 'Place created successfully', data: savedPlace });
         } catch (error) {
-            // Xử lý lỗi nếu có
             next(error);
         }
     }
-
     createForm(req, res, next) {
         const userId = req.user.id;
         const user = User.findById(userId);
         res.render('create-form', { layout: 'layouts/dashboard-layout', user });
     }
     // GET api/place/edit-place/:id
-    editForm(req, res, next) {
+    async editForm(req, res, next) {
+        const userId = req.user.id;
+        const user = await User.findById(userId);
         const placeId = req.params.id;
         Place.findById(placeId)
             .then((place) => {
                 if (!place) {
                     return res.status(404).json({ message: 'Place not found' });
                 } else {
-                    res.render('edit-form', { layout: 'layouts/dashboard-layout', place });
+                    res.render('edit-form', { layout: 'layouts/dashboard-layout', place: place, user });
                 }
             })
             .catch(next);
@@ -61,43 +56,13 @@ class PlaceController {
             })
             .catch(next);
     }
-    async editForm(req, res, next) {
-        const places = await Place.find();
-        res.render('edit-form', { layout: 'layouts/dashboard-layout', places: places });
-    }
-    // DELETE api/place/delete-place/:id
-    deletePlace(req, res, next) {
-        const placeId = req.params.id;
-        Place.findByIdAndDelete(placeId)
-            .then((place) => {
-                if (!place) {
-                    return res.status(404).json({ message: 'Place not found' });
-                } else {
-                    res.status(200).json({ message: 'Delete place successfully' });
-                    // alert('Delete place successfully');
-                }
-            })
-            .catch(next);
-    }
-    async deleteForm(req, res, next) {
-        const places = await Place.find();
-        res.render('delete-form', { layout: 'layouts/dashboard-layout', places: places });
-    }
-
-    // GET api/place/search-place
-    async searchForm(req, res, next) {
-        const places = await Place.find();
-        res.render('search-form', { layout: 'layouts/dashboard-layout', places: places });
-    }
-
     // GET api/place/search-place/:name
     searchPlace(req, res, next) {
         const placeName = req.params.name;
-        Place.find({ name: placeName })
+        Place.find({ name: { $regex: placeName, $options: 'i' } })
             .then((places) => {
                 if (places.length < 0) {
                     return res.status(404).json({ message: 'Place not found' });
-                    // return res.status(404).json({ data: places });
                 } else {
                     res.status(200).json({ message: 'Success', data: places });
                 }

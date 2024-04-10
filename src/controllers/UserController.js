@@ -59,7 +59,7 @@ class UserController {
     // GET /api/user/get-user/:name
     getUser(req, res, next) {
         const userName = req.params.name;
-        User.find({ username: userName })
+        User.find({ name: { $regex: userName, $options: 'i' } })
             .then((user) => {
                 if (!user) {
                     return res.status(404).json({ message: 'User not found' });

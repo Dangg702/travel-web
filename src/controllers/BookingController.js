@@ -88,7 +88,8 @@ class BookingController {
                 user = await User.findById(userID);
             }
             const userId = req.params.id;
-            const bookings = await Booking.find({ userId }).populate('tourId');
+            const bookings = await Booking.find({ userId }).sort({ updatedAt: -1 }).populate('tourId');
+            console.log('bookings', bookings);
             res.render('booking-info', {
                 cssLink: '/css/booking-info.css',
                 bookings,

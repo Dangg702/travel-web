@@ -2,7 +2,7 @@
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#trips">Chuyến đi đã đặt</a>
+                <a class="nav-link active fs-2" aria-current="page" href="#trips">Chuyến đi đã đặt</a>
             </li>
         </ul>
 
@@ -22,7 +22,7 @@
                             <div class="col-md-4 p-5">
                                 <h5 class="card-title">Tour <%= booking.tourId.name %></h5>
                                 <p class="tour-status"><strong>Trạng thái:</strong> <%= booking.status %></p>
-                                <% if ((booking.status != 'cancelled') || booking.status == 'failed') { %>
+                                <% if (booking.status !== 'cancelled' && booking.status !== 'success') { %>
                                 <div>
                                     <button
                                         class="btn btn-danger btn-cancel-tour"
@@ -30,7 +30,6 @@
                                     >
                                         Hủy
                                     </button>
-                                    <% if (booking.status !='success') { %>
                                     <a
                                         class="btn btn-danger btn-payment-tour"
                                         style="font-size: 1.6rem; border-radius: 4px; text-transform: uppercase"
@@ -38,9 +37,7 @@
                                     >
                                         Thanh toán
                                     </a>
-                                    <% } %>
                                 </div>
-
                                 <% } %>
                             </div>
                             <div class="col-md-8 p-5">
