@@ -104,7 +104,8 @@ router.get('/vnpay_return', async function (req, res, next) {
     let crypto = require('crypto');
     let hmac = crypto.createHmac('sha512', secretKey);
     let signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
-
+    console.log(bookingId)
+    console.log('hai2',vnp_Params['vnp_ResponseCode'])
     if (secureHash === signed) {
         const bookingData = await Booking.findById(bookingId).populate('tourId');
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
