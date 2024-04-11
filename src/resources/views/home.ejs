@@ -130,8 +130,8 @@
                 </div>
                 <!-- Hiển thị tên khu vực -->
                 <div class="row gy-5">
-                    <% const tours = toursByRegion[region]; %> <% if (tours && tours.length > 0) { %> <%
-                    tours.forEach((tour, index) => { %>
+                    <% const tours = toursByRegion[region]; %> <% if (tours && tours.length > 0) { %> 
+                    <% tours.forEach((tour, index) => { %>
                     <div class="col-xs-12 col-md-4">
                         <a href="/api/tour/get-tour/<%= tour._id %>">
                             <div class="item">
@@ -170,4 +170,27 @@
             <% } %>
         </div>
     </div>
+    
+    <div id="fb-root"></div>
+    <div id="fb-customer-chat" class="fb-customerchat"></div>
 </div>
+
+<script>
+    let chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute('page_id', 'PAGE-ID');
+    chatbox.setAttribute('attribution', 'biz_inbox');
+</script>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({ xfbml: true, version: 'API-VERSION' });
+    };
+    (function (d, s, id) {
+        var js,
+            fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'facebook-jssdk');
+</script>
