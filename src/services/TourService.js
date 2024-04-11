@@ -15,21 +15,6 @@ class TourService {
             throw error;
         }
     }
-    async getLatestToursByRegion(region, limit) {
-        try {
-            const tours = await Tour.find()
-                .populate({
-                    path: 'placeData',
-                    match: { region: region },
-                })
-                .limit(limit);
-            const filteredTours = tours.filter((tour) => tour.placeData !== null);
-            return filteredTours;
-        } catch (error) {
-            console.error('Error in getToursByRegion:', error);
-            throw error;
-        }
-    }
     async getHotPlaces(limit) {
         try {
             const tours = await Tour.find()

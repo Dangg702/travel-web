@@ -16,9 +16,10 @@ class IndexController {
         const regions = ['miền bắc', 'miền trung', 'miền nam']; // Danh sách các khu vực
         const toursByRegion = {}; // Object lưu trữ các tour theo khu vực
         for (const region of regions) {
-            const filteredTours = await tourService.getLatestToursByRegion(region, limitNumber);
-            toursByRegion[region] = filteredTours; // Lưu các tour theo từng khu vực vào object
+            const filteredTours = await tourService.getToursByRegion(region);
+            toursByRegion[region] = filteredTours.slice(0, limitNumber); // Lưu các tour theo từng khu vực vào object
         }
+
         res.render('home', {
             cssLink: '/css/home.css',
             user,
