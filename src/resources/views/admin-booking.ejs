@@ -51,7 +51,7 @@
                                     <td><%= booking.updatedAt.toLocaleDateString() %></td>
                                     <td>
                                         <!-- <a
-                                            href="http://localhost:9000/"
+                                            href="https://travel-web-ks0z.onrender.com/"
                                             class="btn btn-outline-primary"
                                             >Edit</a
                                         > -->
@@ -80,7 +80,7 @@
             button.addEventListener('click', function (event) {
                 event.preventDefault();
                 const bookingId = this.getAttribute('data-booking-id');
-                fetch(`http://localhost:9000/booking/delete/${bookingId}`, {
+                fetch(`https://travel-web-ks0z.onrender.com/booking/delete/${bookingId}`, {
                     method: 'DELETE',
                 })
                     .then((response) => {

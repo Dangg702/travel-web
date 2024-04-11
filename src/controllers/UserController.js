@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const { refreshTokenJwtService } = require('../services/JwtService');
+const dotenvFlow = require('dotenv-flow');
+dotenvFlow.config();
 
 class UserController {
     // GET /user/account/:id
@@ -30,7 +32,7 @@ class UserController {
                 res.write(
                     '<script>alert("' +
                         successMessage +
-                        '"); window.location.href="http://localhost:9000/api/user/manage";</script>',
+                        '"); window.location.href="https://travel-web-ks0z.onrender.com/api/user/manage";</script>',
                 );
                 res.end();
                 return;

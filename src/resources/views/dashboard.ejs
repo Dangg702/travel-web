@@ -346,7 +346,7 @@
                 event.preventDefault();
                 const bookingId = this.getAttribute('data-booking-id');
                 if (confirm('Are you sure you want to delete this booking?')) {
-                    fetch(`http://localhost:9000/booking/delete/${bookingId}`, {
+                    fetch(`https://travel-web-ks0z.onrender.com/booking/delete/${bookingId}`, {
                     method: 'DELETE',
                 })
                     .then((response) => {

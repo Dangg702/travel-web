@@ -80,7 +80,7 @@
         const btnsRedirect = document.querySelectorAll('.btn-payment-tour');
         const amount = totalPrice.replace(/,/g, '');
         btnsRedirect.forEach((btn) => {
-            btn.href = `http://localhost:9000/api/payment/create_payment_url?orderId=${bookingId}&amount=${amount}`;
+            btn.href = `https://travel-web-ks0z.onrender.com/api/payment/create_payment_url?orderId=${bookingId}&amount=${amount}`;
         });
     }
     function handleCancel(bookingId, totalPrice, userId) {
@@ -105,7 +105,7 @@
                             alert('Hủy tour thất bại');
                         }
                     });
-                fetch(`http://localhost:9000/api/payment/refund`, {
+                fetch(`https://travel-web-ks0z.onrender.com/api/payment/refund`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -57,7 +57,7 @@
                                     <td><%= tour.price %></td>
                                     <td>
                                         <a
-                                            href="http://localhost:9000/api/tour/edit-tour/<%= tour._id %>"
+                                            href="https://travel-web-ks0z.onrender.com/api/tour/edit-tour/<%= tour._id %>"
                                             class="btn btn-outline-primary"
                                             >Edit</a
                                         >
@@ -117,7 +117,7 @@
                 <td>${tour.price}</td>
                 <td>
                     <a
-                        href="http://localhost:9000/api/tour/edit-tour/${tour._id}"
+                        href="https://travel-web-ks0z.onrender.com/api/tour/edit-tour/${tour._id}"
                         class="btn btn-outline-primary"
                         >Edit</a
                     >
@@ -136,7 +136,7 @@
         event.preventDefault();
         const searchInput = document.getElementById('input-tour').value;
         try {
-            const response = await fetch(`http://localhost:9000/api/tour/search-tour/${searchInput}`);
+            const response = await fetch(`https://travel-web-ks0z.onrender.com/api/tour/search-tour/${searchInput}`);
             const searchData = await response.json();
             console.log(searchData.data);
             if (response.ok) {
@@ -161,7 +161,7 @@
             button.addEventListener('click', function (event) {
                 event.preventDefault();
                 const tourId = this.getAttribute('data-tour-id'); // Lấy id từ data-place-id
-                fetch(`http://localhost:9000/api/tour/delete-tour/${tourId}`, {
+                fetch(`https://travel-web-ks0z.onrender.com/api/tour/delete-tour/${tourId}`, {
                     method: 'DELETE',
                 })
                     .then((response) => {

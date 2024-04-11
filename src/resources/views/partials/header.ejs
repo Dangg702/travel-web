@@ -6,7 +6,7 @@
         <nav class="navbar fixed-top d-flex flex-row">
             <!-- Logo -->
             <div class="navbar__logo">
-                <a href="http://localhost:9000/"><img src="/img/logo.svg" alt="logo" /></a>
+                <a href="https://travel-web-ks0z.onrender.com/"><img src="/img/logo.svg" alt="logo" /></a>
             </div>
             <!-- Links -->
             <ul class="navbar-nav navbar__links">
@@ -25,25 +25,33 @@
                     <ul class="dropdown-menu navbar__menu" aria-labelledby="accountDropdown">
                         <% if (user.isAdmin) { %>
                         <li>
-                            <a class="dropdown-item" href="http://localhost:9000/dashboard">Dashboard page</a>
+                            <a class="dropdown-item" href="https://travel-web-ks0z.onrender.com/dashboard"
+                                >Dashboard page</a
+                            >
                         </li>
                         <% } else { %>
                         <li>
                             <a
                                 class="dropdown-item"
-                                href="http://localhost:9000/user/account/<%= user._id %>/booking-info"
+                                href="https://travel-web-ks0z.onrender.com/user/account/<%= user._id %>/booking-info"
                                 >Thông tin đơn hàng</a
                             >
                         </li>
                         <% } %>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
-                            <a class="dropdown-item" href="http://localhost:9000/user/account/<%= user._id %>"
+                            <a
+                                class="dropdown-item"
+                                href="https://travel-web-ks0z.onrender.com/user/account/<%= user._id %>"
                                 >Tài khoản</a
                             >
                         </li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="http://localhost:9000/user/logout">Đăng xuất</a></li>
+                        <li>
+                            <a class="dropdown-item" href="https://travel-web-ks0z.onrender.com/user/logout"
+                                >Đăng xuất</a
+                            >
+                        </li>
                     </ul>
                     <% } else { %>
                     <a class="nav-link" href="/user/login">
