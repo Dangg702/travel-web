@@ -89,7 +89,7 @@
                     <div class="title-description">Đánh giá khách hàng về Tour <%= tour.name %></div>
                     <div class="col-xs-12 mt-5 mb-5">
                         <% if (user != null) { %>
-                        <form id="reviewForm" userId-data="<%= user._id %>">
+                        <form id="reviewForm" user-data="<%= user %>">
                             <div class="row d-flex align-items-center">
                                 <div class="col-xs-12 col-md-3 col-lg-2">
                                     <div class="row">
@@ -213,12 +213,11 @@
         const rating = parseInt(form.rating.value);
         const comment = form.comment.value;
         const tourId = '<%= tour._id %>';
-        let userId = form.getAttribute('userId-data');
         if (!comment) {
             alert('Vui lòng nhập đầy đủ thông tin');
             return;
         }
-
+        const userId = '<%= user.id %>';
         fetch('/api/review/add-review', {
             method: 'POST',
             headers: {
