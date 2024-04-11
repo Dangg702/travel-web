@@ -2,26 +2,23 @@ const Tour = require('../models/Tour');
 const User = require('../models/User');
 const review = require('../controllers/reviewController');
 const fs = require('fs');
-const TourService = require('../services/TourService');
+const tourService = require('../services/TourService');
 
 class TourController {
-    async show(req, res, next) {
-        try {
-            return res.json({ message: 'TourController' });
-        } catch (err) {
-            next(err);
-        }
-    }
     createForm(req, res, next) {
-        res.render('create-tour', { layout: 'layouts/dashboard-layout' });
+        const userId = req.user.id;
+        const user = User.findById(userId);
+        res.render('create-tour', { layout: 'layouts/dashboard-layout', user });
     }
     async editForm(req, res, next) {
+        const userId = req.user.id;
+        const user = await User.findById(userId);
         const tourId = req.params.id;
         const tour = await Tour.findById(tourId);
         if (!tour) {
             res.status(404).json({ message: 'Tour not found' });
         } else {
-            res.render('edit-tour', { layout: 'layouts/dashboard-layout', tour });
+            res.render('edit-tour', { layout: 'layouts/dashboard-layout', tour, user });
         }
     }
     // POST api/tour/add-tour
@@ -122,6 +119,8 @@ class TourController {
                 ...queryConditions, // Sử dụng toán tử spread để thêm các điều kiện vào truy vấn
             }).populate('placeData');
 
+            const hotPlaces = await tourService.getHotPlaces(10);
+
             if (tours.length === 0) {
                 res.render('tours', {
                     layout: 'layouts/sidebar-layout',
@@ -129,6 +128,8 @@ class TourController {
                     message: 'Tours không tồn tại',
                     tours,
                     user,
+                    tourTitle: tourName,
+                    hotPlaces,
                 });
             } else {
                 res.render('tours', {
@@ -136,15 +137,38 @@ class TourController {
                     cssLink: '/css/tours.css',
                     tours,
                     user,
+                    tourTitle: tourName,
+                    hotPlaces,
                 });
             }
         } catch (err) {
             next(err);
         }
     }
+    // GET api/tour/search-tour/:id
+    async searchTourById(req, res, next) {
+        try {
+            const tourId = req.params.id;
+            const tours = await Tour.findById(tourId).populate('placeData');
+
+            if (tours.length === 0) {
+                return res.status(404).json({ message: 'Tour not found' });
+            } else {
+                res.status(200).json({ message: 'Success', data: tours });
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
+
     // GET api/tour/all-tours
     async getAll(req, res, next) {
         try {
+            const userId = req.user ? req.user.id : null;
+            let user = null;
+            if (userId != null) {
+                user = await User.findById(userId);
+            }
             const tours = await Tour.find();
             if (!tours) {
                 res.status(404).json({ message: 'No tour found' });
@@ -154,6 +178,7 @@ class TourController {
                     layout: 'layouts/dashboard-layout',
                     cssLink: '/css/tours.css',
                     tours,
+                    user,
                 });
             }
         } catch (err) {
@@ -168,8 +193,10 @@ class TourController {
             if (userId != null) {
                 user = await User.findById(userId);
             }
+            let tourTitle = 'mới nhất';
             const limitNumber = 15;
             const tours = await Tour.find().sort({ createdAt: -1 }).limit(limitNumber).populate('placeData');
+            const hotPlaces = await tourService.getHotPlaces(10);
             if (!tours) {
                 res.render('404', { layout: false });
             } else {
@@ -178,13 +205,15 @@ class TourController {
                     cssLink: '/css/tours.css',
                     tours,
                     user,
+                    tourTitle,
+                    hotPlaces,
                 });
             }
         } catch (err) {
             res.render('500', { layout: false });
         }
     }
-    // GET /:region
+    // GET api/tour/:region
     async getToursByRegion(req, res, next) {
         try {
             const userId = req.user ? req.user.id : null;
@@ -193,10 +222,8 @@ class TourController {
                 user = await User.findById(userId);
             }
             const region = req.params.region;
-            const tours = await Tour.find().populate({
-                path: 'placeData',
-                match: { region: region },
-            });
+            const tours = await tourService.getToursByRegion(region);
+            const hotPlaces = await tourService.getHotPlaces(10);
             if (!tours) {
                 res.render('404', { layout: false });
             } else {
@@ -205,10 +232,50 @@ class TourController {
                     cssLink: '/css/tours.css',
                     tours,
                     user,
+                    tourTitle: region,
+                    hotPlaces,
                 });
             }
         } catch (error) {
             console.error('Error in getToursByRegion:', error);
+            res.render('500', { layout: false });
+        }
+    }
+    // GET api/tour/:type
+    async getToursByType(req, res, next) {
+        try {
+            const userId = req.user ? req.user.id : null;
+            let user = null;
+            if (userId != null) {
+                user = await User.findById(userId);
+            }
+            const type = req.params.type;
+            console.log('type: ' + type);
+            const tours = await Tour.find({ type: type }).populate('placeData');
+            const hotPlaces = await tourService.getHotPlaces(10);
+            console.log('tour type', tours);
+            if (!tours || tours.length === 0) {
+                res.render('tours', {
+                    layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tours.css',
+                    tours,
+                    user,
+                    tourTitle: type,
+                    hotPlaces,
+                    message: 'No tours found',
+                });
+            } else {
+                res.render('tours', {
+                    layout: 'layouts/sidebar-layout',
+                    cssLink: '/css/tours.css',
+                    tours,
+                    user,
+                    tourTitle: type,
+                    hotPlaces,
+                });
+            }
+        } catch (error) {
+            console.error('Error in getToursByHotPlace:', error);
             res.render('500', { layout: false });
         }
     }

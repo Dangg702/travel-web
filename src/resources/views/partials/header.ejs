@@ -11,6 +11,14 @@
             <!-- Links -->
             <ul class="navbar-nav navbar__links">
                 <li class="nav-item navbar__link"><a href="/">Trang chủ</a></li>
+                <li class="nav-item navbar__link dropdown">
+                    <a href="#">Tour</a>
+                    <ul class="dropdown-menu navbar__menu" aria-labelledby="accountDropdown">
+                        <li><a class="dropdown-item" href="https://travel-web-ks0z.onrender.com/api/tour/miền bắc">Tour du lịch miền Bắc</a></li>
+                        <li><a class="dropdown-item" href="https://travel-web-ks0z.onrender.com/api/tour/miền trung">Tour du lịch miền Trung</a></li>
+                        <li><a class="dropdown-item" href="https://travel-web-ks0z.onrender.com/api/tour/miền nam">Tour du lịch miền Nam</a></li>
+                    </ul>
+                </li>
                 <li class="nav-item navbar__link"><a href="/blog">Blogs</a></li>
                 <li class="nav-item navbar__link"><a href="/contact">Liên hệ</a></li>
                 <li class="nav-item navbar__link dropdown" id="accountBtn">
@@ -23,6 +31,11 @@
                         />
                     </a>
                     <ul class="dropdown-menu navbar__menu" aria-labelledby="accountDropdown">
+                        <% if (user.isAdmin) { %>
+                        <li>
+                            <a class="dropdown-item" href="http://localhost:9000/dashboard">Dashboard page</a>
+                        </li>
+                        <% } else { %>
                         <li>
                             <a
                                 class="dropdown-item"
@@ -30,6 +43,7 @@
                                 >Thông tin đơn hàng</a
                             >
                         </li>
+                        <% } %>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
                             <a class="dropdown-item" href="http://localhost:9000/user/account/<%= user._id %>"

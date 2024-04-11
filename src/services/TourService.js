@@ -4,29 +4,51 @@ const Tour = require('../models/Tour');
 class TourService {
     async getToursByRegion(region) {
         try {
-            const places = await Place.find({ region: region });
-            const placeIds = places.map((place) => place._id);
-            const tours = await Tour.find({ placeData: { $in: placeIds } }).populate('placeData');
-            return { region: region, tours: tours };
+            const tours = await Tour.find().populate({
+                path: 'placeData',
+                match: { region: region },
+            });
+            const filteredTours = tours.filter((tour) => tour.placeData !== null);
+            return filteredTours;
         } catch (error) {
-            console.error(`Error retrieving tours for ${region}:`, error);
+            console.error('Error in getToursByRegion:', error);
             throw error;
         }
     }
     async getLatestToursByRegion(region, limit) {
         try {
-            const places = await Place.find({ region: region });
-            const placeIds = places.map((place) => place._id);
-            const tours = await Tour.find({ placeData: { $in: placeIds } })
-                .sort({ createdAt: -1 })
-                .limit(limit)
-                .populate('placeData');
-            return tours;
+            const tours = await Tour.find()
+                .populate({
+                    path: 'placeData',
+                    match: { region: region },
+                })
+                .limit(limit);
+            const filteredTours = tours.filter((tour) => tour.placeData !== null);
+            return filteredTours;
         } catch (error) {
-            console.error(`Error retrieving tours for ${region}:`, error);
+            console.error('Error in getToursByRegion:', error);
+            throw error;
+        }
+    }
+    async getHotPlaces(limit) {
+        try {
+            const tours = await Tour.find()
+                .populate({
+                    path: 'placeData',
+                    match: { isFamous: true },
+                })
+                .limit(limit);
+            const filteredTours = tours.filter((tour) => tour.placeData !== null);
+            const hotPlaces = [];
+            filteredTours.forEach((tour) => {
+                hotPlaces.push(tour.placeData.name);
+            });
+            return hotPlaces;
+        } catch (error) {
+            console.error('Error in getToursFamous:', error);
             throw error;
         }
     }
 }
 
-module.exports = TourService;
+module.exports = new TourService();

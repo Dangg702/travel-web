@@ -59,7 +59,7 @@ class UserController {
     // GET /api/user/get-user/:name
     getUser(req, res, next) {
         const userName = req.params.name;
-        User.find({ username: userName })
+        User.find({ name: { $regex: userName, $options: 'i' } })
             .then((user) => {
                 if (!user) {
                     return res.status(404).json({ message: 'User not found' });
@@ -72,7 +72,9 @@ class UserController {
 
     // GET /api/user/manage
     userPage(req, res, next) {
-        res.render('user-management', { layout: 'layouts/dashboard-layout' });
+        const userId = req.user.id;
+        const user = User.findById(userId);
+        res.render('user-management', { layout: 'layouts/dashboard-layout', user });
     }
 
     // GET /api/user/refresh-token ( generate a new access token )

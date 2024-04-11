@@ -88,7 +88,8 @@ class BookingController {
                 user = await User.findById(userID);
             }
             const userId = req.params.id;
-            const bookings = await Booking.find({ userId }).populate('tourId');
+            const bookings = await Booking.find({ userId }).sort({ updatedAt: -1 }).populate('tourId');
+            console.log('bookings', bookings);
             res.render('booking-info', {
                 cssLink: '/css/booking-info.css',
                 bookings,
@@ -101,11 +102,14 @@ class BookingController {
     // GET /booking/all-bookings
     async getAllBookings(req, res, next) {
         try {
+            const userId = req.user.id;
+            const user = await User.findById(userId);
             const bookings = await Booking.find();
             // res.status(200).json({ message: 'Success', status: 'ok', bookings });
             res.render('admin-booking', {
                 layout: 'layouts/dashboard-layout',
                 bookings,
+                user,
             });
         } catch (err) {
             next(err);
