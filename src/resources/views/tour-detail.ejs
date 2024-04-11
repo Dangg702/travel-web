@@ -89,7 +89,7 @@
                     <div class="title-description">Đánh giá khách hàng về Tour <%= tour.name %></div>
                     <div class="col-xs-12 mt-5 mb-5">
                         <% if (user != null) { %>
-                        <form id="reviewForm" user-data="<%= user %>">
+                        <form id="reviewForm" userId-data="<%= user._id %>">
                             <div class="row d-flex align-items-center">
                                 <div class="col-xs-12 col-md-3 col-lg-2">
                                     <div class="row">
@@ -187,7 +187,7 @@
                             <button
                                 class="btn btn-lg btn-outline-primary more-reviews"
                                 data-reviews="<%= JSON.stringify(reviews) %>"
-                                onclick="submitReview()"
+                                onclick="handleReviews()"
                             >
                                 Xem tất cả
                             </button>
@@ -213,16 +213,12 @@
         const rating = parseInt(form.rating.value);
         const comment = form.comment.value;
         const tourId = '<%= tour._id %>';
-        let user = form.getAttribute('user-data');
-        let userId = '';
+        let userId = form.getAttribute('userId-data');
         if (!comment) {
             alert('Vui lòng nhập đầy đủ thông tin');
             return;
         }
-        if (user) {
-            user = JSON.parse(user);
-            userId = user._id;
-        }
+
         fetch('/api/review/add-review', {
             method: 'POST',
             headers: {
