@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { authenticateToken } = require('../middleware/authMiddleware');
+const { authMiddleware, authenticateToken } = require('../middleware/authMiddleware');
 
 const indexController = require('../controllers/IndexController');
+const blogsController = require('../controllers/BlogsController');
+const dashboardController = require('../controllers/DashboardController');
 
-router.get('/list/:page', async (req, res, next) => {
-    await indexController.getIndex(req, res, next);
-});
-
+router.get('/blogs', authenticateToken, blogsController.getBlogs);
+router.get('/blogs/create-blog', authenticateToken, blogsController.blogForm);
+router.post('/blogs/create-blog', blogsController.createBlog);
+router.get('/blogs/:name', authenticateToken, blogsController.getBlog);
+router.get('/dashboard', authMiddleware, authenticateToken, dashboardController.getIndex);
 router.get('/contact', authenticateToken, indexController.getContact);
+router.post('/contact', indexController.sendContact);
 router.get('/', authenticateToken, indexController.getIndex);
 module.exports = router;
