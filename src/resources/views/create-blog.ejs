@@ -30,8 +30,8 @@
                             <input
                                 type="file"
                                 class="form-control"
-                                id="imgUrl"
-                                name="imgUrl"
+                                id="image"
+                                name="image"
                                 accept="image/*"
                                 required
                             />
@@ -51,7 +51,7 @@
                             >
                             </textarea>
                         </div>
-                        <button onclick="uploadAndCreateBlog()" class="btn btn-primary">Submit</button>
+                        <button type="button" onclick="uploadAndCreateBlog()" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
@@ -71,7 +71,7 @@
         // Lấy thông tin từ biểu mẫu
         const title = document.getElementById('title').value;
         const desc = document.getElementById('desc').value;
-        const image = document.getElementById('imgUrl').files[0];
+        const image = document.getElementById('image').files[0];
         const contentHtml = document.getElementById('contentHtml').value;
 
         // Tạo FormData để gửi dữ liệu đến server
