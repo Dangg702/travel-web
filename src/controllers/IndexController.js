@@ -2,6 +2,7 @@ const Place = require('../models/Place');
 const Tour = require('../models/Tour');
 const User = require('../models/User');
 const tourService = require('../services/TourService');
+const EmailService = require('../services/EmailService');
 
 class IndexController {
     async getIndex(req, res, next) {
@@ -38,6 +39,17 @@ class IndexController {
             cssLink: '/css/contact.css',
             user,
         });
+    }
+    async sendContact(req, res, next) {
+        try {
+            const data = req.body;
+            await EmailService.sendContactEmail(data);
+            // res.status(200).json({ message: 'Email sent successfully' });
+            res.redirect('/contact');
+        } catch (error) {
+            console.error('Failed to send email:', error);
+            res.status(500).json({ error: 'Failed to send email' });
+        }
     }
 }
 

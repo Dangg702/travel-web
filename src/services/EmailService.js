@@ -38,4 +38,36 @@ const sendEmailCreateBooking = async (bookingData) => {
     });
 };
 
-module.exports = { sendEmailCreateBooking };
+const sendContactEmail = async (data) => {
+    let senderEmail = data.email;
+
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: process.env.MAIL_ACCOUNT,
+            pass: process.env.MAIL_PASSWORD,
+        },
+    });
+
+    // Gửi email với đối tượng vận chuyển đã được xác định
+    let info = await transporter.sendMail({
+        from: senderEmail,
+        to: process.env.MAIL_ACCOUNT,
+        subject: 'Liên hệ từ khách hàng mới',
+        text: 'Xin chào,',
+        html: `
+      <p>Tôi là ${data.sender}. Tôi gửi email này để liên hệ với bạn về một số thông tin quan trọng.</p>
+      <p>Tôi quan tâm và muốn được biết thêm về <strong>${data.message}</strong>. Xin vui lòng cung cấp thông tin chi tiết hoặc giải đáp câu hỏi của tôi.</p>
+      <p>Dưới đây là thông tin liên hệ của tôi:</p>
+      <p>Tên: ${data.sender}</p>
+      <p>Địa chỉ email: ${data.email}</p>
+      <p>Tôi mong nhận được phản hồi từ bạn sớm nhất để chúng ta có thể tiếp tục trao đổi thông tin. Xin cảm ơn vì đã dành thời gian đọc email này.</p>
+      <p>Trân trọng,</p>
+      <p>${data.sender}</p>
+    `,
+    });
+};
+
+module.exports = { sendEmailCreateBooking, sendContactEmail };
