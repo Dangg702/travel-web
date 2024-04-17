@@ -11,24 +11,35 @@ class BlogsController {
         if (userId != null) {
             user = await User.findById(userId);
         }
-        res.render('blogs', {
-            cssLink: '/css/blogs.css',
-            user,
-        });
+        const blogs = await Blogs.find();
+        if (!blogs) {
+            res.status(404).json({ message: 'No blogs found' });
+        } else {
+            res.render('blogs', {
+                cssLink: '/css/blogs.css',
+                user,
+                blogs,
+            });
+        }
     }
-    // GET /blogs/:name
+    // GET /blogs/:title
     async getBlog(req, res, next) {
-        const name = req.params.name;
+        const title = req.params.id;
         const userId = req.user ? req.user.id : null;
         let user = null;
         if (userId != null) {
             user = await User.findById(userId);
         }
-
-        res.render('blog', {
-            cssLink: '/css/blogs.css',
-            user,
-        });
+        const blog = await Blogs.findOne({ _id: title });
+        if (blog) {
+            res.render('blog', {
+                cssLink: '/css/blogs.css',
+                user,
+                blog,
+            });
+        } else {
+            return res.status(404).json({ message: 'No blog found' });
+        }
     }
     // GET /blogs/create-blog
     async blogForm(req, res, next) {
