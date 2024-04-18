@@ -76,7 +76,7 @@ class PaymentController {
         vnp_Params['vnp_TmnCode'] = tmnCode;
         vnp_Params['vnp_Locale'] = locale;
         vnp_Params['vnp_CurrCode'] = currCode;
-        vnp_Params['vnp_TxnRef'] = orderId;
+        vnp_Params['vnp_TxnRef'] = orderId+createDate;
         vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + orderId;
         vnp_Params['vnp_OrderType'] = 'other';
         vnp_Params['vnp_Amount'] = amount * 100;
@@ -102,7 +102,7 @@ class PaymentController {
     // GET /api/payment/vnpay_return
     async showVnpayReturn(req, res, next) {
         let vnp_Params = req.query;
-        let bookingId = vnp_Params['vnp_TxnRef'];
+        let bookingId = vnp_Params['vnp_TxnRef'].substring(0, vnp_Params['vnp_TxnRef'].length -  vnp_Params['vnp_PayDate'].length);
         let secureHash = vnp_Params['vnp_SecureHash'];
 
         delete vnp_Params['vnp_SecureHash'];
