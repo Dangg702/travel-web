@@ -62,7 +62,7 @@ class PaymentController {
         let returnUrl = config.vnpay.vnp_ReturnUrl;
 
         let datetime = new Date();
-        let timestamp = datetime.getTime();
+        let timestamp = datetime.getTime().toString();
         let orderId = req.body.orderId;
         let amount = req.body.amount;
         let bankCode = req.body.bankCode;
