@@ -8,7 +8,7 @@ const dashboardController = require('../controllers/DashboardController');
 
 router.get('/blogs', authenticateToken, blogsController.getBlogs);
 router.get('/blogs/create-blog', authenticateToken, blogsController.blogForm);
-router.post('/blogs/create-blog', blogsController.createBlog);
+router.post('/blogs/create-blog',authMiddleware, authenticateToken, blogsController.createBlog);
 router.get('/blogs/:id', authenticateToken, blogsController.getBlog);
 router.get('/dashboard', authMiddleware, authenticateToken, dashboardController.getIndex);
 router.get('/contact', authenticateToken, indexController.getContact);
