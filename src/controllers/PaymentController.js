@@ -62,8 +62,8 @@ class PaymentController {
         let returnUrl = config.vnpay.vnp_ReturnUrl;
 
         let datetime = new Date();
-        let timestamp = datetime.getTime().toString();
-        let orderId = req.body.orderId;
+        let timestamp = datetime.getTime();
+        let orderId = req.body.orderId+timestamp;
         let amount = req.body.amount;
         let bankCode = req.body.bankCode;
 
@@ -79,8 +79,8 @@ class PaymentController {
         vnp_Params['vnp_Locale'] = locale;
         vnp_Params['vnp_CurrCode'] = currCode;
         vnp_Params['vnp_timestamp'] = timestamp;
-        vnp_Params['vnp_TxnRef'] = orderId+timestamp;
-        vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + orderId+timestamp;
+        vnp_Params['vnp_TxnRef'] = orderId;
+        vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + orderId;
         vnp_Params['vnp_OrderType'] = 'other';
         vnp_Params['vnp_Amount'] = amount * 100;
         vnp_Params['vnp_ReturnUrl'] = returnUrl;
