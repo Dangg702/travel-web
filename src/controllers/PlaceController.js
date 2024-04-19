@@ -70,63 +70,6 @@ class PlaceController {
             .catch(next);
     }
 
-    // GET api/place/all-places
-    getAllPlace(req, res, next) {
-        // const { limit, page, sort } = req.query;
-        const { sort, filter } = req.query;
-        const limit = req.query.limit || 10;
-        const page = req.query.page || 1;
-
-        if (filter) {
-            const objectFilter = {};
-            objectFilter[filter[0]] = filter[1];
-            Place.find({ [filter[0]]: { $regex: filter[1] } })
-                .limit(limit)
-                .skip((page - 1) * limit)
-                .then((places) => {
-                    if (places.length === 0) {
-                        return res.status(404).json({ message: 'Empty' });
-                    } else {
-                        Place.countDocuments().then((totalPlaces) => {
-                            res.status(200).json({
-                                message: 'Success',
-                                data: places,
-                                currentPage: page,
-                                totalPlaces: totalPlaces,
-                                totalPages: Math.ceil(totalPlaces / limit),
-                            });
-                        });
-                    }
-                })
-                .catch(next);
-        }
-
-        if (sort) {
-            const objectSort = {};
-            objectSort[sort[1]] = sort[0];
-            Place.find()
-                .limit(limit)
-                .skip((page - 1) * limit)
-                .sort(objectSort)
-                .then((places) => {
-                    if (places.length === 0) {
-                        return res.status(404).json({ message: 'Empty' });
-                    } else {
-                        Place.countDocuments().then((totalPlaces) => {
-                            res.status(200).json({
-                                message: 'Success',
-                                data: places,
-                                currentPage: page,
-                                totalPlaces: totalPlaces,
-                                totalPages: Math.ceil(totalPlaces / limit),
-                            });
-                        });
-                    }
-                })
-                .catch(next);
-        }
-    }
-
     // GET api/place/place-data
     placeTable(req, res, next) {
         const userId = req.user.id;
