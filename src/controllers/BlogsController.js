@@ -24,13 +24,13 @@ class BlogsController {
     }
     // GET /blogs/:title
     async getBlog(req, res, next) {
-        const title = req.params.id;
+        const title = req.params.title;
         const userId = req.user ? req.user.id : null;
         let user = null;
         if (userId != null) {
             user = await User.findById(userId);
         }
-        const blog = await Blogs.findOne({ _id: title });
+        const blog = await Blogs.findOne({ title: title });
         if (blog) {
             res.render('blog', {
                 cssLink: '/css/blogs.css',
