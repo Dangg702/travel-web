@@ -8,7 +8,6 @@ router.post('/add-place', placeController.addPlace);
 router.get('/edit-place/:id', authenticateToken, placeController.editForm);
 router.put('/edit-place/:id', placeController.editPlace);
 router.get('/search-place/:name', placeController.searchPlace);
-router.get('/all-place/', placeController.getAllPlace);
 router.get('/place-data', authenticateToken, placeController.placeTable);
 
 module.exports = router;
