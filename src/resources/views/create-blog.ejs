@@ -27,18 +27,17 @@
                         </div>
                         <div class="input-group mb-3 custom-file-button">
                             <label class="input-group-text" for="imgUrl">Upload Image</label>
-                            <input
-                                type="file"
-                                class="form-control"
-                                id="image"
-                                name="image"
-                                accept="image/*"
-                                required
-                            />
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*" required />
                         </div>
                         <div class="form-group">
-                            <label for="desc">Description</label>
-                            <textarea class="form-control" id="desc" name="desc" required rows="4"></textarea>
+                            <label for="description">description</label>
+                            <textarea
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                required
+                                rows="4"
+                            ></textarea>
                         </div>
                         <div class="form-group">
                             <label for="contentHtml">Content</label>
@@ -60,24 +59,20 @@
 </div>
 <script src="/ckeditor/ckeditor.js"></script>
 <script>
-    CKEDITOR.replace('contentHtml', {
-        extraPlugins: 'filebrowser',
-        filebrowserBrowseUrl: '/list', //upload location
-        filebrowserUploadMethod: 'form',
-        removePlugins: 'exportpdf',
-    });
+    CKEDITOR.replace('contentHtml');
 
     async function uploadAndCreateBlog() {
         // Lấy thông tin từ biểu mẫu
         const title = document.getElementById('title').value;
-        const desc = document.getElementById('desc').value;
+        const description = document.getElementById('description').value;
         const image = document.getElementById('image').files[0];
         const contentHtml = document.getElementById('contentHtml').value;
+        console.log('contentHtml', contentHtml);
 
         // Tạo FormData để gửi dữ liệu đến server
         const formData = new FormData();
         formData.append('title', title);
-        formData.append('desc', desc);
+        formData.append('description', description);
         formData.append('image', image);
         formData.append('contentHtml', contentHtml);
 
@@ -96,7 +91,7 @@
                 },
                 body: JSON.stringify({
                     title: title,
-                    desc: desc,
+                    description: description,
                     imgUrl: cloudinaryData.url, // Mảng URL của ảnh từ Cloudinary
                     contentHtml: contentHtml,
                 }),
