@@ -53,6 +53,7 @@ class BlogsController {
 
         res.render('create-blog', {
             layout: 'layouts/dashboard-layout',
+            cssLink: '/css/error.css',
             user,
         });
     }
