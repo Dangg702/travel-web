@@ -107,8 +107,20 @@ class TourController {
                 user = await User.findById(userId);
             }
             const tourName = req.params.name;
+            let tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const currentDateStr = tomorrow
+                .toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                })
+                .split('/')
+                .join('/');
+            console.log(currentDateStr);
+            console.log(req.query.dateGo);
             let queryConditions = {}; // Biến trung gian để lưu điều kiện truy vấn
-            if (req.query.dateGo) {
+            if (req.query.dateGo!== currentDateStr) {
                 queryConditions.dateGo = req.query.dateGo;
             }
             if (req.query.departure) {
