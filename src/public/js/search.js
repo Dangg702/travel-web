@@ -87,6 +87,9 @@ document.getElementById('departure-field').addEventListener('click', function ()
 let searchButton = document.getElementById('home-search');
 let searchForm = document.getElementById('search-form');
 searchButton.addEventListener('click', function (e) {
+    if(searchName==null){
+        alert('Vui lòng nhập điểm cần đến');
+    }
     e.preventDefault();
     const url = `https://travel-web-ks0z.onrender.com/api/tour/search-tours/${searchName}?departure=${departure}&dateGo=${dateGo}`;
     searchForm.action = url;
