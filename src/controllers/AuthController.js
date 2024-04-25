@@ -60,7 +60,7 @@ class AuthController {
             res.clearCookie('access_token');
             res.clearCookie('refresh_token');
             // Chuyển hướng người dùng đến trang đăng nhập hoặc trang chính
-            res.redirect('/user/login');
+            res.redirect('/');
         } catch (error) {
             next(error);
         }
