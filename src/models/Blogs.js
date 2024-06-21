@@ -1,4 +1,19 @@
-const { connectMysql } = require('../config/db');
+// const { connectMysql } = require('../config/db');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const blogsSchema = new Schema(
+    {
+        title: { type: String, required: true, unique: true },
+        imgUrl: { type: String, required: true },
+        desc: { type: String, required: true },
+        contentHtml: { type: String },
+    },
+    {
+        timestamps: true,
+    },
+);
+
 const Blogs = {
     // Phương thức để tạo bảng blogs trong cơ sở dữ liệu
     createTable: () => {
@@ -53,4 +68,5 @@ const Blogs = {
         });
     },
 };
-module.exports = Blogs;
+// module.exports = Blogs;
+module.exports = mongoose.model('Blogs', blogsSchema);

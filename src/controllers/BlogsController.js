@@ -1,4 +1,5 @@
-const { Blogs } = require('../config/db');
+// const { Blogs } = require('../config/db');
+const Blogs = require('../models/Blogs');
 const User = require('../models/User');
 const dotenvFlow = require('dotenv-flow');
 dotenvFlow.config();
@@ -11,8 +12,8 @@ class BlogsController {
         if (userId != null) {
             user = await User.findById(userId);
         }
-        const blogs = await Blogs.getBlogs();
-        console.log(blogs.length);
+        // const blogs = await Blogs.getBlogs();
+        const blogs = await Blogs.find();
         if (!blogs) {
             res.status(404).json({ message: 'No blogs found' });
         } else {
@@ -31,8 +32,8 @@ class BlogsController {
         if (userId != null) {
             user = await User.findById(userId);
         }
-        const blog = await Blogs.getBlogByTitle(title);
-        console.log('blog', blog);
+        // const blog = await Blogs.getBlogByTitle(title);
+        const blog = await Blogs.findOne({ title: title });
         if (blog) {
             res.render('blog', {
                 cssLink: '/css/blogs.css',
@@ -59,14 +60,28 @@ class BlogsController {
     }
     // POST /blogs/create-blog
     async createBlog(req, res, next) {
-        const blogData = req.body;
-        const blog = await Blogs.createBlog(blogData);
+        const { title, imgUrl, desc, contentHtml } = req.body;
+        const blog = new Blogs({
+            title,
+            imgUrl,
+            desc,
+            contentHtml,
+        });
+        blog.save()
+            .then(() => {
+                res.status(201).json({ message: 'Blog created successfully' });
+            })
+            .catch((err) => {
+                res.status(500).json({ message: 'Internal server error' });
+            });
+        // const blogData = req.body;
+        // const blog = await Blogs.createBlog(blogData);
 
-        if (typeof blog === 'number') {
-            const successMessage = 'Blog created successfully';
-            res.write('<script>alert("' + successMessage + '"); window.location.href="/blogs/create-blog";</script>');
-            console.log(successMessage);
-        }
+        // if (typeof blog === 'number') {
+        //     const successMessage = 'Blog created successfully';
+        //     res.write('<script>alert("' + successMessage + '"); window.location.href="/blogs/create-blog";</script>');
+        //     console.log(successMessage);
+        // }
     }
     // PATCH /blogs/update/:id
     async updateBlog(req, res, next) {

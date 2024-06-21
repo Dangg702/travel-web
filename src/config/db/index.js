@@ -21,80 +21,80 @@ const connectMysql = mysql.createConnection({
     database: 'blog_db',
 });
 
-connectMysql.connect((err) => {
-    if (err) {
-        console.log(err.message);
-        return;
-    }
-    console.log('Connect Mysql success!');
-    // Tạo bảng comments khi kết nối thành công
-    Blogs.createTable();
-});
-const Blogs = {
-    // Phương thức để tạo bảng blogs trong cơ sở dữ liệu
-    createTable: () => {
-        const createTableQuery = `
-        CREATE TABLE IF NOT EXISTS blogs (
-            id INT AUTO_INCREMENT PRIMARY KEY ,
-            title TEXT NOT NULL,
-            imgUrl TEXT NOT NULL,
-            contentHtml LONGTEXT,
-            description LONGTEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        )
-        `;
-        connectMysql.query(createTableQuery, (err, results, fields) => {
-            if (err) {
-                console.error('Error creating table:', err);
-                return;
-            }
-            if (results.warningStatus === 0) {
-                console.log('Table "blogs" already exists');
-            } else {
-                // console.log('Table "blogs" created successfully');
-            }
-        });
-    },
+// connectMysql.connect((err) => {
+//     if (err) {
+//         console.log(err.message);
+//         return;
+//     }
+//     console.log('Connect Mysql success!');
+//     // Tạo bảng comments khi kết nối thành công
+//     Blogs.createTable();
+// });
+// const Blogs = {
+//     // Phương thức để tạo bảng blogs trong cơ sở dữ liệu
+//     createTable: () => {
+//         const createTableQuery = `
+//         CREATE TABLE IF NOT EXISTS blogs (
+//             id INT AUTO_INCREMENT PRIMARY KEY ,
+//             title TEXT NOT NULL,
+//             imgUrl TEXT NOT NULL,
+//             contentHtml LONGTEXT,
+//             description LONGTEXT,
+//             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+//         )
+//         `;
+//         connectMysql.query(createTableQuery, (err, results, fields) => {
+//             if (err) {
+//                 console.error('Error creating table:', err);
+//                 return;
+//             }
+//             if (results.warningStatus === 0) {
+//                 console.log('Table "blogs" already exists');
+//             } else {
+//                 // console.log('Table "blogs" created successfully');
+//             }
+//         });
+//     },
 
-    createBlog: (blogData) => {
-        return new Promise((resolve, reject) => {
-            const insertQuery = 'INSERT INTO blogs SET ?';
-            // console.log('insertQuery', insertQuery)
-            connectMysql.query(insertQuery, blogData, (err, results) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(results.insertId);
-                }
-            });
-        });
-    },
+//     createBlog: (blogData) => {
+//         return new Promise((resolve, reject) => {
+//             const insertQuery = 'INSERT INTO blogs SET ?';
+//             // console.log('insertQuery', insertQuery)
+//             connectMysql.query(insertQuery, blogData, (err, results) => {
+//                 if (err) {
+//                     reject(err);
+//                 } else {
+//                     resolve(results.insertId);
+//                 }
+//             });
+//         });
+//     },
 
-    getBlogs: () => {
-        return new Promise((resolve, reject) => {
-            const selectQuery = 'SELECT * FROM blogs ';
-            connectMysql.query(selectQuery, (err, results) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(results);
-                }
-            });
-        });
-    },
-    getBlogByTitle: (title) => {
-        return new Promise((resolve, reject) => {
-            const selectQuery = 'SELECT * FROM blogs WHERE title = "' + title +'"';
-            connectMysql.query(selectQuery, (err, results) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(results);
-                }
-            });
-        });
-    },
-};
+//     getBlogs: () => {
+//         return new Promise((resolve, reject) => {
+//             const selectQuery = 'SELECT * FROM blogs ';
+//             connectMysql.query(selectQuery, (err, results) => {
+//                 if (err) {
+//                     reject(err);
+//                 } else {
+//                     resolve(results);
+//                 }
+//             });
+//         });
+//     },
+//     getBlogByTitle: (title) => {
+//         return new Promise((resolve, reject) => {
+//             const selectQuery = 'SELECT * FROM blogs WHERE title = "' + title +'"';
+//             connectMysql.query(selectQuery, (err, results) => {
+//                 if (err) {
+//                     reject(err);
+//                 } else {
+//                     resolve(results);
+//                 }
+//             });
+//         });
+//     },
+// };
 
-module.exports = { connect, Blogs };
+module.exports = { connect };
