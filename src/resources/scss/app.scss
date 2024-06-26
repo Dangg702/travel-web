@@ -110,6 +110,7 @@ p {
     max-width: 1920px;
     width: 100%;
     margin: 0 auto;
+    padding: 0;
 }
 
 .wrapper {
@@ -119,6 +120,8 @@ p {
 }
 
 header {
+    max-width: 1440px;
+    width: 100%;
     background-color: $light-pink-color;
     position: fixed;
     top: 0;
@@ -129,7 +132,13 @@ header {
 
 .navbar {
     background-color: $light-pink-color;
-    padding: 4px 20px;
+    height: 82px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 14px 20px 0 20px;
 }
 .navbar-nav .dropdown-menu {
     position: absolute;
@@ -151,29 +160,29 @@ header {
 
 /* Menu */
 .navbar__links {
-    flex-direction: row;
-    width: 60%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 75%;
     height: 100%;
     transform: translateX(-100%);
     opacity: 0;
     background-color: $orange-color;
     transition: $smooth;
     z-index: 5;
-    margin-bottom: 0;
 }
 
 .navbar__link {
     list-style: none;
-    margin: 55px;
 }
 
 .navbar__link a {
     font-family: 'Domine', serif;
-    color: #fff;
     font-size: 2.4rem;
     text-decoration: none;
     text-transform: capitalize;
     transition: $smooth;
+    color: $green-color;
 }
 
 .navbar__link a:hover {
@@ -262,6 +271,9 @@ header {
 /* Reposive */
 @media (min-width: 62em) {
     /* header */
+    .navbar {
+        padding: 4px 20px;
+    }
     .navbar__links {
         position: initial;
         transform: translateX(0);

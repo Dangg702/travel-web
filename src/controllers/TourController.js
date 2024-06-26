@@ -120,7 +120,7 @@ class TourController {
             console.log(currentDateStr);
             console.log(req.query.dateGo);
             let queryConditions = {}; // Biến trung gian để lưu điều kiện truy vấn
-            if (req.query.dateGo!== currentDateStr) {
+            if (req.query.dateGo !== currentDateStr) {
                 queryConditions.dateGo = req.query.dateGo;
             }
             if (req.query.departure) {

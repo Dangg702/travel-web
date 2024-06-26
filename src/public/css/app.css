@@ -92,7 +92,8 @@ p {
 .container {
   max-width: 1920px;
   width: 100%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding: 0; }
 
 .wrapper {
   max-width: 1440px;
@@ -100,6 +101,8 @@ p {
   margin: 0 auto; }
 
 header {
+  max-width: 1440px;
+  width: 100%;
   background-color: #fff9f9;
   position: fixed;
   top: 0;
@@ -109,7 +112,13 @@ header {
 
 .navbar {
   background-color: #fff9f9;
-  padding: 4px 20px; }
+  height: 82px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 14px 20px 0 20px; }
 
 .navbar-nav .dropdown-menu {
   position: absolute;
@@ -129,27 +138,27 @@ header {
 
 /* Menu */
 .navbar__links {
-  flex-direction: row;
-  width: 60%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 75%;
   height: 100%;
   transform: translateX(-100%);
   opacity: 0;
   background-color: #fa5652;
   transition: all 0.3s ease-in;
-  z-index: 5;
-  margin-bottom: 0; }
+  z-index: 5; }
 
 .navbar__link {
-  list-style: none;
-  margin: 55px; }
+  list-style: none; }
 
 .navbar__link a {
   font-family: 'Domine', serif;
-  color: #fff;
   font-size: 2.4rem;
   text-decoration: none;
   text-transform: capitalize;
-  transition: all 0.3s ease-in; }
+  transition: all 0.3s ease-in;
+  color: #035755; }
 
 .navbar__link a:hover {
   color: #035755;
@@ -228,6 +237,8 @@ header {
 /* Reposive */
 @media (min-width: 62em) {
   /* header */
+  .navbar {
+    padding: 4px 20px; }
   .navbar__links {
     position: initial;
     transform: translateX(0);

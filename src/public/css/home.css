@@ -8,6 +8,8 @@
   background-size: cover;
   background-position-y: center;
   position: relative; }
+  .banner-container row {
+    --bs-gutter-x: 0; }
 
 .banner-form {
   display: flex;
@@ -57,7 +59,7 @@ p.media-heading {
   user-select: none; }
 
 .item-list-container {
-  padding: 0 80px; }
+  padding: 0 40px; }
   .item-list-container .item-list__title {
     font-size: 3.2rem;
     font-weight: 600;
@@ -102,7 +104,12 @@ p.media-heading {
     margin: 0 0 16px;
     font-weight: 500;
     text-wrap: wrap;
-    height: 53px; }
+    height: 53px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box; }
   .item .item__content .item__desc {
     line-height: 1.5;
     color: #787878;
