@@ -1,3 +1,6 @@
+.home-body-container {
+  overflow-x: hidden; }
+
 .light-bg {
   background-color: #fff9f9; }
 
@@ -8,7 +11,7 @@
   background-size: cover;
   background-position-y: center;
   position: relative; }
-  .banner-container row {
+  .banner-container .container .row {
     --bs-gutter-x: 0; }
 
 .banner-form {

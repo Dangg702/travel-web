@@ -1,5 +1,9 @@
 @import 'variables';
 
+.home-body-container {
+    overflow-x: hidden;
+}
+
 .light-bg {
     background-color: $light-pink-color;
 }
@@ -12,7 +16,7 @@
     background-position-y: center;
     position: relative;
 
-    .row {
+    .container .row {
         --bs-gutter-x: 0;
     }
 }
