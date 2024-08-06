@@ -42,7 +42,7 @@
         "passport": "^0.7.0",
         "request": "^2.88.2",
         "sass": "^1.71.1",
-        "vnpay": "^1.5.4"
+        "vnpay": "^1.1.0"
     },
     "devDependencies": {
         "chai": "^3.5.0",
