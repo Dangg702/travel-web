@@ -41,8 +41,7 @@
         "nodemon": "^3.0.3",
         "passport": "^0.7.0",
         "request": "^2.88.2",
-        "sass": "^1.71.1",
-        "vnpay": "^1.5.4"
+        "sass": "^1.71.1"
     },
     "devDependencies": {
         "chai": "^3.5.0",
